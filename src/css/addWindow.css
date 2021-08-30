@@ -1,0 +1,64 @@
+.addWindow__input {
+  display: inline;
+  font-size: 20px;
+  border: none;
+  background: none;
+  border-bottom: 2px solid rgba(243, 156, 18, 0.3);
+  background-color: inherit;
+  margin-bottom: 5px;
+}
+
+.addWindow__input::placeholder {
+  font-size: 16px;
+  color: rgb(0, 0, 0, 0.3);
+}
+.addWindow__input:hover {
+  border: none;
+  border-bottom: 2px solid rgba(243, 156, 18, 1);
+}
+.addWindow__input-name {
+}
+.addWindow__input-time {
+  width: 35px;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+.addWindow__desc {
+  /* display: block;
+  width: 5vw;
+  margin-bottom: 3px; */
+  padding: 5px;
+}
+.addWindow__column {
+  margin-bottom: 10px;
+}
+.addWindow__inputSpace {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.addWinodw__title {
+  font-weight: 800;
+  font-size: 24px;
+}
+.addWindow__tab {
+  background-color: inherit;
+  border: none;
+  border-bottom: 2px solid rgba(243, 156, 18, 0.3);
+}
+.addWindow__tab:hover {
+  background-color: inherit;
+  border: none;
+  border-bottom: 2px solid rgba(243, 156, 18, 0.7);
+}
+.addWindow__tab:focus,
+.addWindow__tab-focus {
+  background-color: inherit;
+  border: none;
+  border-bottom: 2px solid rgb(230, 142, 0);
+}

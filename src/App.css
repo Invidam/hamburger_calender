@@ -16,23 +16,29 @@ article {
 }
 li {
   padding: 10px;
+  border: 1px solid black;
+  margin-top: 10px;
 }
-li:nth-child(2n) {
+/* li:nth-child(2n) {
   background-color: green;
 }
 
 li:nth-child(2n + 1) {
   background-color: brown;
 }
+li:first-child,
+li:last-child {
+  background-color: #bdc3c7;
+} */
 ol {
   list-style: none;
   padding: 0;
 }
 
-span {
+/* span {
   display: block;
   width: 250px;
   border: 1px solid black;
   overflow: hidden;
   text-overflow: ellipsis;
-}
+} */

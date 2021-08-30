@@ -1,0 +1,38 @@
+.workList__wakeTime {
+  border-top-left-radius: 35%;
+  border-top-right-radius: 35%;
+}
+
+.workList__bedTime {
+  border-bottom-left-radius: 35%;
+  border-bottom-right-radius: 35%;
+}
+
+.empty-element {
+  background-color: rgba(151, 151, 151, 0.707);
+}
+.empty-element:hover {
+  transition: background-color 0.5s;
+  background-color: rgba(140, 140, 140, 0.796);
+  cursor: pointer;
+}
+
+.workList__time-display {
+  background-color: rgba(250, 193, 88, 0.8);
+}
+
+.workList__time-display:hover {
+  background-color: rgba(233, 180, 81, 0.933);
+  transition: background-color 0.5s;
+  cursor: pointer;
+}
+
+.workList__work {
+  opacity: 0.9;
+}
+
+.workList__work:hover {
+  opacity: 1;
+  transition: background-color 0.5s;
+  cursor: pointer;
+}

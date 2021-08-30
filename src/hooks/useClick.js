@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 export const useClick = (onClick) => {
   const element = useRef();
   useEffect(() => {
-    console.log("IsRENdering??");
     if (element.current) {
       element.current.addEventListener("click", onClick);
     }
