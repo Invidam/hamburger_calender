@@ -2,7 +2,8 @@ import { useRecordTime } from "../../hooks/useRecoreTime";
 import { TimeRecordDisplay } from "./element/timeBtn/TimeDisplayBtn";
 import { TimeRecordBtn } from "./element/timeBtn/TimeRecordBtn";
 import { EmptyWork } from "./element/work/EmptyWork";
-
+import { IngredientList, tomato } from "./window/IngredientList";
+import styled from "styled-components";
 export const WorkList = ({ workList, addWorkWindow, modal, openModal }) => {
   const [wakeTime, onClickWakeTime] = useRecordTime("wakeTime");
   const addWakeTimeWindow = (
@@ -35,6 +36,7 @@ export const WorkList = ({ workList, addWorkWindow, modal, openModal }) => {
       openModal={openModal}
     />
   );
+  const ingredienName = "tomato";
   return (
     <ol>
       {wakeTime ? addWakeTimeDisplay : addWakeTimeWindow}
@@ -43,6 +45,8 @@ export const WorkList = ({ workList, addWorkWindow, modal, openModal }) => {
           return makeWorkItem(workItem);
         })}
       {emptyWork}
+      <IngredientList ingredienName={ingredienName} />
+      <tomato />
       {bedTime ? addBedTimeDisplay : addBedTimeWindow}
     </ol>
     // </div>
