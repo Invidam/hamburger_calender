@@ -14,7 +14,7 @@ article {
   border: 1px solid blue;
   padding: 50px;
 }
-li {
+li:not(.ingredient__item) {
   padding: 10px;
   border: 1px solid black;
   margin-top: 10px;

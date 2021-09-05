@@ -1,21 +1,55 @@
-import styled from "styled-components";
+import "../../../css/ingredientList.css";
+const themeList = new Map();
+const cheezeTheme = {
+  backgroundColor: "rgba(255, 166, 0, 1)",
+};
+const meetTheme = {
+  backgroundColor: "rgba(69, 1, 1, 1)",
+};
 
-const map = new Map();
-const Tomato = styled.li`
-  background-color: rgba(227, 26, 0, 1);
-`;
-// map["tomato"] = <li>TEST </li>;
-// const Circle = styled.div`
-//   width: 5rem;
-//   height: 5rem;
-//   background: ${(props) => props.color || "black"};
-//   border-radius: 50%;
-// `;
+const vegetableTheme = {
+  backgroundColor: "rgba(50, 199, 4, 1)",
+};
+const add = () => {
+  console.log("1");
+};
 
-export const IngredientList = (ingredienName) => {
-  return <Tomato>TEST</Tomato>;
-  //   return <{ingredienName} />
-  //   return map[ingredienName];
+const tomatoTheme = {
+  backgroundColor: "rgba(227, 26, 0, 1)",
+};
+themeList.set("tomato", tomatoTheme);
+themeList.set("cheeze", cheezeTheme);
+themeList.set("meet", meetTheme);
+themeList.set("vegetable", vegetableTheme);
+export const IngredientEx = ({ ingredienName }) => {
+  return (
+    <li onClick={add} style={themeList[ingredienName]}>
+      test li{" "}
+    </li>
+  );
+};
+
+export const IngredientList = () => {
+  const onClick = (event, style) => {
+    console.log(event.target, style.backgroundColor);
+    // event.target.workColor.value = style.backgroundColor;
+  };
+  console.log();
+  return (
+    <ol className="ingredient__list">
+      {[...themeList].map(([key, value]) => {
+        return (
+          <li
+            className="ingredient__item"
+            onClick={(event) => onClick(event, value)}
+          >
+            <div className="ingredient__color" style={value}></div>
+            <span className="ingredient__title">{key}</span>
+          </li>
+        );
+      })}
+    </ol>
+  );
 };
 //background-color: white;
 
