@@ -36,3 +36,9 @@
   transition: background-color 0.5s;
   cursor: pointer;
 }
+
+.workList__time,
+.workList__element-empty,
+.workList__work {
+  color: black;
+}

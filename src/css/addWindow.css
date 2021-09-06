@@ -62,3 +62,23 @@ select:focus {
   border: none;
   border-bottom: 2px solid rgb(230, 142, 0);
 }
+.addWindow__tab-content {
+  height: 200px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+.addWindow__btn {
+  border: none;
+  margin-top: 10px;
+  width: 100%;
+  color: rgba(245, 235, 220, 1);
+  background-color: rgba(214, 35, 0, 1);
+}
+
+.addWindow__btn:hover {
+  background-color: rgba(167, 27, 0, 1);
+}
+
+.addWindow__btn:active {
+  background-color: rgba(80, 35, 20, 1);
+}

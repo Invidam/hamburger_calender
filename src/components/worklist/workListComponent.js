@@ -39,9 +39,13 @@ export const WorkListComponent = () => {
     setIsOpen(false);
     console.log("CLOSE2", modalIsOpen);
   };
-  const { workList, onSubmitWork } = usePushWork(closeModal);
+  const { workList, onSubmitColor, onSubmitWork } = usePushWork(closeModal);
   const addWorkWindow = (
-    <AddWorkWindow workList={workList} onSubmitWork={onSubmitWork} />
+    <AddWorkWindow
+      workList={workList}
+      onSubmitColor={onSubmitColor}
+      onSubmitWork={onSubmitWork}
+    />
   );
   const modal = (
     <Modal
@@ -52,7 +56,10 @@ export const WorkListComponent = () => {
       overlayClassName="Overlay"
     >
       {addWorkWindow}
-      <button onClick={closeModal}> CLOSE</button>
+      <button className="addWindow__close addWindow__btn" onClick={closeModal}>
+        {" "}
+        CLOSE
+      </button>
     </Modal>
   );
 

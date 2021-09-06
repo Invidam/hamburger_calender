@@ -1,4 +1,5 @@
-import "../../../css/ingredientList.css";
+import "../../../../css/ingredientList.css";
+import { useTabs } from "../../../../hooks/useTabs";
 const themeList = new Map();
 const cheezeTheme = {
   backgroundColor: "rgba(255, 166, 0, 1)",
@@ -29,33 +30,34 @@ export const IngredientEx = ({ ingredienName }) => {
   );
 };
 
-export const IngredientList = () => {
-  const onClick = (event, style) => {
+export const IngredientList = ({ onSubmitColor }) => {
+  const themeArray = [...themeList];
+  const [currentItem, currentIdx, setCurrentIndex] = useTabs(0, themeArray);
+  const onClick = (event, style, idx) => {
+    event.preventDefault();
     console.log(event.target, style.backgroundColor);
+    setCurrentIndex(idx);
+    onSubmitColor(style.backgroundColor);
     // event.target.workColor.value = style.backgroundColor;
   };
-  console.log();
   return (
-    <ol className="ingredient__list">
-      {[...themeList].map(([key, value]) => {
+    <div className="ingredient__list">
+      {[...themeList].map(([key, value], idx) => {
         return (
-          <li
-            className="ingredient__item"
-            onClick={(event) => onClick(event, value)}
+          <button
+            className={
+              idx === currentIdx
+                ? "ingredient__item ingredient__item-focus"
+                : "ingredient__item"
+            }
+            onClick={(event) => onClick(event, value, idx)}
+            key={idx}
           >
             <div className="ingredient__color" style={value}></div>
             <span className="ingredient__title">{key}</span>
-          </li>
+          </button>
         );
       })}
-    </ol>
+    </div>
   );
 };
-//background-color: white;
-
-/*
-방법 생각해보기
-버튼 클릭 -> () => 색상 지정 (DB에도 저장) => 색상 표시
-
-에서, 버튼 클릭에 따라 어떻게 색상을 지정할 것인지 고민해보기.
-*/

@@ -10,11 +10,19 @@
 }
 .ingredient__item:hover {
   transition: background-color 0.25s;
+  background-color: rgba(255, 249, 241, 0.555);
+  cursor: pointer;
+}
+.ingredient__item:focus,
+.ingredient__item-focus {
+  transition: background-color 0.25s;
   background-color: rgba(255, 249, 241, 0.9);
   cursor: pointer;
 }
+
 .ingredient__list {
   display: flex;
+  margin-top: 15px;
 }
 .ingredient__color {
   display: block;

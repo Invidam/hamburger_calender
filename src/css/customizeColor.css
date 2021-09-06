@@ -1,0 +1,31 @@
+.addWindow__customColor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.addWindow__customColor-text {
+  margin-bottom: 15px;
+}
+.addWindow__customColor-pickColor-input {
+  border: none;
+  /* border-color: rgba(250, 193, 88, 0.8); */
+  background-color: inherit;
+  border-radius: 15%;
+  width: 100px;
+  height: 30px;
+}
+
+.addWindow__customColor-bread {
+  height: 15px;
+  width: 100px;
+  background-color: rgba(250, 193, 88, 0.8);
+}
+.addWindow__customColor-bread-top {
+  border-top-left-radius: 25%;
+  border-top-right-radius: 25%;
+}
+.addWindow__customColor-bread-bottom {
+  border-bottom-left-radius: 25%;
+  border-bottom-right-radius: 25%;
+}

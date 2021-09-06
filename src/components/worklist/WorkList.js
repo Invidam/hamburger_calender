@@ -2,7 +2,6 @@ import { useRecordTime } from "../../hooks/useRecoreTime";
 import { TimeRecordDisplay } from "./element/timeBtn/TimeDisplayBtn";
 import { TimeRecordBtn } from "./element/timeBtn/TimeRecordBtn";
 import { EmptyWork } from "./element/work/EmptyWork";
-import { IngredientEx, tomato } from "./window/IngredientList";
 export const WorkList = ({ workList, addWorkWindow, modal, openModal }) => {
   const [wakeTime, onClickWakeTime] = useRecordTime("wakeTime");
   const [bedTime, onClickBedTime] = useRecordTime("bedTime");
@@ -44,10 +43,6 @@ export const WorkList = ({ workList, addWorkWindow, modal, openModal }) => {
           return makeWorkItem(workItem, idx);
         })}
       {emptyWork}
-      <IngredientEx ingredienName={"tomato"} />
-      <IngredientEx ingredienName={"cheeze"} />
-      <IngredientEx ingredienName={"meet"} />
-      <IngredientEx ingredienName={"vegetable"} />
       {bedTime ? addBedTimeDisplay : addBedTimeWindow}
     </ol>
     // </div>

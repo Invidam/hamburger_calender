@@ -1,18 +1,11 @@
 import "../../../css/addWindow.css";
 import { useTabs } from "../../../hooks/useTabs";
-import { IngredientList } from "./IngredientList";
-export const AddWorkWindow = ({ workList, onSubmitWork }) => {
-  const Recommended = <IngredientList />;
+import { CustomizeColor } from "./tabs/CustomizeColor";
+import { IngredientList } from "./tabs/IngredientList";
+export const AddWorkWindow = ({ workList, onSubmitColor, onSubmitWork }) => {
+  const Recommended = <IngredientList onSubmitColor={onSubmitColor} />;
   const Favorite = <h1>Favorite</h1>;
-  const Customize = (
-    <input
-      type="color"
-      onChange={() => {
-        console.log(this.value);
-      }}
-      name="workColor"
-    ></input>
-  );
+  const Customize = <CustomizeColor onSubmitColor={onSubmitColor} />;
   const tabNames = ["Recommended", "Favorite", "Customize"];
   const Tabs = [Recommended, Favorite, Customize];
   const [currentItem, currentIdx, changeItem] = useTabs(0, Tabs);
@@ -50,6 +43,7 @@ export const AddWorkWindow = ({ workList, onSubmitWork }) => {
         {Tabs.map((section, idx) => {
           return (
             <button
+              key={idx}
               className={
                 currentIdx === idx
                   ? "addWindow__tab-focus addWindow__tab"
@@ -65,8 +59,12 @@ export const AddWorkWindow = ({ workList, onSubmitWork }) => {
           );
         })}
       </div>
-      {currentItem}
-      <input type="submit" value="SUBMIT"></input>
+      <div className="addWindow__tab-content">{currentItem}</div>
+      <input
+        className="addWindow__submit addWindow__btn"
+        type="submit"
+        value="SUBMIT"
+      ></input>
     </form>
   );
 };
