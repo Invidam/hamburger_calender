@@ -33,6 +33,7 @@ li:last-child {
 ol {
   list-style: none;
   padding: 0;
+  /* width: 45vw; */
 }
 
 /* span {
