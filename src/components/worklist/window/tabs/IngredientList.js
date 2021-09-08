@@ -32,8 +32,10 @@ export const IngredientEx = ({ ingredienName }) => {
 
 export const IngredientList = ({ onSubmitColor }) => {
   const themeArray = [...themeList];
+  let isFirst = true;
   const [currentItem, currentIdx, setCurrentIndex] = useTabs(0, themeArray);
   const onClick = (event, style, idx) => {
+    isFirst = false;
     event.preventDefault();
     console.log(event.target, style.backgroundColor);
     setCurrentIndex(idx);
@@ -46,7 +48,7 @@ export const IngredientList = ({ onSubmitColor }) => {
         return (
           <button
             className={
-              idx === currentIdx
+              idx === currentIdx && !isFirst
                 ? "ingredient__item ingredient__item-focus"
                 : "ingredient__item"
             }

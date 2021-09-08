@@ -1,17 +1,17 @@
 import { useState } from "react";
 
-export const usePushWork = (workList, setWorkList, callback) => {
+export const useEditWork = (workList, setWorkList, idx, callback) => {
   const validator = (workObj) => {
     return workObj.workName && workObj.workTime && workObj.workColor;
   };
-  let workColor;
+  let workColor = workList[idx].workColor;
   const hexToRgba = (color) => {
     const r = parseInt(color.substr(1, 2), 16);
     const g = parseInt(color.substr(3, 2), 16);
     const b = parseInt(color.substr(5, 2), 16);
     return "rgba(" + r + "," + g + "," + b + ", 1)";
   };
-  const onSubmitColor = (color) => {
+  const onEditColor = (color) => {
     if (!color) {
       console.log("NO", color);
     } else if (color.substr(0, 1) === "#") {
@@ -20,7 +20,7 @@ export const usePushWork = (workList, setWorkList, callback) => {
     }
     workColor = color;
   };
-  const onSubmitWork = (event) => {
+  const onEditWork = (event, idx) => {
     event.preventDefault();
     const workName = event.target.workName.value;
     const workTime = parseInt(event.target.workTime.value);
@@ -29,7 +29,10 @@ export const usePushWork = (workList, setWorkList, callback) => {
     if (typeof validator === "function") willUpdate = validator(workObj);
     if (willUpdate) {
       callback();
-      setWorkList((workList) => [...workList, workObj]);
+      console.log("EDIT WORK, ", workObj);
+      console.log(workList);
+      setWorkList(workList.splice(idx, 1, workObj));
+      console.log(workList);
     } else {
       console.log(workObj);
       console.log("NOT CHOOSED");
@@ -41,5 +44,5 @@ export const usePushWork = (workList, setWorkList, callback) => {
       alert(errText);
     }
   };
-  return { workList, onSubmitColor, onSubmitWork };
+  return { workList, onEditColor, onEditWork };
 };

@@ -1,4 +1,4 @@
-import "../../../css/addWindow.css";
+import "../../../css/window.css";
 import { useTabs } from "../../../hooks/useTabs";
 import { CustomizeColor } from "./tabs/CustomizeColor";
 import { IngredientList } from "./tabs/IngredientList";
@@ -9,24 +9,24 @@ export const AddWorkWindow = ({ workList, onSubmitColor, onSubmitWork }) => {
   const tabNames = ["Recommended", "Favorite", "Customize"];
   const Tabs = [Recommended, Favorite, Customize];
   const [currentItem, currentIdx, changeItem] = useTabs(0, Tabs);
-  if (workList.length)
-    window.localStorage.setItem("workList", JSON.stringify(workList));
+  // if (workList.length)
+  //   window.localStorage.setItem("workList", JSON.stringify(workList));
   return (
-    <form className="addWindow" autoComplete="off" onSubmit={onSubmitWork}>
+    <form className="modalWindow" autoComplete="off" onSubmit={onSubmitWork}>
       {/* {WorkList.workList} */}
-      <div className="addWindow__column">
+      <div className="modalWindow__column">
         <span className="addWinodw__title">Input Work</span>{" "}
       </div>
-      <div className="addWindow__column addWindow__inputSpace">
-        <span className="addWindow__desc addWindow__desc-name">Name:</span>
+      <div className="modalWindow__column modalWindow__inputSpace">
+        <span className="modalWindow__desc modalWindow__desc-name">Name:</span>
         <input
-          className="addWindow__input addWindow__input-name"
+          className="modalWindow__input modalWindow__input-name"
           type="text"
           name="workName"
         ></input>
-        <span className="addWindow__desc addWindow__desc-time">Time:</span>
+        <span className="modalWindow__desc modalWindow__desc-time">Time:</span>
         <input
-          className="addWindow__input addWindow__input-time"
+          className="modalWindow__input modalWindow__input-time"
           type="number"
           step="1"
           min="0"
@@ -36,18 +36,18 @@ export const AddWorkWindow = ({ workList, onSubmitColor, onSubmitWork }) => {
         ></input>
         h
       </div>
-      <div className="addWindow__column">
-        <span className="addWinodw__title">Pick Color</span>{" "}
+      <div className="modalWindow__column">
+        <span className="modalWindow__title">Pick Color</span>{" "}
       </div>
-      <div className="addWindow_column">
+      <div className="modalWindow_column">
         {Tabs.map((section, idx) => {
           return (
             <button
               key={idx}
               className={
                 currentIdx === idx
-                  ? "addWindow__tab-focus addWindow__tab"
-                  : "addWindow__tab"
+                  ? "modalWindow__tab-focus modalWindow__tab"
+                  : "modalWindow__tab"
               }
               onClick={(event) => {
                 event.preventDefault();
@@ -59,9 +59,9 @@ export const AddWorkWindow = ({ workList, onSubmitColor, onSubmitWork }) => {
           );
         })}
       </div>
-      <div className="addWindow__tab-content">{currentItem}</div>
+      <div className="modalWindow__tab-content">{currentItem}</div>
       <input
-        className="addWindow__submit addWindow__btn"
+        className="modalWindow__submit modalWindow__btn"
         type="submit"
         value="SUBMIT"
       ></input>

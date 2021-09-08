@@ -1,4 +1,4 @@
-.addWindow__input {
+.modalWindow__input {
   display: inline;
   font-size: 20px;
   border: none;
@@ -8,17 +8,17 @@
   margin-bottom: 5px;
 }
 
-.addWindow__input::placeholder {
+.modalWindow__input::placeholder {
   font-size: 16px;
   color: rgb(0, 0, 0, 0.3);
 }
-.addWindow__input:hover {
+.modalWindow__input:hover {
   border: none;
   border-bottom: 2px solid rgba(243, 156, 18, 1);
 }
-.addWindow__input-name {
+.modalWindow__input-name {
 }
-.addWindow__input-time {
+.modalWindow__input-time {
   width: 35px;
 }
 input:focus,
@@ -27,16 +27,16 @@ select:focus {
   outline: none;
 }
 
-.addWindow__desc {
+.modalWindow__desc {
   /* display: block;
   width: 5vw;
   margin-bottom: 3px; */
   padding: 5px;
 }
-.addWindow__column {
+.modalWindow__column {
   margin-bottom: 10px;
 }
-.addWindow__inputSpace {
+.modalWindow__inputSpace {
   display: flex;
   align-items: center;
   margin-bottom: 25px;
@@ -46,28 +46,28 @@ select:focus {
   font-weight: 800;
   font-size: 24px;
 }
-.addWindow__tab {
+.modalWindow__tab {
   background-color: inherit;
   border: none;
   border-bottom: 2px solid rgba(243, 156, 18, 0.3);
 }
-.addWindow__tab:hover {
+.modalWindow__tab:hover {
   background-color: inherit;
   border: none;
   border-bottom: 2px solid rgba(243, 156, 18, 0.7);
 }
-.addWindow__tab:focus,
-.addWindow__tab-focus {
+.modalWindow__tab:focus,
+.modalWindow__tab-focus {
   background-color: inherit;
   border: none;
   border-bottom: 2px solid rgb(230, 142, 0);
 }
-.addWindow__tab-content {
+.modalWindow__tab-content {
   height: 200px;
   padding: 10px;
   margin-bottom: 20px;
 }
-.addWindow__btn {
+.modalWindow__btn {
   border: none;
   margin-top: 10px;
   width: 100%;
@@ -75,10 +75,10 @@ select:focus {
   background-color: rgba(214, 35, 0, 1);
 }
 
-.addWindow__btn:hover {
+.modalWindow__btn:hover {
   background-color: rgba(167, 27, 0, 1);
 }
 
-.addWindow__btn:active {
+.modalWindow__btn:active {
   background-color: rgba(80, 35, 20, 1);
 }

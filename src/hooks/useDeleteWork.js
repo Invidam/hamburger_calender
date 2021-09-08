@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export const usePushWork = (workList, setWorkList, callback) => {
+export const usePushWork = (callback) => {
+  const initVal = window.localStorage.getItem("workList")
+    ? JSON.parse(window.localStorage.getItem("workList"))
+    : [];
+  const [workList, setWorkList] = useState(initVal);
   const validator = (workObj) => {
     return workObj.workName && workObj.workTime && workObj.workColor;
   };
