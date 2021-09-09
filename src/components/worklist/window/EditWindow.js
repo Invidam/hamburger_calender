@@ -2,20 +2,25 @@ import "../../../css/window.css";
 import { useTabs } from "../../../hooks/useTabs";
 import { CustomizeColor } from "./tabs/CustomizeColor";
 import { IngredientList } from "./tabs/IngredientList";
-export const EditWorkWindow = ({ workList, idx, onEditColor, onEditWork }) => {
-  const Recommended = <IngredientList onEditColor={onEditColor} />;
+export const EditWorkWindow = ({
+  workList,
+  idx,
+  onSubmitColor,
+  onEditWork,
+}) => {
+  const Recommended = <IngredientList onSubmitColor={onSubmitColor} />;
   const Favorite = <h1>Favorite</h1>;
-  const Customize = <CustomizeColor onEditColor={onEditColor} />;
+  const Customize = <CustomizeColor onSubmitColor={onSubmitColor} />;
   const tabNames = ["Recommended", "Favorite", "Customize"];
   const Tabs = [Recommended, Favorite, Customize];
   const [currentItem, currentIdx, changeItem] = useTabs(0, Tabs);
-  //   if (workList.length)
-  //     window.localStorage.setItem("workList", JSON.stringify(workList));
   const workItem = workList[idx];
-  console.log("ITEM: ", workItem);
-  console.log("LIST: ", workList);
   return (
-    <form className="modalWindow" autoComplete="off" onSubmit={onEditWork}>
+    <form
+      className="modalWindow"
+      autoComplete="off"
+      onSubmit={(event) => onEditWork(event, idx)}
+    >
       {/* {WorkList.workList} */}
       <div className="modalWindow__column">
         <span className="addWinodw__title">Input Work</span>{" "}

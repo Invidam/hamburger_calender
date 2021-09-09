@@ -9,16 +9,10 @@ export const useUpdateWork = (initList) => {
   console.log("RET0", initList);
   const [workList, setWorkList] = useState(initList);
   const updateWorkList = (_workList) => {
-    console.log("BE", workList);
-    console.log("_BE", _workList);
-    setWorkList(_workList);
-    if (_workList.length)
+    setWorkList([..._workList]);
+    if (_workList?.length)
       window.localStorage.setItem("workList", JSON.stringify(workList));
-    console.log("AF", workList);
   };
-  console.log("RET1", initList);
-  // setWorkList(initList);
-  console.log("RET", workList);
   return [workList, updateWorkList];
 };
 

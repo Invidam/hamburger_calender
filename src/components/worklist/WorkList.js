@@ -40,10 +40,6 @@ export const WorkList = () => {
             />
           );
         })}
-      <li className="tooltip">
-        <div className="tooltip-content">Study Hard 3h</div>
-        test
-      </li>
       {emptyWork}
       {bedTime ? addBedTimeDisplay : addBedTimeWindow}
     </ol>

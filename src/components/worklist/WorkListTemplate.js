@@ -1,15 +1,10 @@
 import "../../css/workList.css";
-export const WorkListTemplate = ({
-  addWakeTimeWindow,
-  addWorkWindow,
-  workList,
-  addBedTimeWindow,
-}) => {
+import { WorkList } from "./WorkList";
+export const WorkListTemplate = () => {
   return (
     <div>
       <h1>Hamburger App</h1>
-      {addWorkWindow}
-      {workList}
+      <WorkList />
     </div>
   );
 };

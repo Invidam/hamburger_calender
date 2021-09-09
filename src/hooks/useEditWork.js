@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export const useEditWork = (workList, setWorkList, idx, callback) => {
   const validator = (workObj) => {
     return workObj.workName && workObj.workTime && workObj.workColor;
@@ -11,7 +9,7 @@ export const useEditWork = (workList, setWorkList, idx, callback) => {
     const b = parseInt(color.substr(5, 2), 16);
     return "rgba(" + r + "," + g + "," + b + ", 1)";
   };
-  const onEditColor = (color) => {
+  const onSubmitColor = (color) => {
     if (!color) {
       console.log("NO", color);
     } else if (color.substr(0, 1) === "#") {
@@ -29,10 +27,8 @@ export const useEditWork = (workList, setWorkList, idx, callback) => {
     if (typeof validator === "function") willUpdate = validator(workObj);
     if (willUpdate) {
       callback();
-      console.log("EDIT WORK, ", workObj);
-      console.log(workList);
-      setWorkList(workList.splice(idx, 1, workObj));
-      console.log(workList);
+      workList.splice(idx, 1, workObj);
+      setWorkList(workList);
     } else {
       console.log(workObj);
       console.log("NOT CHOOSED");
@@ -44,5 +40,5 @@ export const useEditWork = (workList, setWorkList, idx, callback) => {
       alert(errText);
     }
   };
-  return { workList, onEditColor, onEditWork };
+  return { onSubmitColor, onEditWork };
 };

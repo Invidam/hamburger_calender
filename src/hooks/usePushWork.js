@@ -29,7 +29,8 @@ export const usePushWork = (workList, setWorkList, callback) => {
     if (typeof validator === "function") willUpdate = validator(workObj);
     if (willUpdate) {
       callback();
-      setWorkList((workList) => [...workList, workObj]);
+      // workList.push(workObj);
+      setWorkList([...workList, workObj]);
     } else {
       console.log(workObj);
       console.log("NOT CHOOSED");

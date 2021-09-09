@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Modal from "react-modal";
+import { useDeleteWork } from "../../../../hooks/useDeleteWork";
 import { useEditWork } from "../../../../hooks/useEditWork";
 import { EditWorkWindow } from "../../window/EditWindow";
 Modal.setAppElement("#root");
@@ -29,17 +30,19 @@ export const Work = ({ workItem, workList, setWorkList, idx }) => {
   const openEditModal = () => setEditModalIsOpen(true);
   const closeEditModal = (event) => setEditModalIsOpen(false);
 
-  const {
-    workListEdit = workList,
-    onEditColor,
-    onEditWork,
-  } = useEditWork(workList, setWorkList, idx, closeEditModal);
-  workList = workListEdit;
+  const { onSubmitColor, onEditWork } = useEditWork(
+    workList,
+    setWorkList,
+    idx,
+    closeEditModal
+  );
+  const { onDeleteWork } = useDeleteWork(workList, setWorkList, closeEditModal);
+
   const editWorkWindow = (
     <EditWorkWindow
       workList={workList}
       idx={idx}
-      onEditColor={onEditColor}
+      onSubmitColor={onSubmitColor}
       onEditWork={onEditWork}
     />
   );
@@ -53,6 +56,9 @@ export const Work = ({ workItem, workList, setWorkList, idx }) => {
       overlayClassName="Overlay"
     >
       {editWorkWindow}
+      <button className="modalWindow__btn" onClick={onDeleteWork}>
+        DELETE
+      </button>
       <button
         className="modalWindow__close modalWindow__btn"
         onClick={closeEditModal}

@@ -3,5 +3,5 @@ import { WorkListTemplate } from "./WorkListTemplate";
 
 export const WorkListComponent = () => {
   const workListDisplay = <WorkList />;
-  return <WorkListTemplate workList={workListDisplay} />;
+  return <WorkListTemplate />;
 };
