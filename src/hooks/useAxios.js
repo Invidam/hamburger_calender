@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+axios.defaults.headers.common = {
+  "Content-Type": "application/json",
+};
 export const useAxios = (options, axiosInstance = axios) => {
   const [state, setState] = useState({
     loading: true,
@@ -11,7 +13,7 @@ export const useAxios = (options, axiosInstance = axios) => {
   const [trigger, setTrigger] = useState(0);
   const refetch = () => {
     setState({
-      ...setState,
+      ...state,
       loading: true,
     });
     setTrigger(Date.now());
@@ -25,6 +27,7 @@ export const useAxios = (options, axiosInstance = axios) => {
           loading: false,
           data,
         });
+        console.log("IN EFFECT DATA:", data.config.data);
       })
       .catch((error) => {
         setState({

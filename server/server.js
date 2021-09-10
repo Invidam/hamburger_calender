@@ -8,6 +8,12 @@ const app = express();
 const logger = morgan("dev");
 app.use(cors());
 app.use(logger);
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+app.use(express.json());
 app.use("/api", api);
 
 app.listen(port, () => console.log(`Listening Start on port ${port}`));
