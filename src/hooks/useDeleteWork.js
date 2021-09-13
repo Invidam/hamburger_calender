@@ -3,6 +3,7 @@ export const useDeleteWork = (workList, setWorkList, callback) => {
     const deleteAction = () => {
       callback();
       workList.splice(idx, 1);
+      console.log("WORKL IST AFT DELETE ", workList);
       setWorkList(workList);
     };
     const cancelAction = () => {

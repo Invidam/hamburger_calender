@@ -14,10 +14,10 @@ export const WorkList = () => {
   const addBedTimeWindow = (
     <TimeRecordBtn onClick={onClickBedTime} isWake={false} />
   );
-  const addWakeTimeDisplay = (
+  const wakeTimeDisplay = (
     <TimeRecordDisplay recordTime={wakeTime} isWake={true} />
   );
-  const addBedTimeDisplay = (
+  const bedTimeDisplay = (
     <TimeRecordDisplay recordTime={bedTime} isWake={false} />
   );
 
@@ -27,7 +27,7 @@ export const WorkList = () => {
 
   return (
     <ol>
-      {wakeTime ? addWakeTimeDisplay : addWakeTimeWindow}
+      {wakeTime ? wakeTimeDisplay : addWakeTimeWindow}
       {workList &&
         workList.map((workItem, idx) => {
           return (
@@ -41,7 +41,7 @@ export const WorkList = () => {
           );
         })}
       {emptyWork}
-      {bedTime ? addBedTimeDisplay : addBedTimeWindow}
+      {bedTime ? bedTimeDisplay : addBedTimeWindow}
     </ol>
     // </div>
   );

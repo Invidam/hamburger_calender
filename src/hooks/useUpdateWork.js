@@ -9,9 +9,12 @@ export const useUpdateWork = (initList) => {
   console.log("RET0", initList);
   const [workList, setWorkList] = useState(initList);
   const updateWorkList = (_workList) => {
-    setWorkList([..._workList]);
+    console.log("IN UPDATE WORKLIST: INPUT DAT: ", _workList);
+    setWorkList(_workList);
+    console.log("IN UPDATE WORKLIST: hook  DAT: ", workList);
     if (_workList?.length)
-      window.localStorage.setItem("workList", JSON.stringify(workList));
+      window.localStorage.setItem("workList", JSON.stringify(_workList));
+    else window.localStorage.removeItem("workList");
   };
   return [workList, updateWorkList];
 };

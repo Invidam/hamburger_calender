@@ -14,14 +14,14 @@ function App() {
     url: "/api/world",
     data: { test: "TEST" },
   });
-  console.log("STATE: ", JSON.parse(data?.config.data));
+  console.log("STATE: ", data);
   return (
     <main>
       <article>
         test
         {/* axios.post("http") */}
         {`load: ${loading} 
-        data: ${data.config.data} 
+        data: ${JSON.stringify(data?.data)} 
         
         error: ${error}`}
         <button onClick={refetch}> CLICK </button>

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 export const useRecordTime = (key) => {
@@ -13,9 +14,10 @@ export const useRecordTime = (key) => {
       .slice(0, 2)
       .map((numChar) => parseInt(numChar));
     console.log("on CLick, ", hour, minute);
-    window.localStorage.setItem(key, JSON.stringify({ hour, minute }));
-
-    setRecordTime({ hour, minute });
+    const timeObj = { hour, minute };
+    window.localStorage.setItem(key, JSON.stringify(timeObj));
+    axios.post("api/world", { key: timeObj });
+    setRecordTime(timeObj);
   };
   return [recordTime, onClick];
 };

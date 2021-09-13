@@ -9,6 +9,7 @@
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "firebase": "^9.0.2",
     "http-proxy-middleware": "^2.0.1",
     "morgan": "^1.10.0",
     "react": "^17.0.2",
@@ -22,7 +23,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev-server": "nodemon server/server.js"
   },
   "eslintConfig": {
     "extends": [

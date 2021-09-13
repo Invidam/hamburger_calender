@@ -27,7 +27,7 @@ export const useAxios = (options, axiosInstance = axios) => {
           loading: false,
           data,
         });
-        console.log("IN EFFECT DATA:", data.config.data);
+        console.log("IN EFFECT DATA:", data);
       })
       .catch((error) => {
         setState({
