@@ -7,10 +7,11 @@ import { EmptyWork } from "./element/work/EmptyWork";
 import { Work } from "./element/work/Work";
 export const WorkList = () => {
   const [wakeTime, onClickWakeTime] = useRecordTime("wakeTime");
-  const [bedTime, onClickBedTime] = useRecordTime("bedTime");
   const addWakeTimeWindow = (
     <TimeRecordBtn onClick={onClickWakeTime} isWake={true} />
   );
+  console.log("ERR BEF BEDTIME??");
+  const [bedTime, onClickBedTime] = useRecordTime("bedTime");
   const addBedTimeWindow = (
     <TimeRecordBtn onClick={onClickBedTime} isWake={false} />
   );
@@ -20,7 +21,6 @@ export const WorkList = () => {
   const bedTimeDisplay = (
     <TimeRecordDisplay recordTime={bedTime} isWake={false} />
   );
-
   const [workList, setWorkList] = useUpdateWork([]);
   console.log("wrLIST: ", workList);
   const emptyWork = <EmptyWork workList={workList} setWorkList={setWorkList} />;

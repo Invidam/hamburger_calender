@@ -5,27 +5,9 @@ import { WorkListTemplate } from "./components/worklist/WorkListTemplate";
 import { useAxios } from "./hooks/useAxios";
 
 function App() {
-  const { loading, data, error, refetch } = useAxios({
-    headers: {
-      Authorization: "",
-      "Content-Type": "application/json",
-    },
-    method: "post",
-    url: "/api/world",
-    data: { test: "TEST" },
-  });
-  console.log("STATE: ", data);
   return (
     <main>
-      <article>
-        test
-        {/* axios.post("http") */}
-        {`load: ${loading} 
-        data: ${JSON.stringify(data?.data)} 
-        
-        error: ${error}`}
-        <button onClick={refetch}> CLICK </button>
-      </article>
+      <article>test</article>
       <article>
         <WorkListTemplate />
       </article>

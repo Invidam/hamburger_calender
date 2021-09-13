@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import axios from "axios";
 export const useUpdateWork = (initList) => {
   initList = window.localStorage.getItem("workList")
     ? JSON.parse(window.localStorage.getItem("workList"))
@@ -8,10 +8,26 @@ export const useUpdateWork = (initList) => {
     : [];
   console.log("RET0", initList);
   const [workList, setWorkList] = useState(initList);
+  if (!workList || workList.length < 1)
+    axios({
+      headers: {
+        Authorization: "",
+        "Content-Type": "application/json",
+      },
+      url: "/api/get-worklist",
+      method: "get",
+    }).then((data) => {
+      console.log("[W.L]HOOK DATA: ", data?.data);
+      if (data.data) {
+        setWorkList(data?.data);
+        window.localStorage.setItem("workList", JSON.stringify(data?.data));
+      }
+    });
   const updateWorkList = (_workList) => {
     console.log("IN UPDATE WORKLIST: INPUT DAT: ", _workList);
     setWorkList(_workList);
     console.log("IN UPDATE WORKLIST: hook  DAT: ", workList);
+    axios.post("api/update-worklist", { user: "TEST", value: _workList });
     if (_workList?.length)
       window.localStorage.setItem("workList", JSON.stringify(_workList));
     else window.localStorage.removeItem("workList");
