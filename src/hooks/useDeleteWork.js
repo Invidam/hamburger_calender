@@ -1,10 +1,13 @@
 export const useDeleteWork = (workList, setWorkList, callback) => {
   const onDeleteWork = (event, idx) => {
+    event.preventDefault();
     const deleteAction = () => {
       callback();
-      workList.splice(idx, 1);
-      console.log("WORKL IST AFT DELETE ", workList);
-      setWorkList(workList);
+      const workListTemp = [...workList];
+      console.log("IDX: ", idx);
+      workListTemp.splice(idx, 1);
+      console.log("WORKL IST AFT DELETE ", workListTemp);
+      setWorkList(workListTemp);
     };
     const cancelAction = () => {
       console.log("CANCEL DELETE WORK");

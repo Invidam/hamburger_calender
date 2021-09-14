@@ -1,14 +1,7 @@
-import express from "express";
-import { db } from "./firebase/config.js";
-// const database = require("./firebase/config");
+import { db } from "../routes/firebase/config.js";
 
-export const router = express.Router();
-let cnt = 0;
 const user = "TEST";
-router.get("/hello", (req, res) => {
-  res.send({ greeting: "Hello React X Node j1s" });
-});
-router.post("/record-time", (req, res) => {
+export const postTime = (req, res) => {
   console.log("[record-time]RECEIVE: ", req.body);
   // res.end
   const { key, value } = req.body;
@@ -24,16 +17,16 @@ router.post("/record-time", (req, res) => {
   }
   // return res.send("GOOD");
   // return res.end();
-});
+};
 
-router.post("/get-time", (req, res) => {
+export const getTime = (req, res) => {
   const ref = db.ref(`users/${req.body.user}/workList/${req.body.key}`);
 
-  console.log("REQBODY: ", req.body, ++cnt);
+  console.log("REQBODY: ", req.body);
   ref.on(
     "value",
     (timeObj) => {
-      console.log("[get-time]OBJ", req.body.key, timeObj.val(), cnt);
+      console.log("[get-time]OBJ", req.body.key, timeObj.val());
       const time = timeObj.val();
       console.log("TIME AT", time);
       return res.json(time);
@@ -45,11 +38,11 @@ router.post("/get-time", (req, res) => {
       return res.send(errorObject);
     }
   );
-  console.log("UNEXPECT", cnt);
+  console.log("UNEXPECT");
   // return res.end();
-});
+};
 
-router.post("/update-worklist", (req, res) => {
+export const postWorkList = (req, res) => {
   console.log("[update-worklist] RECEIVE: ", req.body);
   const { value } = req.body;
   console.log("VALUE: ", typeof value, value);
@@ -66,33 +59,22 @@ router.post("/update-worklist", (req, res) => {
   }
   // return res.send("GOOD");
   // return res.end();
-});
+};
 
-router.get("/get-worklist", (req, res) => {
+export const getWorkList = (req, res) => {
   const ref = db.ref(`users/${user}/workList/workList`);
   ref.on(
     "value",
     (workListObj) => {
       console.log("[get-worklist], OBJ: ", workListObj.val());
       const workList = workListObj.val();
-      return res.json(workList);
+      if (!workList) return res.end();
+      else return res.json(workList);
     },
     (errorObject) => {
       console.log("The read failed: " + errorObject.name);
       return res.send(errorObject);
     }
   );
-});
-/*
-timeObj를 만들어 리턴하자.
-obj에 wake, bedTime 둘다 들어있게
-*/
-// router.get("/save", function (req, res) {
-//   database.ref("customer").set({ name: "junseok" }, function (error) {
-//     if (error) console.error(error);
-//     else console.log("success save !!");
-//   });
-//   return res.json({ firebase: true });
-// });
-
-// database
+  console.log("UNEXPECT WORKLIST PAGE");
+};

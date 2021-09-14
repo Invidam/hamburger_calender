@@ -56,7 +56,10 @@ export const Work = ({ workItem, workList, setWorkList, idx }) => {
       overlayClassName="Overlay"
     >
       {editWorkWindow}
-      <button className="modalWindow__btn" onClick={onDeleteWork}>
+      <button
+        className="modalWindow__btn"
+        onClick={(event) => onDeleteWork(event, idx)}
+      >
         DELETE
       </button>
       <button

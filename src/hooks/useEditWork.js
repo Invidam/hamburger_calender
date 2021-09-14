@@ -2,7 +2,7 @@ export const useEditWork = (workList, setWorkList, idx, callback) => {
   const validator = (workObj) => {
     return workObj.workName && workObj.workTime && workObj.workColor;
   };
-  let workColor = workList[idx].workColor;
+  let workColor = workList.length > idx ? workList[idx].workColor : undefined;
   const hexToRgba = (color) => {
     const r = parseInt(color.substr(1, 2), 16);
     const g = parseInt(color.substr(3, 2), 16);
@@ -27,8 +27,9 @@ export const useEditWork = (workList, setWorkList, idx, callback) => {
     if (typeof validator === "function") willUpdate = validator(workObj);
     if (willUpdate) {
       callback();
-      workList.splice(idx, 1, workObj);
-      setWorkList(workList);
+      const workListTemp = [...workList];
+      workListTemp.splice(idx, 1, workObj);
+      setWorkList(workListTemp);
     } else {
       console.log(workObj);
       console.log("NOT CHOOSED");

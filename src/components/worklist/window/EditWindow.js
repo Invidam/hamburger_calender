@@ -31,7 +31,7 @@ export const EditWorkWindow = ({
           className="modalWindow__input modalWindow__input-name"
           type="text"
           name="workName"
-          defaultValue={workItem.workName}
+          defaultValue={workItem?.workName}
         ></input>
         <span className="modalWindow__desc modalWindow__desc-time">Time:</span>
         <input
@@ -42,7 +42,7 @@ export const EditWorkWindow = ({
           max="24"
           name="workTime"
           placeholder="0"
-          defaultValue={workItem.workTime}
+          defaultValue={workItem?.workTime}
         ></input>
         h
       </div>
