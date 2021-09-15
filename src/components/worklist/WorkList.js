@@ -25,8 +25,13 @@ export const WorkList = () => {
   console.log("wrLIST: ", workList);
   const emptyWork = <EmptyWork workList={workList} setWorkList={setWorkList} />;
 
+  const offset = new Date().getTimezoneOffset() * 60000;
+
+  const today = new Date(Date.now() - offset);
   return (
     <ol>
+      {new Date().toISOString()}
+      {today.toISOString()}
       {wakeTime ? wakeTimeDisplay : addWakeTimeWindow}
       {workList &&
         workList.map((workItem, idx) => {

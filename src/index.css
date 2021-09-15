@@ -1,9 +1,9 @@
 body {
-  /* background-color: #f2ebe6; */
   font-family: "Bree Serif", serif;
-  background-color: rgb(245, 235, 220);
+  background-color: var(--main-bg-color);
   margin: 0;
   font-family: "Bree Serif", serif;
+  color: var(--main-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -13,7 +13,6 @@ code {
     monospace;
 }
 
-* {
+*:not(.caldendar) {
   font-family: "Bree Serif", serif;
-  color: rgb(80, 35, 20);
 }

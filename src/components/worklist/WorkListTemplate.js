@@ -1,10 +1,10 @@
 import "../../css/workList.css";
 import { WorkList } from "./WorkList";
-export const WorkListTemplate = () => {
+export const WorkListTemplate = ({ date }) => {
   return (
     <div>
-      <h1>Hamburger App</h1>
-      <WorkList />
+      <h1>Make Hamburger</h1>
+      <WorkList date={date} />
     </div>
   );
 };
