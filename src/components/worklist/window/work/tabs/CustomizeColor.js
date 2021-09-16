@@ -1,4 +1,4 @@
-import "../../../../css/customizeColor.css";
+import "../../../../../css/customizeColor.css";
 export const CustomizeColor = ({ onSubmitColor }) => {
   return (
     <div className="addWindow__customColor">
@@ -14,7 +14,6 @@ export const CustomizeColor = ({ onSubmitColor }) => {
           className="addWindow__customColor-pickColor-input"
           type="color"
           onChange={(event) => {
-            console.log(event.target.value);
             onSubmitColor(event.target.value);
           }}
           name="workColor"

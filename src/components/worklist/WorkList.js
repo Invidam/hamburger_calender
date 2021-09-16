@@ -1,38 +1,42 @@
 import "../../css/workList.css";
-import { useRecordTime } from "../../hooks/useRecoreTime";
-import { useUpdateWork } from "../../hooks/useUpdateWork";
+import { useUpdateTime } from "../../hooks/workList/time/useUpdateTime";
+import { useUpdateWork } from "../../hooks/workList/work/useUpdateWork";
 import { TimeRecordDisplay } from "./element/timeBtn/TimeDisplayBtn";
 import { TimeRecordBtn } from "./element/timeBtn/TimeRecordBtn";
 import { EmptyWork } from "./element/work/EmptyWork";
 import { Work } from "./element/work/Work";
-export const WorkList = () => {
-  const [wakeTime, onClickWakeTime] = useRecordTime("wakeTime");
+export const WorkList = ({ date }) => {
+  const [wakeTime, onClickWakeTime, updateWakeTime] = useUpdateTime("wakeTime");
   const addWakeTimeWindow = (
-    <TimeRecordBtn onClick={onClickWakeTime} isWake={true} />
+    <TimeRecordBtn onClick={onClickWakeTime} isWake={true} date={date} />
   );
-  console.log("ERR BEF BEDTIME??");
-  const [bedTime, onClickBedTime] = useRecordTime("bedTime");
+  const [bedTime, onClickBedTime, updateBedTime] = useUpdateTime("bedTime");
   const addBedTimeWindow = (
-    <TimeRecordBtn onClick={onClickBedTime} isWake={false} />
+    <TimeRecordBtn onClick={onClickBedTime} isWake={false} date={date} />
   );
   const wakeTimeDisplay = (
-    <TimeRecordDisplay recordTime={wakeTime} isWake={true} />
+    <TimeRecordDisplay
+      recordTime={wakeTime}
+      isWake={true}
+      updateRecordTime={updateWakeTime}
+      date={date}
+    />
   );
   const bedTimeDisplay = (
-    <TimeRecordDisplay recordTime={bedTime} isWake={false} />
+    <TimeRecordDisplay
+      recordTime={bedTime}
+      isWake={false}
+      updateRecordTime={updateBedTime}
+      date={date}
+    />
   );
   const [workList, setWorkList] = useUpdateWork([]);
-  console.log("wrLIST: ", workList);
+  date = { date };
   const emptyWork = <EmptyWork workList={workList} setWorkList={setWorkList} />;
 
-  const offset = new Date().getTimezoneOffset() * 60000;
-
-  const today = new Date(Date.now() - offset);
   return (
     <ol>
-      {new Date().toISOString()}
-      {today.toISOString()}
-      {wakeTime ? wakeTimeDisplay : addWakeTimeWindow}
+      {wakeTime && wakeTime.hour !== -1 ? wakeTimeDisplay : addWakeTimeWindow}
       {workList &&
         workList.map((workItem, idx) => {
           return (
@@ -42,11 +46,12 @@ export const WorkList = () => {
               setWorkList={setWorkList}
               key={idx}
               idx={idx}
+              date={date}
             />
           );
         })}
       {emptyWork}
-      {bedTime ? bedTimeDisplay : addBedTimeWindow}
+      {bedTime && bedTime.hour !== -1 ? bedTimeDisplay : addBedTimeWindow}
     </ol>
     // </div>
   );

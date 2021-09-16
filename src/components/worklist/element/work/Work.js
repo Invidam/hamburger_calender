@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Modal from "react-modal";
-import { useDeleteWork } from "../../../../hooks/useDeleteWork";
-import { useEditWork } from "../../../../hooks/useEditWork";
-import { EditWorkWindow } from "../../window/EditWindow";
+import { useDeleteWork } from "../../../../hooks/workList/work/useDeleteWork";
+import { useEditWork } from "../../../../hooks/workList/work/useEditWork";
+import { EditWorkWindow } from "../../window/work/EditWorkWindow";
 Modal.setAppElement("#root");
 const customStyles = {
   content: {
@@ -25,7 +25,7 @@ const customStyles = {
     backgroundColor: "rgba(0,0,0,0.4)",
   },
 };
-export const Work = ({ workItem, workList, setWorkList, idx }) => {
+export const Work = ({ workItem, workList, setWorkList, idx, date }) => {
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const openEditModal = () => setEditModalIsOpen(true);
   const closeEditModal = (event) => setEditModalIsOpen(false);

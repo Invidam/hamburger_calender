@@ -5,7 +5,6 @@ export const useFullScreen = (callback) => {
 
   const fullscreenChanged = () => {
     const isFull = document.fullscreen ? true : false;
-    console.log("isFull: ", isFull);
     setState(isFull);
   };
   useEffect(() => {

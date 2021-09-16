@@ -1,5 +1,5 @@
-import "../../../css/window.css";
-import { useTabs } from "../../../hooks/useTabs";
+import "../../../../css/window.css";
+import { useTabs } from "../../../../hooks/example/useTabs";
 import { CustomizeColor } from "./tabs/CustomizeColor";
 import { IngredientList } from "./tabs/IngredientList";
 export const AddWorkWindow = ({ workList, onSubmitColor, onSubmitWork }) => {

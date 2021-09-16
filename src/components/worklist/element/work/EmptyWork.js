@@ -1,8 +1,8 @@
 import Modal from "react-modal";
 import { useState } from "react";
 import "../../../../css/modam.css";
-import { usePushWork } from "../../../../hooks/usePushWork";
-import { AddWorkWindow } from "../../window/AddWindow";
+import { usePushWork } from "../../../../hooks/workList/work/usePushWork";
+import { AddWorkWindow } from "../../window/work/AddWorkWindow";
 Modal.setAppElement("#root");
 const customStyles = {
   content: {
@@ -25,7 +25,7 @@ const customStyles = {
     backgroundColor: "rgba(0,0,0,0.4)",
   },
 };
-export const EmptyWork = ({ workList, setWorkList }) => {
+export const EmptyWork = ({ workList, setWorkList, date }) => {
   const [addModalIsOpen, setAddModalIsOpen] = useState(false);
   const openAddModal = () => setAddModalIsOpen(true);
   const closeAddModal = () => setAddModalIsOpen(false);
@@ -33,7 +33,8 @@ export const EmptyWork = ({ workList, setWorkList }) => {
   const { onSubmitColor, onSubmitWork } = usePushWork(
     workList,
     setWorkList,
-    closeAddModal
+    closeAddModal,
+    date
   );
 
   const addWorkWindow = (

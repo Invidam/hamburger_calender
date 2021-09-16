@@ -1,4 +1,4 @@
-export const TimeRecordBtn = ({ onClick, isWake }) => {
+export const TimeRecordBtn = ({ onClick, isWake, date }) => {
   return (
     <li
       className={

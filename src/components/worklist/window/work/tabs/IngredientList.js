@@ -1,5 +1,5 @@
-import "../../../../css/ingredientList.css";
-import { useTabs } from "../../../../hooks/useTabs";
+import "../../../../../css/ingredientList.css";
+import { useTabs } from "../../../../../hooks/example/useTabs";
 const themeList = new Map();
 const cheezeTheme = {
   backgroundColor: "rgba(255, 166, 0, 1)",
@@ -11,9 +11,6 @@ const meetTheme = {
 const vegetableTheme = {
   backgroundColor: "rgba(50, 199, 4, 1)",
 };
-const add = () => {
-  console.log("1");
-};
 
 const tomatoTheme = {
   backgroundColor: "rgba(227, 26, 0, 1)",
@@ -22,13 +19,6 @@ themeList.set("tomato", tomatoTheme);
 themeList.set("cheeze", cheezeTheme);
 themeList.set("meet", meetTheme);
 themeList.set("vegetable", vegetableTheme);
-export const IngredientEx = ({ ingredienName }) => {
-  return (
-    <li onClick={add} style={themeList[ingredienName]}>
-      test li{" "}
-    </li>
-  );
-};
 
 export const IngredientList = ({ onSubmitColor }) => {
   const themeArray = [...themeList];
@@ -37,7 +27,6 @@ export const IngredientList = ({ onSubmitColor }) => {
   const onClick = (event, style, idx) => {
     isFirst = false;
     event.preventDefault();
-    console.log(event.target, style.backgroundColor);
     setCurrentIndex(idx);
     onSubmitColor(style.backgroundColor);
     // event.target.workColor.value = style.backgroundColor;

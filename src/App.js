@@ -2,22 +2,22 @@
 import axios from "axios";
 import { useState } from "react";
 import Calendar from "react-calendar";
-import "./App.css";
+import "./css/App.css";
 import { WorkListTemplate } from "./components/worklist/WorkListTemplate";
-import { useAxios } from "./hooks/useAxios";
+import { useAxios } from "./hooks/example/useAxios";
 // import "react-calendar/dist/Calendar.css";
 import "./css/calendar.css";
-
+import { changeFormatYYYYMMDD, UTCtoKTC } from "./tools/time";
 function App() {
   const [value, onChange] = useState(new Date());
+  const [test, testtest] = useState(0);
   const clickDay = (event, value) => alert("Clicked day: ", value);
-  const changeFormatYYYYMMDD = (date) => date.toISOString().slice(0, 10);
   const mark = ["2021-09-12", "2021-09-13", "2021-09-14"];
   return (
     <main>
       <header>
         <h1>Hamburger App</h1>
-        {changeFormatYYYYMMDD(value)}
+        {changeFormatYYYYMMDD(value, false)}
       </header>
       <section>
         <article>
@@ -27,11 +27,20 @@ function App() {
             value={value}
             locale={"en"}
             calendarType={"US"}
-            onClickDay={(value, event) =>
-              console.log("Clic123ked day: ", value)
-            }
+            onClickDay={(value, event) => {
+              console.log(
+                "Clic123ked day: ",
+                value,
+                changeFormatYYYYMMDD(value)
+              );
+              const timeObj = {
+                hour: parseInt(changeFormatYYYYMMDD(value).substr(5, 2), 10),
+                minute: parseInt(changeFormatYYYYMMDD(value).substr(8, 2), 10),
+              };
+              window.localStorage.setItem("wakeTime", JSON.stringify(timeObj));
+              testtest(new Date().getSeconds());
+            }}
             tileClassName={({ date, view }) => {
-              console.log(date);
               if (
                 mark.find(
                   (markedDate) => markedDate === changeFormatYYYYMMDD(date)
