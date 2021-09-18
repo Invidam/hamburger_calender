@@ -4,7 +4,7 @@ export const UTCtoKTC = (date) => {
   return korDay;
 };
 export const getToday = () => {
-  return UTCtoKTC(new Date());
+  return changeFormatYYYYMMDD(new Date(), true);
 };
 
 export const changeFormatYYYYMMDD = (date, isKOR) => {

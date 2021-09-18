@@ -5,12 +5,19 @@ import { TimeRecordDisplay } from "./element/timeBtn/TimeDisplayBtn";
 import { TimeRecordBtn } from "./element/timeBtn/TimeRecordBtn";
 import { EmptyWork } from "./element/work/EmptyWork";
 import { Work } from "./element/work/Work";
-export const WorkList = ({ date }) => {
-  const [wakeTime, onClickWakeTime, updateWakeTime] = useUpdateTime("wakeTime");
+export const WorkList = ({
+  date,
+  user,
+  wakeTimeHook,
+  bedTimeHook,
+  updateWorkHook,
+}) => {
+  const [wakeTime, onClickWakeTime, updateWakeTime] = wakeTimeHook;
+  const [bedTime, onClickBedTime, updateBedTime] = bedTimeHook;
+  const [workList, setWorkList] = updateWorkHook;
   const addWakeTimeWindow = (
     <TimeRecordBtn onClick={onClickWakeTime} isWake={true} date={date} />
   );
-  const [bedTime, onClickBedTime, updateBedTime] = useUpdateTime("bedTime");
   const addBedTimeWindow = (
     <TimeRecordBtn onClick={onClickBedTime} isWake={false} date={date} />
   );
@@ -30,8 +37,7 @@ export const WorkList = ({ date }) => {
       date={date}
     />
   );
-  const [workList, setWorkList] = useUpdateWork([]);
-  date = { date };
+
   const emptyWork = <EmptyWork workList={workList} setWorkList={setWorkList} />;
 
   return (

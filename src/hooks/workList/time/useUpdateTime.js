@@ -1,37 +1,47 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { getToday } from "../../../tools/time";
 
-export const useUpdateTime = (key) => {
+export const useUpdateTime = (key, user, date) => {
+  console.log("UPDATE TIME HOOK DATE: ", date, getToday());
+  // if (getToday() !== date) window.localStorage.removeItem(key);
   const initVal = window.localStorage.getItem(key)
     ? JSON.parse(window.localStorage.getItem(key))
     : null;
+  if (key === "wakeTime") console.log("UPDATE TIME HOOK INIT VAL", initVal);
   const [recordTime, setRecordTime] = useState(initVal);
-  if (!recordTime)
-    axios({
+  // setRecordTime(initVal);
+  useEffect(() => {
+    console.log("DATE CHANG================", date);
+    setRecordTime(initVal);
+  }, [date]);
+  if (key === "wakeTime")
+    console.log("UPDATE TIME HOOK RECRORD TIME", recordTime);
+  const axiosSync = async () => {
+    console.log("AXIOS START");
+    const data = await axios({
       headers: {
         Authorization: "",
         "Content-Type": "application/json",
       },
-      url: "/api/get-time",
-      method: "post",
-      data: { user: "TEST", key },
-    }).then((data) => {
-      if (data?.data) {
-        setRecordTime(data?.data);
-        window.localStorage.setItem(key, JSON.stringify(data?.data));
-      }
+      url: `/api/${user}/${date}/worklist/record-time/${key}`,
+      method: "get",
     });
-  const updateRecordTime = (timeObj) => {
-    if (timeObj) {
-      axios.post("/api/record-time", { user: "TEST", key, value: timeObj });
-      window.localStorage.setItem(key, JSON.stringify(timeObj));
-      setRecordTime(timeObj);
-    } else {
-      timeObj = { hour: -1, minute: -1 };
-      axios.post("/api/record-time", { user: "TEST", key, value: timeObj });
-      window.localStorage.setItem(key, JSON.stringify(timeObj));
-      setRecordTime(timeObj);
+    if (data?.data && data?.data.hour !== -1) {
+      setRecordTime(data?.data);
+      window.localStorage.setItem(key, JSON.stringify(data?.data));
     }
+  };
+  if (!recordTime || recordTime.hour === -1) axiosSync();
+
+  const updateRecordTime = (timeObj) => {
+    if (!timeObj) timeObj = { hour: -1, minute: -1 };
+
+    axios.post(`/api/${user}/${date}/worklist/record-time/${key}`, {
+      value: timeObj,
+    });
+    window.localStorage.setItem(key, JSON.stringify(timeObj));
+    setRecordTime(timeObj);
   };
   const onClick = (event) => {
     event.preventDefault();
