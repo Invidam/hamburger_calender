@@ -16,3 +16,7 @@ code {
 *:not(.caldendar) {
   font-family: "Bree Serif", serif;
 }
+a {
+  color: inherit;
+  text-decoration: none;
+}

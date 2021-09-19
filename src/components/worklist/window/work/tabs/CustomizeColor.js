@@ -1,5 +1,5 @@
 import "../../../../../css/customizeColor.css";
-export const CustomizeColor = ({ onSubmitColor }) => {
+export const CustomizeColor = ({ onChangeWorkColor }) => {
   return (
     <div className="addWindow__customColor">
       <span className="addWindow__customColor-text">
@@ -13,8 +13,8 @@ export const CustomizeColor = ({ onSubmitColor }) => {
         <input
           className="addWindow__customColor-pickColor-input"
           type="color"
-          onChange={(event) => {
-            onSubmitColor(event.target.value);
+          onChange={({ target: { value } }) => {
+            onChangeWorkColor(value);
           }}
           name="workColor"
         ></input>

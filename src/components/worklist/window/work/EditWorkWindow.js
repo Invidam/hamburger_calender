@@ -1,29 +1,22 @@
 import "../../../../css/window.css";
 import { useTabs } from "../../../../hooks/example/useTabs";
+import { useEditWork } from "../../../../hooks/workList/work/useEditWork";
 import { CustomizeColor } from "./tabs/CustomizeColor";
 import { IngredientList } from "./tabs/IngredientList";
-export const EditWorkWindow = ({
-  workList,
-  idx,
-  onSubmitColor,
-  onEditWork,
-}) => {
-  const Recommended = <IngredientList onSubmitColor={onSubmitColor} />;
+export const EditWorkWindow = ({ workList, setWorkList, idx, callback }) => {
+  const { onChangeWorkColor, onChangeWorkName, onChangeWorkTime, onEditWork } =
+    useEditWork(workList, setWorkList, idx, callback);
+  const Recommended = <IngredientList onChangeWorkColor={onChangeWorkColor} />;
   const Favorite = <h1>Favorite</h1>;
-  const Customize = <CustomizeColor onSubmitColor={onSubmitColor} />;
+  const Customize = <CustomizeColor onChangeWorkColor={onChangeWorkColor} />;
   const tabNames = ["Recommended", "Favorite", "Customize"];
   const Tabs = [Recommended, Favorite, Customize];
   const [currentItem, currentIdx, changeItem] = useTabs(0, Tabs);
   const workItem = workList[idx];
   return (
-    <form
-      className="modalWindow"
-      autoComplete="off"
-      onSubmit={(event) => onEditWork(event, idx)}
-    >
-      {/* {WorkList.workList} */}
+    <div className="modalWindow">
       <div className="modalWindow__column">
-        <span className="addWinodw__title">Input Work</span>{" "}
+        <span className="addWinodw__title">Input Work</span>
       </div>
       <div className="modalWindow__column modalWindow__inputSpace">
         <span className="modalWindow__desc modalWindow__desc-name">Name:</span>
@@ -31,7 +24,9 @@ export const EditWorkWindow = ({
           className="modalWindow__input modalWindow__input-name"
           type="text"
           name="workName"
+          autoComplete="off"
           defaultValue={workItem?.workName}
+          onChange={({ target: { value } }) => onChangeWorkName(value)}
         ></input>
         <span className="modalWindow__desc modalWindow__desc-time">Time:</span>
         <input
@@ -43,6 +38,7 @@ export const EditWorkWindow = ({
           name="workTime"
           placeholder="0"
           defaultValue={workItem?.workTime}
+          onChange={({ target: { value } }) => onChangeWorkTime(value)}
         ></input>
         h
       </div>
@@ -70,11 +66,12 @@ export const EditWorkWindow = ({
         })}
       </div>
       <div className="modalWindow__tab-content">{currentItem}</div>
-      <input
+      <button
         className="modalWindow__submit modalWindow__btn"
-        type="submit"
-        value="SAVE"
-      ></input>
-    </form>
+        onClick={(event) => onEditWork(event, idx)}
+      >
+        SUBMIT
+      </button>
+    </div>
   );
 };

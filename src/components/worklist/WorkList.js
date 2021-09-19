@@ -5,28 +5,21 @@ import { TimeRecordDisplay } from "./element/timeBtn/TimeDisplayBtn";
 import { TimeRecordBtn } from "./element/timeBtn/TimeRecordBtn";
 import { EmptyWork } from "./element/work/EmptyWork";
 import { Work } from "./element/work/Work";
-export const WorkList = ({
-  date,
-  user,
-  wakeTimeHook,
-  bedTimeHook,
-  updateWorkHook,
-}) => {
+export const WorkList = ({ wakeTimeHook, bedTimeHook, updateWorkHook }) => {
   const [wakeTime, onClickWakeTime, updateWakeTime] = wakeTimeHook;
   const [bedTime, onClickBedTime, updateBedTime] = bedTimeHook;
   const [workList, setWorkList] = updateWorkHook;
   const addWakeTimeWindow = (
-    <TimeRecordBtn onClick={onClickWakeTime} isWake={true} date={date} />
+    <TimeRecordBtn onClick={onClickWakeTime} isWake={true} />
   );
   const addBedTimeWindow = (
-    <TimeRecordBtn onClick={onClickBedTime} isWake={false} date={date} />
+    <TimeRecordBtn onClick={onClickBedTime} isWake={false} />
   );
   const wakeTimeDisplay = (
     <TimeRecordDisplay
       recordTime={wakeTime}
       isWake={true}
       updateRecordTime={updateWakeTime}
-      date={date}
     />
   );
   const bedTimeDisplay = (
@@ -34,7 +27,6 @@ export const WorkList = ({
       recordTime={bedTime}
       isWake={false}
       updateRecordTime={updateBedTime}
-      date={date}
     />
   );
 
@@ -45,14 +37,13 @@ export const WorkList = ({
       {wakeTime && wakeTime.hour !== -1 ? wakeTimeDisplay : addWakeTimeWindow}
       {workList &&
         workList.map((workItem, idx) => {
-          return (
+          return workItem.workTime === -1 ? undefined : (
             <Work
               workItem={workItem}
               workList={workList}
               setWorkList={setWorkList}
               key={idx}
               idx={idx}
-              date={date}
             />
           );
         })}

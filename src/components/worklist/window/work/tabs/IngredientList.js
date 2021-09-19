@@ -20,7 +20,7 @@ themeList.set("cheeze", cheezeTheme);
 themeList.set("meet", meetTheme);
 themeList.set("vegetable", vegetableTheme);
 
-export const IngredientList = ({ onSubmitColor }) => {
+export const IngredientList = ({ onChangeWorkColor }) => {
   const themeArray = [...themeList];
   let isFirst = true;
   const [currentItem, currentIdx, setCurrentIndex] = useTabs(0, themeArray);
@@ -28,7 +28,7 @@ export const IngredientList = ({ onSubmitColor }) => {
     isFirst = false;
     event.preventDefault();
     setCurrentIndex(idx);
-    onSubmitColor(style.backgroundColor);
+    onChangeWorkColor(style.backgroundColor);
     // event.target.workColor.value = style.backgroundColor;
   };
   return (

@@ -25,25 +25,19 @@ const customStyles = {
     backgroundColor: "rgba(0,0,0,0.4)",
   },
 };
-export const Work = ({ workItem, workList, setWorkList, idx, date }) => {
+export const Work = ({ workItem, workList, setWorkList, idx }) => {
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const openEditModal = () => setEditModalIsOpen(true);
   const closeEditModal = (event) => setEditModalIsOpen(false);
 
-  const { onSubmitColor, onEditWork } = useEditWork(
-    workList,
-    setWorkList,
-    idx,
-    closeEditModal
-  );
   const { onDeleteWork } = useDeleteWork(workList, setWorkList, closeEditModal);
 
   const editWorkWindow = (
     <EditWorkWindow
       workList={workList}
+      setWorkList={setWorkList}
       idx={idx}
-      onSubmitColor={onSubmitColor}
-      onEditWork={onEditWork}
+      callback={closeEditModal}
     />
   );
 

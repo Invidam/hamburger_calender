@@ -1,21 +1,28 @@
+import { useState } from "react";
 import "../../../../css/window.css";
 import { useTabs } from "../../../../hooks/example/useTabs";
+import { usePushWork } from "../../../../hooks/workList/work/usePushWork";
 import { CustomizeColor } from "./tabs/CustomizeColor";
 import { IngredientList } from "./tabs/IngredientList";
-export const AddWorkWindow = ({ workList, onSubmitColor, onSubmitWork }) => {
-  const Recommended = <IngredientList onSubmitColor={onSubmitColor} />;
+export const AddWorkWindow = ({ workList, setWorkList, callback }) => {
+  const {
+    onChangeWorkColor,
+    onChangeWorkName,
+    onChangeWorkTime,
+    onSubmitWork,
+  } = usePushWork(workList, setWorkList, callback);
+  const Recommended = <IngredientList onChangeWorkColor={onChangeWorkColor} />;
   const Favorite = <h1>Favorite</h1>;
-  const Customize = <CustomizeColor onSubmitColor={onSubmitColor} />;
+  const Customize = <CustomizeColor onChangeWorkColor={onChangeWorkColor} />;
   const tabNames = ["Recommended", "Favorite", "Customize"];
   const Tabs = [Recommended, Favorite, Customize];
   const [currentItem, currentIdx, changeItem] = useTabs(0, Tabs);
   // if (workList.length)
   //   window.localStorage.setItem("workList", JSON.stringify(workList));
   return (
-    <form className="modalWindow" autoComplete="off" onSubmit={onSubmitWork}>
-      {/* {WorkList.workList} */}
+    <div className="modalWindow">
       <div className="modalWindow__column">
-        <span className="addWinodw__title">Input Work</span>{" "}
+        <span className="addWinodw__title">Input Work</span>
       </div>
       <div className="modalWindow__column modalWindow__inputSpace">
         <span className="modalWindow__desc modalWindow__desc-name">Name:</span>
@@ -23,6 +30,8 @@ export const AddWorkWindow = ({ workList, onSubmitColor, onSubmitWork }) => {
           className="modalWindow__input modalWindow__input-name"
           type="text"
           name="workName"
+          autoComplete="off"
+          onChange={({ target: { value } }) => onChangeWorkName(value)}
         ></input>
         <span className="modalWindow__desc modalWindow__desc-time">Time:</span>
         <input
@@ -33,6 +42,7 @@ export const AddWorkWindow = ({ workList, onSubmitColor, onSubmitWork }) => {
           max="24"
           name="workTime"
           placeholder="0"
+          onChange={({ target: { value } }) => onChangeWorkTime(value)}
         ></input>
         h
       </div>
@@ -60,12 +70,13 @@ export const AddWorkWindow = ({ workList, onSubmitColor, onSubmitWork }) => {
         })}
       </div>
       <div className="modalWindow__tab-content">{currentItem}</div>
-      <input
+      <button
         className="modalWindow__submit modalWindow__btn"
-        type="submit"
-        value="SUBMIT"
-      ></input>
-    </form>
+        onClick={onSubmitWork}
+      >
+        SUBMIT
+      </button>
+    </div>
   );
 };
 

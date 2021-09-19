@@ -25,23 +25,17 @@ const customStyles = {
     backgroundColor: "rgba(0,0,0,0.4)",
   },
 };
-export const EmptyWork = ({ workList, setWorkList, date }) => {
+export const EmptyWork = ({ workList, setWorkList }) => {
+  console.log("workList: ", workList);
   const [addModalIsOpen, setAddModalIsOpen] = useState(false);
   const openAddModal = () => setAddModalIsOpen(true);
   const closeAddModal = () => setAddModalIsOpen(false);
 
-  const { onSubmitColor, onSubmitWork } = usePushWork(
-    workList,
-    setWorkList,
-    closeAddModal,
-    date
-  );
-
   const addWorkWindow = (
     <AddWorkWindow
       workList={workList}
-      onSubmitColor={onSubmitColor}
-      onSubmitWork={onSubmitWork}
+      setWorkList={setWorkList}
+      callback={closeAddModal}
     />
   );
   const addModal = (

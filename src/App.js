@@ -7,6 +7,14 @@ import { useUpdateTime } from "./hooks/workList/time/useUpdateTime";
 import { useUpdateWork } from "./hooks/workList/work/useUpdateWork";
 import { useEffect, useState } from "react";
 import { changeFormatYYYYMMDD } from "./tools/time";
+import axios from "axios";
+import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { NotFoundPage } from "./components/pages/NotFoundPage";
+import { LoginPage } from "./components/pages/LoginPage";
+import { HomePage } from "./components/pages/HomePage";
+import { Header } from "./components/Header";
+import { useLogin } from "./hooks/user/useLogin";
+
 const USER = "TEST";
 function App() {
   // const [value, onChange] = useState(new Date());
@@ -15,37 +23,25 @@ function App() {
   // const mark = ["2021-09-12", "2021-09-13", "2021-09-14"];
   const updateDateHook = useState(new Date());
   const date = changeFormatYYYYMMDD(updateDateHook[0]);
-  console.log("DATE: ", date);
-  const wakeTimeHook = useUpdateTime("wakeTime", USER, date);
-  const bedTimeHook = useUpdateTime("bedTime", USER, date);
-  const updateWorkHook = useUpdateWork([], USER, date);
+  //{ user, setUser, authenticated, login, logout }
+  const loginHook = useLogin();
+  const user = loginHook[0];
+  console.log("USER: ", user);
   return (
-    <main>
-      <header>
-        <h1>Hamburger App</h1>
-      </header>
-      <section>
-        <article>
-          <CalendarTemplate
-            user={"TEST"}
-            updateDateHook={updateDateHook}
-            wakeTimeHook={wakeTimeHook}
-            bedTimeHook={bedTimeHook}
-            updateWorkHook={updateWorkHook}
+    <Router>
+      <Header date={date} loginHook={loginHook} />
+      <main>
+        <Switch>
+          <Route exact path="/" component={HomePage} user={user} />
+          <Route
+            path="/login"
+            render={(props) => <LoginPage loginHook={loginHook} />}
           />
-        </article>
-        <article>
-          <WorkListTemplate
-            date={updateDateHook[0]}
-            user={"TEST"}
-            wakeTimeHook={wakeTimeHook}
-            bedTimeHook={bedTimeHook}
-            updateWorkHook={updateWorkHook}
-          />
-        </article>
-      </section>
+          <Route component={NotFoundPage} />
+        </Switch>
+      </main>
       <footer>footer</footer>
-    </main>
+    </Router>
   );
 }
 

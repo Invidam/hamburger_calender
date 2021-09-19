@@ -28,12 +28,7 @@ const customStyles = {
     backgroundColor: "rgba(0,0,0,0.4)",
   },
 };
-export const TimeRecordDisplay = ({
-  recordTime,
-  isWake,
-  updateRecordTime,
-  date,
-}) => {
+export const TimeRecordDisplay = ({ recordTime, isWake, updateRecordTime }) => {
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const openEditModal = () => setEditModalIsOpen(true);
 

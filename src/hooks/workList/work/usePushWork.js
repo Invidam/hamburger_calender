@@ -1,34 +1,40 @@
 import { useState } from "react";
 
-export const usePushWork = (workList, setWorkList, callback) => {
-  const validator = (workObj) => {
-    return workObj.workName && workObj.workTime && workObj.workColor;
-  };
-  let workColor;
+export const usePushWork = (workList, setWorkList, date, callback) => {
+  const [workColor, setColor] = useState();
+  const [workName, setWorkName] = useState();
+  const [workTime, setWorkTime] = useState();
   const hexToRgba = (color) => {
     const r = parseInt(color.substr(1, 2), 16);
     const g = parseInt(color.substr(3, 2), 16);
     const b = parseInt(color.substr(5, 2), 16);
     return "rgba(" + r + "," + g + "," + b + ", 1)";
   };
-  const onSubmitColor = (color) => {
+  const onChangeWorkColor = (color) => {
     if (!color) {
     } else if (color.substr(0, 1) === "#") {
       color = hexToRgba(color);
     }
-    workColor = color;
+    setColor(color);
+  };
+  const onChangeWorkName = (name) => setWorkName(name);
+  const onChangeWorkTime = (time) => setWorkTime(parseInt(time));
+  const validator = (workObj) => {
+    return workObj.workName && workObj.workTime && workObj.workColor;
   };
   const onSubmitWork = (event) => {
     event.preventDefault();
-    const workName = event.target.workName.value;
-    const workTime = parseInt(event.target.workTime.value);
+    // const workName = event.target.workName.value;
+    // const workTime = parseInt(event.target.workTime.value);
     const workObj = { workName, workTime, workColor };
     let willUpdate = true;
     if (typeof validator === "function") willUpdate = validator(workObj);
     if (willUpdate) {
       callback();
       // workList.push(workObj);
-      setWorkList([...workList, workObj]);
+      console.log(workObj);
+      if (workList[0]?.workTime === -1) setWorkList([workObj]);
+      else setWorkList([...workList, workObj]);
     } else {
       let errText = `[ERROR] ${workName ? "" : "WorkName"}${
         !workTime + !workColor > 0 && !workName ? ", " : ""
@@ -38,5 +44,10 @@ export const usePushWork = (workList, setWorkList, callback) => {
       alert(errText);
     }
   };
-  return { workList, onSubmitColor, onSubmitWork };
+  return {
+    onChangeWorkColor,
+    onChangeWorkName,
+    onChangeWorkTime,
+    onSubmitWork,
+  };
 };

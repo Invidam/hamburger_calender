@@ -1,33 +1,47 @@
+import { useState } from "react";
+
 export const useEditWork = (workList, setWorkList, idx, callback) => {
-  const validator = (workObj) => {
-    return workObj.workName && workObj.workTime && workObj.workColor;
-  };
-  let workColor = workList.length > idx ? workList[idx].workColor : undefined;
+  const [workColor, setColor] = useState(
+    workList.length > idx ? workList[idx].workColor : undefined
+  );
+  const [workName, setWorkName] = useState(
+    workList.length > idx ? workList[idx].workName : undefined
+  );
+  const [workTime, setWorkTime] = useState(
+    workList.length > idx ? workList[idx].workTime : undefined
+  );
+
   const hexToRgba = (color) => {
     const r = parseInt(color.substr(1, 2), 16);
     const g = parseInt(color.substr(3, 2), 16);
     const b = parseInt(color.substr(5, 2), 16);
     return "rgba(" + r + "," + g + "," + b + ", 1)";
   };
-  const onSubmitColor = (color) => {
+  const onChangeWorkColor = (color) => {
     if (!color) {
       console.log("NO", color);
     } else if (color.substr(0, 1) === "#") {
       color = hexToRgba(color);
     }
-    workColor = color;
+    setColor(color);
+  };
+  const onChangeWorkName = (name) => setWorkName(name);
+  const onChangeWorkTime = (time) => setWorkTime(parseInt(time));
+  const validator = (workObj) => {
+    return workObj.workName && workObj.workTime && workObj.workColor;
   };
   const onEditWork = (event, idx) => {
     event.preventDefault();
-    const workName = event.target.workName.value;
-    const workTime = parseInt(event.target.workTime.value);
     const workObj = { workName, workTime, workColor };
     let willUpdate = true;
     if (typeof validator === "function") willUpdate = validator(workObj);
     if (willUpdate) {
       callback();
+      console.log("[EDIT] idx: ", idx, "obj: ", workObj);
+      console.log("[EDIT]BEF WORKLIST", workList);
       const workListTemp = [...workList];
       workListTemp.splice(idx, 1, workObj);
+      console.log("[EDIT]AFT WORKLIST", workListTemp);
       setWorkList(workListTemp);
     } else {
       let errText = `[ERROR] ${workName ? "" : "WorkName"}${
@@ -38,5 +52,5 @@ export const useEditWork = (workList, setWorkList, idx, callback) => {
       alert(errText);
     }
   };
-  return { onSubmitColor, onEditWork };
+  return { onChangeWorkColor, onChangeWorkName, onChangeWorkTime, onEditWork };
 };

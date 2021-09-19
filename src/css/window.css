@@ -74,18 +74,20 @@ select:focus {
 }
 .modalWindow__btn {
   border: none;
+  border-radius: 5px;
   margin-top: 10px;
   width: 100%;
-  color: rgba(245, 235, 220, 1);
-  background-color: rgba(214, 35, 0, 1);
+  font-weight: bold;
+  color: var(--main-color);
+  background-color: var(--main-sub-color);
 }
 
 .modalWindow__btn:hover {
-  background-color: rgba(167, 27, 0, 1);
+  background-color: var(--main-sub-color__hover);
 }
 
 .modalWindow__btn:active {
-  background-color: rgba(80, 35, 20, 1);
+  background-color: var(--main-sub-color__active);
 }
 
 .modalWindow__input-minute,
