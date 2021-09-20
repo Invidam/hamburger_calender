@@ -1,11 +1,8 @@
 import "../../../../css/window.css";
-export const EditTimeWindow = ({ recordTime, isWake, onEditTime }) => {
+export const EditTimeWindow = ({ recordTime, isWake, editTimeHook }) => {
+  const { onChangeHour, onChangeMinute, onEditRecordTime } = editTimeHook;
   return (
-    <form
-      className="modalWindow"
-      autoComplete="off"
-      onSubmit={(event) => onEditTime(event, isWake)}
-    >
+    <div className="modalWindow">
       <div className="modalWindow__column">
         <span className="addWinodw__title">{`Input ${
           isWake ? "Wake" : "Bed "
@@ -21,6 +18,7 @@ export const EditTimeWindow = ({ recordTime, isWake, onEditTime }) => {
           name="hour"
           placeholder="0"
           defaultValue={recordTime?.hour}
+          onChange={({ target: { value } }) => onChangeHour(value)}
         ></input>
         h
         <input
@@ -32,14 +30,16 @@ export const EditTimeWindow = ({ recordTime, isWake, onEditTime }) => {
           name="minute"
           placeholder="0"
           defaultValue={recordTime?.minute}
+          onChange={({ target: { value } }) => onChangeMinute(value)}
         ></input>
         m
       </div>
-      <input
+      <button
         className="modalWindow__submit modalWindow__btn"
-        type="submit"
-        value="SAVE"
-      ></input>
-    </form>
+        onClick={onEditRecordTime}
+      >
+        SAVE
+      </button>
+    </div>
   );
 };

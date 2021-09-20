@@ -33,7 +33,7 @@ export const TimeRecordDisplay = ({ recordTime, isWake, updateRecordTime }) => {
   const openEditModal = () => setEditModalIsOpen(true);
 
   const closeEditModal = (event) => setEditModalIsOpen(false);
-  const { onEditRecordTime } = useEditTime(
+  const editTimeHook = useEditTime(
     recordTime,
     updateRecordTime,
     isWake,
@@ -48,7 +48,7 @@ export const TimeRecordDisplay = ({ recordTime, isWake, updateRecordTime }) => {
     <EditTimeWindow
       recordTime={recordTime}
       isWake={isWake}
-      onEditTime={onEditRecordTime}
+      editTimeHook={editTimeHook}
     />
   );
   const editModal = (

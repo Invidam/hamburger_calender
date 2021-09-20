@@ -1,11 +1,17 @@
 import { useState } from "react";
 import "../../css/pages/loginPage.css";
 import { useAttemptLogin } from "../../hooks/user/useAttemptLogin";
-export const LoginPage = ({ loginHook }) => {
-  const [user, setUser, authenticated, login, logout] = loginHook;
-  console.log("HOOK", loginHook);
-  const { email, password, setEmail, setPassword, handleSubmit } =
-    useAttemptLogin(login);
+export const LoginPage = ({ customLoginHook }) => {
+  const [user, setUser, authenticated, login, logout] = customLoginHook;
+
+  const {
+    email,
+    password,
+    setEmail,
+    setPassword,
+    handleSubmitNotSocial,
+    handleAttemptGithubLogin,
+  } = useAttemptLogin(login);
   return (
     <section>
       <input
@@ -20,7 +26,8 @@ export const LoginPage = ({ loginHook }) => {
         placeholder="Input Password"
         onChange={({ target: { value } }) => setPassword(value)}
       />
-      <button onClick={handleSubmit}>Login</button>
+      <button onClick={handleSubmitNotSocial}>Login</button>
+      <a href={handleAttemptGithubLogin()}>GITHUB LOGIN</a>
     </section>
   );
 };

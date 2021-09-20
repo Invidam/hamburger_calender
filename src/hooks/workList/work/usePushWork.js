@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const usePushWork = (workList, setWorkList, date, callback) => {
+export const usePushWork = (workList, setWorkList, callback) => {
   const [workColor, setColor] = useState();
   const [workName, setWorkName] = useState();
   const [workTime, setWorkTime] = useState();
@@ -31,8 +31,6 @@ export const usePushWork = (workList, setWorkList, date, callback) => {
     if (typeof validator === "function") willUpdate = validator(workObj);
     if (willUpdate) {
       callback();
-      // workList.push(workObj);
-      console.log(workObj);
       if (workList[0]?.workTime === -1) setWorkList([workObj]);
       else setWorkList([...workList, workObj]);
     } else {

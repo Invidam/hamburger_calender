@@ -78,7 +78,7 @@ select:focus {
   margin-top: 10px;
   width: 100%;
   font-weight: bold;
-  color: var(--main-color);
+  color: var(--main-bg-color);
   background-color: var(--main-sub-color);
 }
 

@@ -1,11 +1,11 @@
 .workList__wakeTime {
-  border-top-left-radius: 35%;
-  border-top-right-radius: 35%;
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
 }
 
 .workList__bedTime {
-  border-bottom-left-radius: 35%;
-  border-bottom-right-radius: 35%;
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
 }
 
 .empty-element {
@@ -29,6 +29,7 @@
 
 .workList__work {
   opacity: 0.9;
+  border-radius: 5px;
 }
 
 .workList__work:hover {

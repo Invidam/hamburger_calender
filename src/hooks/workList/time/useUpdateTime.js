@@ -20,20 +20,15 @@ export const useUpdateTime = (key, user, date) => {
   const [recordTime, setRecordTime] = useState();
   // setRecordTime(initVal);
   useEffect(() => {
-    console.log("DATE CHANGE");
-
-    console.log("RECORDTIME BEF COND", date, key, recordTime, !recordTime);
     getAndUpdateRecordTime();
   }, [date]);
 
   const getAndUpdateRecordTime = async () => {
-    console.log("AXIOS START");
     const data = await axios.get(
       `/api/${user}/${date}/worklist/record-time/${key}`
     );
     const resTimeObj = checkTimeObj(data?.data);
     // window.localStorage.setItem(key, JSON.stringify(data?.data));
-    console.log("SET AFT: ", resTimeObj);
     setRecordTime(resTimeObj);
   };
 

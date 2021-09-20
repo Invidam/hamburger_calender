@@ -1,11 +1,15 @@
+import { useState } from "react";
+
 export const useEditTime = (recordTime, updateRecordTime, isWake, callback) => {
+  const [hour, setHour] = useState(recordTime.hour);
+  const [minute, setMinute] = useState(recordTime.minute);
   const validator = (timeObj) => {
     return timeObj.hour && timeObj.minute;
   };
-  const onEditRecordTime = (event, idx) => {
+  const onChangeHour = (hour) => setHour(hour);
+  const onChangeMinute = (minute) => setMinute(parseInt(minute));
+  const onEditRecordTime = (event) => {
     event.preventDefault();
-    const hour = parseInt(event.target.hour.value);
-    const minute = parseInt(event.target.minute.value);
     const timeObj = { hour, minute };
     let willUpdate = true;
     if (typeof validator === "function") willUpdate = validator(timeObj);
@@ -17,5 +21,5 @@ export const useEditTime = (recordTime, updateRecordTime, isWake, callback) => {
       alert(errText);
     }
   };
-  return { onEditRecordTime };
+  return { onChangeHour, onChangeMinute, onEditRecordTime };
 };

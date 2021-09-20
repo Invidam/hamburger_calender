@@ -17,7 +17,6 @@ export const CalendarTemplate = () => {
         locale={"en"}
         calendarType={"US"}
         onClickDay={(value, event) => {
-          console.log("Clic123ked day: ", value, changeFormatYYYYMMDD(value));
           const timeObj = {
             hour: parseInt(changeFormatYYYYMMDD(value).substr(5, 2), 10),
             minute: parseInt(changeFormatYYYYMMDD(value).substr(8, 2), 10),

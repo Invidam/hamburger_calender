@@ -25,15 +25,15 @@ export const CalendarTemplate = ({
         locale={"en"}
         calendarType={"US"}
         onClickDay={(date, event) => {
-          //날짜와 user에 따라 DB를 확인하고, workList, recrodTime을 가져와 갱신한다. [추후 다른 데이터들도 동일하게 처리한다.]
-          console.log("Clic123ked day: ", date, changeFormatYYYYMMDD(date));
-          const timeObj = {
-            hour: parseInt(changeFormatYYYYMMDD(date).substr(5, 2), 10),
-            minute: parseInt(changeFormatYYYYMMDD(date).substr(8, 2), 10),
+          const localDateObj = {
+            today: getToday(),
+            clickedDate: UTCtoKTC(date),
           };
-          window.localStorage.removeItem("wakeTime");
-          window.localStorage.removeItem("bedTime");
-          window.localStorage.removeItem("workList");
+          localStorage.setItem("date", JSON.stringify(localDateObj));
+          //날짜와 user에 따라 DB를 확인하고, workList, recrodTime을 가져와 갱신한다. [추후 다른 데이터들도 동일하게 처리한다.]
+          // window.localStorage.removeItem("wakeTime");
+          // window.localStorage.removeItem("bedTime");
+          // window.localStorage.removeItem("workList");
           // updateWakeTime();
           // updateBedTime();
           // setWorkList([]);

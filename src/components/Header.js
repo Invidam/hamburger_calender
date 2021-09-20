@@ -1,13 +1,16 @@
 import { Link } from "react-router-dom";
 import "../css/header/header.css";
-export const Header = ({ date, loginHook }) => {
-  const [user, setUser, authenticated, login, logout] = loginHook;
-  // const user = loginHook?.user;
-  console.log("HOOK", loginHook);
+export const Header = ({ date, customLoginHook }) => {
+  const [user, setUser, authenticated, login, logout] = customLoginHook;
+
   const loginColumn = (
     <div className="header__column header-link">
-      <Link className="header-link__elem" to="/login" loginHook={loginHook}>
-        Login
+      <Link
+        className="header-link__elem"
+        to="/login"
+        // customLoginHook={customLoginHook}
+      >
+        Log In
       </Link>
       <Link className="header-link__elem" to="/register">
         Register
@@ -17,17 +20,15 @@ export const Header = ({ date, loginHook }) => {
   const logoutColumn = (
     <div className="header__column header-link">
       <button className="header-link__elem" onClick={logout}>
-        {" "}
-        Logout
+        Log Out
       </button>
       <Link className="header-link__elem" to="/register">
-        {" "}
-        Register
+        Profile
       </Link>
     </div>
   );
   return (
-    <header clasName="header">
+    <header className="header">
       {/* <a href="https://www.freepik.com/vectors/food">
         Food vector created by rawpixel.com - www.freepik.com */}
       {/* </a> */}
@@ -35,6 +36,7 @@ export const Header = ({ date, loginHook }) => {
         <div className="header__column header-icon">
           <Link className="" to="/">
             <img
+              alt="app-icon"
               className="header-icon__icon"
               src="https://user-images.githubusercontent.com/71889359/133923788-1e176d98-acda-47ab-9eba-3815e3903ecf.png"
             ></img>

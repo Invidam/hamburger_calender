@@ -37,11 +37,8 @@ export const useEditWork = (workList, setWorkList, idx, callback) => {
     if (typeof validator === "function") willUpdate = validator(workObj);
     if (willUpdate) {
       callback();
-      console.log("[EDIT] idx: ", idx, "obj: ", workObj);
-      console.log("[EDIT]BEF WORKLIST", workList);
       const workListTemp = [...workList];
       workListTemp.splice(idx, 1, workObj);
-      console.log("[EDIT]AFT WORKLIST", workListTemp);
       setWorkList(workListTemp);
     } else {
       let errText = `[ERROR] ${workName ? "" : "WorkName"}${

@@ -31,16 +31,20 @@
   justify-content: flex-end;
 }
 .header-link__elem {
+  font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80px;
-  height: 30px;
-  margin-right: 25px;
+  width: 60px;
+  height: 25px;
+  margin-right: 15px;
   /* border: 5px solid; */
   border-radius: 30px;
   color: var(--main-bg-color);
   background-color: var(--main-sub-color);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
 }
 .header-link__elem:hover {
   background-color: var(--main-sub-color__hover);

@@ -26,7 +26,6 @@ const customStyles = {
   },
 };
 export const EmptyWork = ({ workList, setWorkList }) => {
-  console.log("workList: ", workList);
   const [addModalIsOpen, setAddModalIsOpen] = useState(false);
   const openAddModal = () => setAddModalIsOpen(true);
   const closeAddModal = () => setAddModalIsOpen(false);
@@ -58,7 +57,7 @@ export const EmptyWork = ({ workList, setWorkList }) => {
   return (
     <div>
       <li
-        className={"empty-element workList__element-empty"}
+        className={"workList__work empty-element workList__element-empty"}
         onClick={openAddModal}
       >
         Add your work
