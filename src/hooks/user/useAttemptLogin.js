@@ -9,12 +9,7 @@ export const useAttemptLogin = (login) => {
     try {
       event.preventDefault();
       console.log("INFO< ", email, password);
-      // login({ email, password });
-
-      axios.post(`/auth/login/notSocial`, {
-        email,
-        password,
-      });
+      login({ email, password });
     } catch (error) {
       alert(error);
       setEmail("");

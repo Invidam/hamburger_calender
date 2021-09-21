@@ -3,20 +3,20 @@ import qs from "qs";
 import { useEffect } from "react";
 export const GithubLoginPage = (props) => {
   // const {code} =
-  console.log("PROPS: ", props);
   const { history, location, customLoginHook } = props;
-  console.log("locat", location?.search);
+  const setUser = customLoginHook[1];
   useEffect(() => {
-    const { setUser } = customLoginHook;
     const getToken = async () => {
       const { code } = qs.parse(location?.search, {
         ignoreQueryPrefix: true,
       });
       try {
-        const { data } = await axios.post("/auth/github-login", {
+        const response = await axios.post("/auth/login/github", {
           code,
         });
-        localStorage.setItem("data", data);
+        const { access_token, name } = response.data;
+        localStorage.setItem("access_token", access_token);
+        setUser(name);
         history.push("/");
       } catch (error) {
         alert(error);

@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { getToday } from "../../../tools/time";
-let cnt = 0;
 const getEmptyTimeObj = () => {
   return { hour: -1, minute: -1 };
 };
@@ -19,9 +18,6 @@ export const useUpdateTime = (key, user, date) => {
       : null;
   const [recordTime, setRecordTime] = useState();
   // setRecordTime(initVal);
-  useEffect(() => {
-    getAndUpdateRecordTime();
-  }, [date]);
 
   const getAndUpdateRecordTime = async () => {
     const data = await axios.get(
@@ -31,6 +27,9 @@ export const useUpdateTime = (key, user, date) => {
     // window.localStorage.setItem(key, JSON.stringify(data?.data));
     setRecordTime(resTimeObj);
   };
+  useEffect(() => {
+    getAndUpdateRecordTime();
+  }, [date]);
 
   const updateRecordTime = (timeObj) => {
     timeObj = checkTimeObj(timeObj);

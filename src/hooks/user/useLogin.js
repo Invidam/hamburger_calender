@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 const users = [
@@ -17,8 +18,18 @@ export const useLogin = () => {
   const [user, setUser] = useState(null);
   const authenticated = user != null;
 
-  const login = ({ email, password }) => setUser(signIn({ email, password }));
-  const logout = () => setUser(null);
+  const login = ({ email, password }) => {
+    // setUser(signIn({ email, password }));
+
+    axios.post(`/auth/login/notSocial`, {
+      email,
+      password,
+    });
+  };
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("access_token");
+  };
 
   return [user, setUser, authenticated, login, logout];
 };
