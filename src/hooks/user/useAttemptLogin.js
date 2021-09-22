@@ -16,33 +16,19 @@ export const useAttemptLogin = (login) => {
       setPassword("");
     }
   };
-  const handleAttemptGithubLogin = () => {
-    // event.preventDefault();
-    //   const { code } = req.body;
-    console.log("CONNET ON REACT-github page: ");
-    //   const { email, password } = req.body;
-    const baseUrl = "https://github.com/login/oauth/authorize";
-    const authConfig = {
-      client_id: "44089da06c95a868c4cb",
-      allow_signup: false,
-      scope: "read:user user:email",
-    };
-    console.log("CONFIG", authConfig);
-    const authUrl = baseUrl + "?" + qs.stringify(authConfig);
-    console.log("url", authUrl);
-    return authUrl;
-    // const finalUrl = await axios.get(authUrl);
-    // console.log("RES", finalUrl);
-    //   return res.redirect(finalUrl);
-    //React로 옮기기!!
-    // axios.get(`/auth/login/github`);
+  const baseUrl = "https://github.com/login/oauth/authorize";
+  const authConfig = {
+    client_id: "44089da06c95a868c4cb",
+    allow_signup: false,
+    scope: "read:user user:email",
   };
+  const authUrl = baseUrl + "?" + qs.stringify(authConfig);
   return {
     email,
     setEmail,
     password,
     setPassword,
     handleSubmitNotSocial,
-    handleAttemptGithubLogin,
+    authUrl,
   };
 };

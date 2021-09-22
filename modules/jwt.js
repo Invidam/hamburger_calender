@@ -5,12 +5,11 @@ const TOKEN_EXPIRED = -3;
 const TOKEN_INVALID = -2;
 
 const jwt = {
-  sign: async ({ name }) => {
+  sign: async ({ uesrname }) => {
     const { secretKey, options } = key;
     const payload = {
-      name,
+      uesrname,
     };
-    console.log("SECRET,", secretKey, options);
     const result = {
       token: jsonwebtoken.sign(payload, secretKey, options),
       refreshToken: randomToken.uid(16),

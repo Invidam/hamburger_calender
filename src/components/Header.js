@@ -12,8 +12,8 @@ export const Header = ({ date, customLoginHook }) => {
       >
         Log In
       </Link>
-      <Link className="header-link__elem" to="/register">
-        Register
+      <Link className="header-link__elem" to="/signup">
+        Sign Up
       </Link>
     </div>
   );
@@ -22,7 +22,7 @@ export const Header = ({ date, customLoginHook }) => {
       <button className="header-link__elem" onClick={logout}>
         Log Out
       </button>
-      <Link className="header-link__elem" to="/register">
+      <Link className="header-link__elem" to="/signup">
         Profile
       </Link>
     </div>

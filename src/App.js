@@ -1,11 +1,6 @@
 // import logo from './logo.svg';
 import "./css/App.css";
-import { WorkListTemplate } from "./components/worklist/WorkListTemplate";
 import "./css/calendar.css";
-import { CalendarTemplate } from "./components/calendar/CalendarTemplate";
-import { useUpdateTime } from "./hooks/workList/time/useUpdateTime";
-import { useUpdateWork } from "./hooks/workList/work/useUpdateWork";
-import { useEffect, useState } from "react";
 import { changeFormatYYYYMMDD } from "./tools/time";
 import axios from "axios";
 import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
@@ -16,6 +11,7 @@ import { Header } from "./components/Header";
 import { useLogin } from "./hooks/user/useLogin";
 import { useSetDate } from "./hooks/date/useSetDate";
 import { GithubLoginPage } from "./components/pages/GithubLoginPage";
+import { SignupPage } from "./components/pages/SignupPage";
 
 const USER = "TEST";
 function App() {
@@ -35,13 +31,6 @@ function App() {
     <Router>
       <Header date={date} customLoginHook={customLoginHook} />
       <main>
-        <button
-          onClick={() =>
-            axios.get("/auth/hello").then((res) => console.log("RES ", res))
-          }
-        >
-          CLICK
-        </button>
         <Switch>
           <Route
             exact
@@ -54,6 +43,7 @@ function App() {
             path="/login"
             render={() => <LoginPage customLoginHook={customLoginHook} />}
           />
+          <Route path="/signup" render={() => <SignupPage />} />
           <Route
             path="/github-login"
             // component={GithubLoginPage}
