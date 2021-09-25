@@ -19,5 +19,6 @@ app.use(
 app.use(express.json());
 // app.use("/api", apiRouter);
 app.use("/api/:user/:date/worklist", workListRouter);
+app.use("/api", apiRouter);
 app.use("/auth", authRouter);
 app.listen(port, () => console.log(`Listening Start on port ${port}`));

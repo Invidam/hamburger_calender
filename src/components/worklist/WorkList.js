@@ -1,6 +1,4 @@
 import "../../css/workList.css";
-import { useUpdateTime } from "../../hooks/workList/time/useUpdateTime";
-import { useUpdateWork } from "../../hooks/workList/work/useUpdateWork";
 import { TimeRecordDisplay } from "./element/timeBtn/TimeDisplayBtn";
 import { TimeRecordBtn } from "./element/timeBtn/TimeRecordBtn";
 import { EmptyWork } from "./element/work/EmptyWork";

@@ -1,6 +1,5 @@
 import { db } from "../routes/firebase/config.js";
 
-const user = "TEST";
 export const postTime = (req, res) => {
   // res.end
   const { key, user, date } = req.params;

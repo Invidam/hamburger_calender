@@ -29,7 +29,7 @@ export const useUpdateTime = (key, user, date) => {
   };
   useEffect(() => {
     getAndUpdateRecordTime();
-  }, [date]);
+  }, [date, user]);
 
   const updateRecordTime = (timeObj) => {
     timeObj = checkTimeObj(timeObj);

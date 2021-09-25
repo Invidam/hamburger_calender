@@ -5,10 +5,10 @@ const TOKEN_EXPIRED = -3;
 const TOKEN_INVALID = -2;
 
 const jwt = {
-  sign: async ({ uesrname }) => {
+  sign: async ({ username }) => {
     const { secretKey, options } = key;
     const payload = {
-      uesrname,
+      username,
     };
     const result = {
       token: jsonwebtoken.sign(payload, secretKey, options),
@@ -16,21 +16,22 @@ const jwt = {
     };
     return result;
   },
-  veryfy: async (token) => {
+  verify: async (token) => {
     let decode;
     try {
       const { secretKey, options } = key;
+      console.log("TOKEN: ", token);
       decode = jsonwebtoken.verify(token, secretKey);
     } catch (error) {
       if (error.message === "jwt expired") {
         console.log("expired token");
         return TOKEN_EXPIRED;
       } else if (error.message === "invalid token") {
-        console.log("invalid token");
+        console.log("1invalid token");
         console.log(TOKEN_INVALID);
         return TOKEN_INVALID;
       } else {
-        console.log("invalid token");
+        console.log("2invalid token");
         return TOKEN_INVALID;
       }
     }

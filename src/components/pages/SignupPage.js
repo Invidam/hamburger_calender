@@ -1,6 +1,6 @@
 import "../../css/pages/loginPage.css";
 import { useAttemptSignup } from "../../hooks/user/useAttemptSignup";
-export const SignupPage = () => {
+export const SignupPage = (props) => {
   const {
     username,
     setUsername,
@@ -9,7 +9,7 @@ export const SignupPage = () => {
     setEmail,
     setPassword,
     handleAttemptSignup,
-  } = useAttemptSignup();
+  } = useAttemptSignup(props);
   return (
     <section className="login-page">
       <div className="login-box">

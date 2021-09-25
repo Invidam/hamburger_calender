@@ -19,7 +19,7 @@ export const useUpdateWork = (initList, user, date) => {
   const [workList, setWorkList] = useState();
   useEffect(() => {
     getAndUpdateWorkList();
-  }, [date]);
+  }, [date, user]);
 
   const getAndUpdateWorkList = async () => {
     const data = await axios.get(`/api/${user}/${date}/worklist/worklist`);

@@ -1,30 +1,41 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const users = [
-  { email: "kim@test.com", password: "123", name: "TEST" },
-  { email: "lee@test.com", password: "456", name: "Lee" },
-  { email: "park@test.com", password: "789", name: "Park" },
-];
-export const signIn = ({ email, password }) => {
-  const user = users.find((user) => {
-    // console.log("CHECK", user.email,em)
-    return user.email === email && user.password === password;
-  });
-  if (!user) throw new Error("User not found");
-  return user;
+const verifyToken = async () => {
+  const { token } = JSON.parse(localStorage.getItem("access_token"));
+  const response = await axios.post("/api/jwt/verify", { token });
+  return response.data.decode;
 };
+
 export const useLogin = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
+  const setUserInToken = async () => {
+    try {
+      if (!localStorage.getItem("access_token"))
+        throw new Error("access_token not exists.");
+      const { username } = await verifyToken();
+      setUser(username);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    setUserInToken();
+  }, []);
   const authenticated = user != null;
-
-  const login = ({ email, password }) => {
+  const login = async ({ email, password }) => {
     // setUser(signIn({ email, password }));
-
-    axios.post(`/auth/login/notSocial`, {
-      email,
-      password,
-    });
+    try {
+      const response = await axios.post(`/auth/login/notSocial`, {
+        email,
+        password,
+      });
+      const { access_token, username } = response.data;
+      localStorage.setItem("access_token", JSON.stringify(access_token));
+      setUser(username);
+    } catch (error) {
+      alert(error);
+    }
   };
   const logout = () => {
     setUser(null);

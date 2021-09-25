@@ -6,7 +6,7 @@ import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 const element = <FontAwesomeIcon icon={faGithub} />;
 
-export const LoginPage = ({ customLoginHook }) => {
+export const LoginPage = ({ customLoginHook, history, location }) => {
   const [user, setUser, authenticated, login, logout] = customLoginHook;
 
   const {
@@ -16,7 +16,7 @@ export const LoginPage = ({ customLoginHook }) => {
     setPassword,
     handleSubmitNotSocial,
     authUrl,
-  } = useAttemptLogin(login);
+  } = useAttemptLogin(login, history);
   return (
     <section className="login-page">
       <div className="login-box">

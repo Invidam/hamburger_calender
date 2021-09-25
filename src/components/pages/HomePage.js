@@ -8,7 +8,6 @@ import { useUpdateWork } from "../../hooks/workList/work/useUpdateWork";
 import { changeFormatYYYYMMDD } from "../../tools/time";
 
 import { useState } from "react";
-const USER = "TEST";
 export const HomePage = ({ user, updateDateHook }) => {
   // const [date, setDate] = useState(new Date());
   // const [test, testtest] = useState(0);
@@ -16,16 +15,17 @@ export const HomePage = ({ user, updateDateHook }) => {
   // const mark = ["2021-09-12", "2021-09-13", "2021-09-14"];
   // const updateDateHook = useState(new Date());
   const date = changeFormatYYYYMMDD(updateDateHook[0], false);
-  const wakeTimeHook = useUpdateTime("wakeTime", USER, date);
-  const bedTimeHook = useUpdateTime("bedTime", USER, date);
-  const updateWorkHook = useUpdateWork([], USER, date);
+  console.log("in homepage, user: ", user);
+  const wakeTimeHook = useUpdateTime("wakeTime", user, date);
+  const bedTimeHook = useUpdateTime("bedTime", user, date);
+  const updateWorkHook = useUpdateWork([], user, date);
 
   return (
     <section>
       <article>
         {`Hello ${user}`}
         <CalendarTemplate
-          user={"TEST"}
+          user={user}
           updateDateHook={updateDateHook}
           wakeTimeHook={wakeTimeHook}
           bedTimeHook={bedTimeHook}

@@ -2,7 +2,7 @@
 import "./css/App.css";
 import "./css/calendar.css";
 import { changeFormatYYYYMMDD } from "./tools/time";
-import axios from "axios";
+
 import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { NotFoundPage } from "./components/pages/NotFoundPage";
 import { LoginPage } from "./components/pages/LoginPage";
@@ -12,21 +12,17 @@ import { useLogin } from "./hooks/user/useLogin";
 import { useSetDate } from "./hooks/date/useSetDate";
 import { GithubLoginPage } from "./components/pages/GithubLoginPage";
 import { SignupPage } from "./components/pages/SignupPage";
+import { useSetAxios } from "./hooks/date/useSetAxios";
 
 const USER = "TEST";
-function App() {
-  // const [value, onChange] = useState(new Date());
-  // const [test, testtest] = useState(0);
-  // const clickDay = (event, value) => alert("Clicked day: ", value);
-  // const mark = ["2021-09-12", "2021-09-13", "2021-09-14"];
+function App(props) {
+  useSetAxios();
   const updateDateHook = useSetDate();
   const date = changeFormatYYYYMMDD(updateDateHook[0], false);
-  // const [t1, t2] = useSetDate();
-  // console.log(t1, t2);
-  //{ user, setUser, authenticated, login, logout }
   const customLoginHook = useLogin();
   const user = customLoginHook[0];
-  console.log("USER: ", user);
+  console.log("APP USER: ", user);
+
   return (
     <Router>
       <Header date={date} customLoginHook={customLoginHook} />
@@ -41,9 +37,20 @@ function App() {
           />
           <Route
             path="/login"
-            render={() => <LoginPage customLoginHook={customLoginHook} />}
+            render={({ history, location }) => (
+              <LoginPage
+                history={history}
+                location={location}
+                customLoginHook={customLoginHook}
+              />
+            )}
           />
-          <Route path="/signup" render={() => <SignupPage />} />
+          <Route
+            path="/signup"
+            render={({ history, location }) => (
+              <SignupPage history={history} location={location} />
+            )}
+          />
           <Route
             path="/github-login"
             // component={GithubLoginPage}
