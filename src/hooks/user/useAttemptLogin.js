@@ -15,12 +15,14 @@ export const useAttemptLogin = (login, history) => {
   const handleSubmitNotSocial = async (event) => {
     try {
       event.preventDefault();
-      login({ email, password });
+      const userInfo = { email, password };
+      await login(userInfo, "notSocial");
       history.push("/");
     } catch (error) {
       alert(error);
       setEmail("");
       setPassword("");
+      history.push("/login");
     }
   };
   const authUrl = baseUrl + "?" + qs.stringify(authConfig);

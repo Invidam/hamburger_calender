@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
+import { API } from "../../../tools/axiosSetting";
 import { getToday } from "../../../tools/time";
 const getEmptyTimeObj = () => {
   return { hour: -1, minute: -1 };
@@ -16,15 +16,16 @@ export const useUpdateTime = (key, user, date) => {
     !user && window.localStorage.getItem(key)
       ? JSON.parse(window.localStorage.getItem(key))
       : null;
-  const [recordTime, setRecordTime] = useState();
-  // setRecordTime(initVal);
+  const [recordTime, setRecordTime] = useState(initVal);
 
   const getAndUpdateRecordTime = async () => {
-    const data = await axios.get(
-      `/api/${user}/${date}/worklist/record-time/${key}`
-    );
-    const resTimeObj = checkTimeObj(data?.data);
-    // window.localStorage.setItem(key, JSON.stringify(data?.data));
+    let resTimeObj;
+    if (user) {
+      const data = await API.get(
+        `/api/${user}/${date}/worklist/record-time/${key}`
+      );
+      resTimeObj = checkTimeObj(data?.data);
+    } else resTimeObj = JSON.parse(window.localStorage.getItem(key));
     setRecordTime(resTimeObj);
   };
   useEffect(() => {
@@ -33,11 +34,11 @@ export const useUpdateTime = (key, user, date) => {
 
   const updateRecordTime = (timeObj) => {
     timeObj = checkTimeObj(timeObj);
-
-    axios.post(`/api/${user}/${date}/worklist/record-time/${key}`, {
-      value: timeObj,
-    });
-    // window.localStorage.setItem(key, JSON.stringify(timeObj));
+    if (user)
+      API.post(`/api/${user}/${date}/worklist/record-time/${key}`, {
+        value: timeObj,
+      });
+    else window.localStorage.setItem(key, JSON.stringify(timeObj));
     setRecordTime(timeObj);
   };
   const onClick = (event) => {

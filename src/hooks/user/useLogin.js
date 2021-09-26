@@ -1,9 +1,10 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { API } from "../../tools/axiosSetting";
+import { getToday } from "../../tools/time";
 
 const verifyToken = async () => {
   const { token } = JSON.parse(localStorage.getItem("access_token"));
-  const response = await axios.post("/api/jwt/verify", { token });
+  const response = await API.post("/api/jwt/verify", { token });
   return response.data.decode;
 };
 
@@ -11,30 +12,62 @@ export const useLogin = () => {
   const [user, setUser] = useState();
   const setUserInToken = async () => {
     try {
-      if (!localStorage.getItem("access_token"))
+      if (
+        !localStorage.getItem("access_token") ||
+        localStorage.getItem("access_token") === "undefined"
+      ) {
+        localStorage.setItem("access_token", "undefined");
         throw new Error("access_token not exists.");
+      }
       const { username } = await verifyToken();
       setUser(username);
     } catch (error) {
-      console.error(error);
+      console.warn(error);
+    }
+  };
+  const setDataInLocal = (user) => {
+    const date = getToday();
+    if (localStorage.getItem("wakeTime")) {
+      const wakeTime = JSON.parse(localStorage.getItem("wakeTime"));
+      console.log("TO set Data: waketime", wakeTime);
+      API.post(`/api/${user}/${date}/worklist/record-time/wakeTime`, {
+        value: wakeTime,
+      });
+      localStorage.removeItem("wakeTime");
+    }
+    if (localStorage.getItem("bedTime")) {
+      const bedTime = JSON.parse(localStorage.getItem("bedTime"));
+      console.log("TO set Data: bedTime", bedTime);
+      API.post(`/api/${user}/${date}/worklist/record-time/bedTime`, {
+        value: bedTime,
+      });
+      localStorage.removeItem("bedTime");
+    }
+    if (localStorage.getItem("workList")) {
+      const workList = JSON.parse(localStorage.getItem("workList"));
+      console.log("TO set Data: waketime", workList);
+      API.post(`/api/${user}/${date}/worklist/record-time/workList`, {
+        value: workList,
+      });
+      localStorage.removeItem("workList");
     }
   };
   useEffect(() => {
     setUserInToken();
   }, []);
   const authenticated = user != null;
-  const login = async ({ email, password }) => {
+  const login = async (userInfo, socialType) => {
     // setUser(signIn({ email, password }));
     try {
-      const response = await axios.post(`/auth/login/notSocial`, {
-        email,
-        password,
+      const response = await API.post(`/auth/login/${socialType}`, {
+        userInfo,
       });
       const { access_token, username } = response.data;
       localStorage.setItem("access_token", JSON.stringify(access_token));
       setUser(username);
+      setDataInLocal(username);
     } catch (error) {
-      alert(error);
+      throw error;
     }
   };
   const logout = () => {

@@ -18,7 +18,7 @@ export const HomePage = ({ user, updateDateHook }) => {
   console.log("in homepage, user: ", user);
   const wakeTimeHook = useUpdateTime("wakeTime", user, date);
   const bedTimeHook = useUpdateTime("bedTime", user, date);
-  const updateWorkHook = useUpdateWork([], user, date);
+  const updateWorkHook = useUpdateWork(user, date);
 
   return (
     <section>

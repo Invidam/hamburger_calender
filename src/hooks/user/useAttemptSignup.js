@@ -1,7 +1,6 @@
-import qs from "qs";
-import axios from "axios";
 import isEmail from "validator/lib/isEmail";
 import { useState } from "react";
+import { API } from "../../tools/axiosSetting";
 
 export const useAttemptSignup = ({ history, locaiton }) => {
   const [username, setUsername] = useState("");
@@ -9,8 +8,6 @@ export const useAttemptSignup = ({ history, locaiton }) => {
   const [password, setPassword] = useState("");
   const handleAttemptSignup = async () => {
     try {
-      // event.preventDefault();
-      //   const { code } = req.body;
       console.log("CONNET ON REACT-REGISTER page: ");
       console.log(username, email, password);
       if (!isEmail(email)) {
@@ -24,7 +21,7 @@ export const useAttemptSignup = ({ history, locaiton }) => {
         } ${!username + !email + !password > 1 ? "are" : "is"} not entered.`;
         throw errText;
       }
-      const response = await axios.post("/auth/signup", {
+      const response = await API.post("/auth/signup", {
         username,
         email,
         password,

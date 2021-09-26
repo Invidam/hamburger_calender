@@ -25,15 +25,6 @@ const getUserList = async () => {
   );
   return userList;
 };
-
-//email, username => 몇개 일치하는지 확인  0 1 2 3
-//email => 해당 유저 정보 확인
-
-//존재O
-//깃헙X => 에러 처리
-//깃헙O => 로그인
-//존재X => 회원가입
-//**** */
 const signup = (userInfo) => {
   const { username } = userInfo;
   if (!username) throw new Error("Cannot make user.");
@@ -52,19 +43,19 @@ export const signupNotSocial = async (req, res) => {
   const checkExistUser = async ({ email, username }) => {
     const userList = await getUserList();
     return (
-      EXISTUSER * userList.includes(username) +
-      EXISTEMAIL * userList.includes(email)
+      EXISTEMAIL * !!userList.find((user) => user.email === email) +
+      EXISTUSER * !!userList.find((user) => user.username === username)
     );
   };
   const { email, password, username } = req.body;
 
-  //**** */
   const existCode = await checkExistUser({ email, username });
   if (existCode) {
     return res
       .status(401)
       .send(`User has entered ${getErrorText(existCode)} already exists.`);
   }
+
   const uid = randomToken.uid(16);
   const hashedPassword = bcrypt.hashSync(password, SALTROUND);
   const userInfo = {
@@ -85,20 +76,30 @@ export const loginNotSocial = async (req, res) => {
   const getUserInfoByEmail = async (email) => {
     const userList = await getUserList();
     console.log(userList);
-    return userList.find((user) => user.email === email);
+    userList.forEach((user) => {
+      console.log(
+        "USER INFO",
+        user,
+        user?.email && user?.email === email,
+        user?.email,
+        email,
+        typeof email,
+        user?.email === email
+      );
+    });
+    return userList.find((user) => user?.email && user?.email === email);
   };
   const isCorrectUser = (enteredPassword, userInfo) => {
     if (!userInfo) return false;
     return bcrypt.compareSync(enteredPassword, userInfo.password);
   };
 
-  const { email, password } = req.body;
-
+  const { email, password } = req.body.userInfo;
   const userInfo = await getUserInfoByEmail(email);
-  console.log("INFO: ", userInfo);
   if (!isCorrectUser(password, userInfo)) {
     return res.status(401).send(`User not Exists.`);
   }
+
   const access_token = await jwt.sign({
     username: userInfo.username,
   });
@@ -118,7 +119,7 @@ export const loginGithub = async (req, res) => {
       EXISTEMAIL * userEmailSet.has(email)
     );
   };
-  const { code } = req.body;
+  const { code } = req.body.userInfo;
   const baseUrl = "https://github.com/login/oauth/access_token";
   const tokenConfig = {
     code,
@@ -142,7 +143,8 @@ export const loginGithub = async (req, res) => {
   //**** */
   const checkExistGithubUser = async (username) => {
     const userList = await getUserList();
-    const findUser = userList.find((user) => user.username === username);
+    console.log(userList);
+    const findUser = userList.find((user) => user?.username === username);
     if (!findUser) return 0;
     return findUser
       ? findUser.socialType === "github"
@@ -151,12 +153,8 @@ export const loginGithub = async (req, res) => {
       : NOTEXIST;
   };
 
-  const NOTEXIST = 0;
-  const EXISTGITHUB = 1;
-  const EXISTNOTGITHUB = 2;
-  const existCode = await checkExistGithubUser({
-    username: data?.login,
-  });
+  const existCode = await checkExistGithubUser(data?.login);
+  console.log("EXIST CODE: ", existCode);
   //이미 존재하는 유저라면, uid가 맞는지 확인.
   if (existCode === NOTEXIST) {
     const userInfo = {

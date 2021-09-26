@@ -33,7 +33,9 @@ export const getTime = (req, res) => {
 export const postWorkList = (req, res) => {
   const { user, date } = req.params;
   const { value } = req.body;
-
+  console.log(req.headers);
+  // const token = req.headers["x-access-token"];
+  // console.log("HEADER: ", token, typeof tokengfg, JSON.parse(token));
   if (!db)
     return res.status(400).json({
       status: "error",

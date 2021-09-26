@@ -31,7 +31,8 @@ export const usePushWork = (workList, setWorkList, callback) => {
     if (typeof validator === "function") willUpdate = validator(workObj);
     if (willUpdate) {
       callback();
-      if (workList[0]?.workTime === -1) setWorkList([workObj]);
+      console.log("work:ist: ", workList);
+      if (!workList || workList[0]?.workTime === -1) setWorkList([workObj]);
       else setWorkList([...workList, workObj]);
     } else {
       let errText = `[ERROR] ${workName ? "" : "WorkName"}${
