@@ -67,6 +67,7 @@ export const useLogin = () => {
       setUser(username);
       setDataInLocal(username);
     } catch (error) {
+      console.log("WHY NOT ERR");
       throw error;
     }
   };

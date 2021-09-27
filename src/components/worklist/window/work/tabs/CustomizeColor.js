@@ -1,4 +1,4 @@
-import "../../../../../css/customizeColor.css";
+import "../../../../../css/workList/customizeColor.css";
 export const CustomizeColor = ({ onChangeWorkColor }) => {
   return (
     <div className="addWindow__customColor">

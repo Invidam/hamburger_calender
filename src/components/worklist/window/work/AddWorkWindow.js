@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../../../../css/window.css";
+import "../../../../css/workList/window.css";
 import { useTabs } from "../../../../hooks/example/useTabs";
 import { usePushWork } from "../../../../hooks/workList/work/usePushWork";
 import { CustomizeColor } from "./tabs/CustomizeColor";

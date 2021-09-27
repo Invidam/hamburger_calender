@@ -9,7 +9,6 @@ export const useAttemptGithubLogin = (props) => {
       const { code } = qs.parse(location?.search, {
         ignoreQueryPrefix: true,
       });
-
       try {
         const userInfo = { code };
         login(userInfo, "github");
@@ -20,7 +19,12 @@ export const useAttemptGithubLogin = (props) => {
         history.push("/login");
       }
     };
-    axiosSetting();
-    getToken();
+    try {
+      axiosSetting();
+      getToken();
+    } catch (e) {
+      console.log("HERE? ");
+      alert(e);
+    }
   }, [location, history]);
 };

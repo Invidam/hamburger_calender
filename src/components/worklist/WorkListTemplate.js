@@ -1,4 +1,4 @@
-import "../../css/workList.css";
+import "../../css/workList/workList.css";
 import { WorkList } from "./WorkList";
 export const WorkListTemplate = ({
   wakeTimeHook,

@@ -1,4 +1,4 @@
-import "../../../../../css/ingredientList.css";
+import "../../../../../css/workList/ingredientList.css";
 import { useTabs } from "../../../../../hooks/example/useTabs";
 const themeList = new Map();
 const cheezeTheme = {

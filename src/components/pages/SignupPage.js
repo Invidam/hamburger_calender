@@ -1,4 +1,4 @@
-import "../../css/pages/loginPage.css";
+import "../../css/pages/pages.css";
 import { useAttemptSignup } from "../../hooks/user/useAttemptSignup";
 export const SignupPage = (props) => {
   const {
@@ -11,20 +11,20 @@ export const SignupPage = (props) => {
     handleAttemptSignup,
   } = useAttemptSignup(props);
   return (
-    <section className="login-page">
-      <div className="login-box">
+    <section className="page">
+      <div className="page-input-box">
         <h1>Sign up Page</h1>
 
         <input
           value={username}
           type="text"
-          className="login-box__input login-box__input-username"
+          className="page-input-box__input page-input-box__input-username"
           placeholder="Username"
           onChange={({ target: { value } }) => setUsername(value)}
         />
         <input
           value={email}
-          className="login-box__input login-box__input-email"
+          className="page-input-box__input page-input-box__input-email"
           type="email"
           placeholder="Email"
           onChange={({ target: { value } }) => setEmail(value)}
@@ -32,12 +32,12 @@ export const SignupPage = (props) => {
         <input
           value={password}
           type="password"
-          className="login-box__input login-box__input-password"
+          className="page-input-box__input page-input-box__input-password"
           placeholder="Password"
           onChange={({ target: { value } }) => setPassword(value)}
         />
         <button
-          className="login-box__btn login-box__btn-login"
+          className="page-input-box__btn page-input-box__btn-login"
           onClick={handleAttemptSignup}
         >
           Sign up

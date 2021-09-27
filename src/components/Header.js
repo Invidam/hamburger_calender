@@ -1,5 +1,13 @@
 import { Link } from "react-router-dom";
 import "../css/header/header.css";
+import { isLoggedin } from "../tools/auth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCog } from "@fortawesome/free-solid-svg-icons";
+
+const element = (
+  <FontAwesomeIcon icon={faUserCog} size="2x" style={{ fontSize: `18px` }} />
+);
+
 export const Header = ({ date, customLoginHook }) => {
   const [user, setUser, authenticated, login, logout] = customLoginHook;
 
@@ -22,8 +30,10 @@ export const Header = ({ date, customLoginHook }) => {
       <button className="header-link__elem" onClick={logout}>
         Log Out
       </button>
-      <Link className="header-link__elem" to="/signup">
-        Profile
+      <Link className="header-link__elem" to="/setting">
+        {/* Log Out */}
+        Setting
+        {/* {element} */}
       </Link>
     </div>
   );

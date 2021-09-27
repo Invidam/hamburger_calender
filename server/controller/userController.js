@@ -11,6 +11,7 @@ const EXISTUSERANDEMAIL = 3;
 const NOTEXIST = 0;
 const EXISTGITHUB = 1;
 const EXISTNOTGITHUB = 2;
+
 const getUserList = async () => {
   const userList = [];
   const ref = db.ref(`users`);
@@ -31,7 +32,9 @@ const signup = (userInfo) => {
   const ref = db.ref(`users/${username}/info`);
   ref.set(userInfo);
 };
-export const signupNotSocial = async (req, res) => {
+
+export const checkExistUser = async (req, res, next) => {
+  const { email, password, username } = req.body;
   const getErrorText = (isExist) => {
     let errText = ``;
     if (isExist === EXISTUSER) errText = `username`;
@@ -40,21 +43,23 @@ export const signupNotSocial = async (req, res) => {
     return errText;
   };
 
-  const checkExistUser = async ({ email, username }) => {
+  const getExistCode = async ({ email, username }) => {
     const userList = await getUserList();
     return (
       EXISTEMAIL * !!userList.find((user) => user.email === email) +
       EXISTUSER * !!userList.find((user) => user.username === username)
     );
   };
-  const { email, password, username } = req.body;
 
-  const existCode = await checkExistUser({ email, username });
+  const existCode = await getExistCode({ email, username });
   if (existCode) {
     return res
       .status(401)
       .send(`User has entered ${getErrorText(existCode)} already exists.`);
-  }
+  } else next();
+};
+export const signupNotSocial = async (req, res) => {
+  const { email, password, username } = req.body;
 
   const uid = randomToken.uid(16);
   const hashedPassword = bcrypt.hashSync(password, SALTROUND);
@@ -73,6 +78,10 @@ export const signupNotSocial = async (req, res) => {
 };
 
 export const loginNotSocial = async (req, res) => {
+  const isCorrectUser = (enteredPassword, userInfo) => {
+    if (!userInfo) return false;
+    return bcrypt.compareSync(enteredPassword, userInfo.password);
+  };
   const getUserInfoByEmail = async (email) => {
     const userList = await getUserList();
     console.log(userList);
@@ -89,10 +98,6 @@ export const loginNotSocial = async (req, res) => {
     });
     return userList.find((user) => user?.email && user?.email === email);
   };
-  const isCorrectUser = (enteredPassword, userInfo) => {
-    if (!userInfo) return false;
-    return bcrypt.compareSync(enteredPassword, userInfo.password);
-  };
 
   const { email, password } = req.body.userInfo;
   const userInfo = await getUserInfoByEmail(email);
@@ -107,18 +112,6 @@ export const loginNotSocial = async (req, res) => {
   return res.json({ access_token, username: userInfo.username });
 };
 export const loginGithub = async (req, res) => {
-  //존재O
-  //깃헙X
-  //
-  //존재X
-  //**** */
-  const isExistingGithubUser = async ({ email, username, uid }) => {
-    const { userNameSet, userEmailSet } = await getUserList();
-    return (
-      EXISTUSER * userNameSet.has(username) +
-      EXISTEMAIL * userEmailSet.has(email)
-    );
-  };
   const { code } = req.body.userInfo;
   const baseUrl = "https://github.com/login/oauth/access_token";
   const tokenConfig = {
@@ -177,4 +170,26 @@ export const loginGithub = async (req, res) => {
     //401 error
     return res.status(401).send(`User has entered info already exists.`);
   }
+};
+
+export const postSetting = (req, res) => {
+  const { user, value } = req.body;
+  console.log(req.body, user, value);
+  const ref = db.ref(`users/${user}/setting`);
+  ref.set(value);
+};
+
+export const getSetting = (req, res) => {
+  const { user } = req.params;
+  console.log("GET DATA", req.params, user);
+  const ref = db.ref(`users/${user}/setting`);
+  ref.once(
+    "value",
+    (settingObj) => {
+      const setting = settingObj.val();
+      if (!setting) return res.end();
+      else return res.json(setting);
+    },
+    (errorObject) => res.send(errorObject)
+  );
 };

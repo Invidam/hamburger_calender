@@ -1,6 +1,5 @@
 import Modal from "react-modal";
 import { useState } from "react";
-import "../../../../css/modam.css";
 import { usePushWork } from "../../../../hooks/workList/work/usePushWork";
 import { AddWorkWindow } from "../../window/work/AddWorkWindow";
 Modal.setAppElement("#root");

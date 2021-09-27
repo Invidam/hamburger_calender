@@ -1,4 +1,4 @@
-import "../../../../css/window.css";
+import "../../../../css/workList/window.css";
 import { useTabs } from "../../../../hooks/example/useTabs";
 import { useEditWork } from "../../../../hooks/workList/work/useEditWork";
 import { CustomizeColor } from "./tabs/CustomizeColor";

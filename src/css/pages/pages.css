@@ -1,10 +1,10 @@
-.login-page {
+.page {
   font-family: Arial, Helvetica;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.login-box {
+.page-input-box {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,7 +15,7 @@
   height: 50vh;
   /* width: 100%; */
 }
-.login-box__input {
+.page-input-box__input {
   font-size: 16px;
   margin-bottom: 20px;
   border-radius: 5px;
@@ -23,14 +23,14 @@
   height: 4vh;
   width: 100%;
 }
-.login-box__input::placeholder {
+.page-input-box__input::placeholder {
   color: rgb(0, 0, 0, 0.3);
   padding-left: 5px;
 }
-.login-box__input:hover {
+.page-input-box__input:hover {
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
-.login-box__btn {
+.page-input-box__btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,10 +44,45 @@
   border: 1px solid brown;
   border-radius: 8px;
 }
-.login-box__btn-github {
+.page-input-box__btn-github {
   background-color: var(--main-color);
 }
 
-.login-box__btn-text {
+.page-input-box__btn-text {
   margin-left: 5px;
+}
+.setting-box {
+  display: flex;
+  flex-direction: column;
+}
+.setting__text {
+  font-size: 16px;
+  /* margin-right: 20px; */
+  width: 50%;
+}
+.setting__input-box {
+  width: 20%;
+}
+.setting-column {
+  display: flex;
+  justify-content: space-around;
+}
+.setting__input {
+  width: 65%;
+  display: inline;
+  font-size: 16px;
+  border: none;
+  background: none;
+  border-bottom: 2px solid rgba(100, 69, 19, 0.3);
+  background-color: inherit;
+  margin-bottom: 15px;
+}
+
+.setting__input::placeholder {
+  /* font-size: 16px; */
+  color: rgb(0, 0, 0, 0.3);
+}
+.setting__input:hover {
+  border: none;
+  border-bottom: 2px solid rgba(100, 69, 19, 0.9);
 }

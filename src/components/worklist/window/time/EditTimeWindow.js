@@ -1,4 +1,4 @@
-import "../../../../css/window.css";
+import "../../../../css/workList/window.css";
 export const EditTimeWindow = ({ recordTime, isWake, editTimeHook }) => {
   const { onChangeHour, onChangeMinute, onEditRecordTime } = editTimeHook;
   return (

@@ -1,6 +1,7 @@
 .modalWindow {
   color: var(--main-color);
 }
+
 .modalWindow__input {
   display: inline;
   font-size: 20px;

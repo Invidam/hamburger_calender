@@ -1,4 +1,4 @@
-import "../../css/workList.css";
+import "../../css/workList/workList.css";
 import { TimeRecordDisplay } from "./element/timeBtn/TimeDisplayBtn";
 import { TimeRecordBtn } from "./element/timeBtn/TimeRecordBtn";
 import { EmptyWork } from "./element/work/EmptyWork";

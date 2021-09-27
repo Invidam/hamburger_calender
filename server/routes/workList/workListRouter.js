@@ -11,8 +11,6 @@ workListRouter.get("/hello", (req, res) => {
   res.send({ greeting: "Hello React X Node j1s" });
 });
 
-workListRouter
-  .get("/record-time/:key", getTime)
-  .post("/record-time/:key", postTime);
+workListRouter.route("/record-time/:key").get(getTime).post(postTime);
 
-workListRouter.post("/worklist", postWorkList).get("/worklist", getWorkList);
+workListRouter.route("/worklist").post(postWorkList).get(getWorkList);

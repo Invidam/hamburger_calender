@@ -2,6 +2,8 @@ import isEmail from "validator/lib/isEmail";
 import { useState } from "react";
 import { API } from "../../tools/axiosSetting";
 
+const isUserName = (username) => !/[^\w]/.exec(username);
+
 export const useAttemptSignup = ({ history, locaiton }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -10,8 +12,13 @@ export const useAttemptSignup = ({ history, locaiton }) => {
     try {
       console.log("CONNET ON REACT-REGISTER page: ");
       console.log(username, email, password);
-      if (!isEmail(email)) {
-        throw "Unexpected Email Form. Please chek your email.";
+      console.log("UN", username, username.length, isUserName(username));
+      if (!isEmail(email) || !isUserName(username)) {
+        let errText = "";
+        if (!isEmail(email)) errText += "Email";
+        if (!isEmail(email) && !isUserName(username)) errText += " and ";
+        if (!isUserName(username)) errText += "UserName";
+        throw `Unexpected ${errText} Form. Please chek your ${errText}.`;
       }
       if (!username || !email || !password) {
         let errText = `[ERROR] ${username ? "" : "Username"}${
