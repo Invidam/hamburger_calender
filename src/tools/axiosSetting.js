@@ -8,7 +8,7 @@ export const getCustomConfig = () => {
   return config;
 };
 
-export const API = axios.create(getCustomConfig());
+export let API = axios.create(getCustomConfig());
 
 API.interceptors.response.use(
   (res) => {
@@ -24,3 +24,7 @@ API.interceptors.response.use(
     return Promise.reject(e);
   }
 );
+
+export const updateAPIHeader = () => {
+  API = axios.create(getCustomConfig());
+};

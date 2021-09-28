@@ -8,14 +8,13 @@ import { useUpdateWork } from "../../hooks/workList/work/useUpdateWork";
 import { changeFormatYYYYMMDD } from "../../tools/time";
 
 import { useState } from "react";
-export const HomePage = ({ user, updateDateHook }) => {
+export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
   // const [date, setDate] = useState(new Date());
   // const [test, testtest] = useState(0);
   // const clickDay = (event, value) => alert("Clicked day: ", value);
   // const mark = ["2021-09-12", "2021-09-13", "2021-09-14"];
   // const updateDateHook = useState(new Date());
   const date = changeFormatYYYYMMDD(updateDateHook[0], false);
-  console.log("in homepage, user: ", user);
   const wakeTimeHook = useUpdateTime("wakeTime", user, date);
   const bedTimeHook = useUpdateTime("bedTime", user, date);
   const updateWorkHook = useUpdateWork(user, date);
@@ -34,6 +33,7 @@ export const HomePage = ({ user, updateDateHook }) => {
       </article>
       <article>
         <WorkListTemplate
+          targetTimeObj={targetTimeObj}
           wakeTimeHook={wakeTimeHook}
           bedTimeHook={bedTimeHook}
           updateWorkHook={updateWorkHook}

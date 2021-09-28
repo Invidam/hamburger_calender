@@ -6,12 +6,12 @@ export const useSetDate = () => {
   let localDateObj;
   if (localStorage.getItem("date"))
     localDateObj = JSON.parse(localStorage.getItem("date"));
-  console.log(localDateObj);
+  // console.log(localDateObj);
   const initVal =
     localDateObj && localDateObj.today === today
       ? new Date(localDateObj.clickedDate)
       : new Date();
-  console.log(initVal, typeof initVal, new Date());
+  // console.log(initVal, typeof initVal, new Date());
   const [date, setDate] = useState(initVal);
   return [date, setDate];
 };

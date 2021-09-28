@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
 export const axiosSetting = () => {
-  console.log("AXIOST SETTING START");
   axios.interceptors.response.use(
     (res) => {
       return res;

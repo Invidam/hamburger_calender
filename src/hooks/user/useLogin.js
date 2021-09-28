@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { API } from "../../tools/axiosSetting";
+import { API, updateAPIHeader } from "../../tools/axiosSetting";
 import { getToday } from "../../tools/time";
 
 const verifyToken = async () => {
@@ -26,35 +26,40 @@ export const useLogin = () => {
     }
   };
   const setDataInLocal = (user) => {
-    const date = getToday();
-    if (localStorage.getItem("wakeTime")) {
-      const wakeTime = JSON.parse(localStorage.getItem("wakeTime"));
-      console.log("TO set Data: waketime", wakeTime);
-      API.post(`/api/${user}/${date}/worklist/record-time/wakeTime`, {
-        value: wakeTime,
-      });
-      localStorage.removeItem("wakeTime");
-    }
-    if (localStorage.getItem("bedTime")) {
-      const bedTime = JSON.parse(localStorage.getItem("bedTime"));
-      console.log("TO set Data: bedTime", bedTime);
-      API.post(`/api/${user}/${date}/worklist/record-time/bedTime`, {
-        value: bedTime,
-      });
-      localStorage.removeItem("bedTime");
-    }
-    if (localStorage.getItem("workList")) {
-      const workList = JSON.parse(localStorage.getItem("workList"));
-      console.log("TO set Data: waketime", workList);
-      API.post(`/api/${user}/${date}/worklist/record-time/workList`, {
-        value: workList,
-      });
-      localStorage.removeItem("workList");
+    try {
+      const date = getToday();
+      updateAPIHeader();
+      if (localStorage.getItem("wakeTime")) {
+        const wakeTime = JSON.parse(localStorage.getItem("wakeTime"));
+        console.log("TO set Data: waketime", wakeTime);
+        API.post(`/api/${user}/${date}/worklist/record-time/wakeTime`, {
+          value: wakeTime,
+        });
+        localStorage.removeItem("wakeTime");
+      }
+      if (localStorage.getItem("bedTime")) {
+        const bedTime = JSON.parse(localStorage.getItem("bedTime"));
+        console.log("TO set Data: bedTime", bedTime);
+        API.post(`/api/${user}/${date}/worklist/record-time/bedTime`, {
+          value: bedTime,
+        });
+        localStorage.removeItem("bedTime");
+      }
+      if (localStorage.getItem("workList")) {
+        const workList = JSON.parse(localStorage.getItem("workList"));
+        console.log("TO set Data: waketime", workList);
+        API.post(`/api/${user}/${date}/worklist/record-time/workList`, {
+          value: workList,
+        });
+        localStorage.removeItem("workList");
+      }
+    } catch (error) {
+      alert(error);
     }
   };
   useEffect(() => {
-    setUserInToken();
-  }, []);
+    if (!user) setUserInToken();
+  }, [user]);
   const authenticated = user != null;
   const login = async (userInfo, socialType) => {
     // setUser(signIn({ email, password }));
@@ -65,7 +70,7 @@ export const useLogin = () => {
       const { access_token, username } = response.data;
       localStorage.setItem("access_token", JSON.stringify(access_token));
       setUser(username);
-      setDataInLocal(username);
+      if (localStorage.getItem("access_token")) setDataInLocal(username);
     } catch (error) {
       console.log("WHY NOT ERR");
       throw error;
@@ -74,6 +79,7 @@ export const useLogin = () => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem("access_token");
+    updateAPIHeader();
   };
 
   return [user, setUser, authenticated, login, logout];

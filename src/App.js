@@ -15,27 +15,35 @@ import { SignupPage } from "./components/pages/SignupPage";
 import { useSetAxios } from "./hooks/date/useSetAxios";
 import { isLoggedIn } from "./tools/auth";
 import { SettingPage } from "./components/pages/SettingPage";
+import { useUpdateSetting } from "./hooks/user/useUpdateSetting";
 
 const USER = "TEST";
 function App(props) {
-  useSetAxios();
+  // useSetAxios();
   const updateDateHook = useSetDate();
   const date = changeFormatYYYYMMDD(updateDateHook[0], false);
   const customLoginHook = useLogin();
   const user = customLoginHook[0];
   const isLoggedIn = customLoginHook[2];
   console.log("APP USER: ", user);
+  const updateSettingHook = useUpdateSetting(user);
+  const { targetTimeObj } = updateSettingHook;
 
   return (
     <Router>
       <Header date={date} customLoginHook={customLoginHook} />
       <main>
+        {JSON.stringify(targetTimeObj)}
         <Switch>
           <Route
             exact
             path="/"
             render={() => (
-              <HomePage user={user} updateDateHook={updateDateHook} />
+              <HomePage
+                user={user}
+                targetTimeObj={targetTimeObj}
+                updateDateHook={updateDateHook}
+              />
             )}
           />
           <Route
@@ -79,6 +87,7 @@ function App(props) {
                     user={user}
                     history={history}
                     location={location}
+                    updateSettingHook={updateSettingHook}
                   />
                 );
             }}

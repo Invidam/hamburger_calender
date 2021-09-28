@@ -1,9 +1,16 @@
 import "../../css/workList/workList.css";
+import "../../css/workList/tooltip.css";
 import { TimeRecordDisplay } from "./element/timeBtn/TimeDisplayBtn";
 import { TimeRecordBtn } from "./element/timeBtn/TimeRecordBtn";
 import { EmptyWork } from "./element/work/EmptyWork";
 import { Work } from "./element/work/Work";
-export const WorkList = ({ wakeTimeHook, bedTimeHook, updateWorkHook }) => {
+export const WorkList = ({
+  wakeTimeHook,
+  bedTimeHook,
+  updateWorkHook,
+  targetTimeObj,
+}) => {
+  const { targetWakeTime, targetBedTime, targetWorkTime } = targetTimeObj;
   const [wakeTime, onClickWakeTime, updateWakeTime] = wakeTimeHook;
   const [bedTime, onClickBedTime, updateBedTime] = bedTimeHook;
   const [workList, setWorkList] = updateWorkHook;
@@ -18,6 +25,7 @@ export const WorkList = ({ wakeTimeHook, bedTimeHook, updateWorkHook }) => {
       recordTime={wakeTime}
       isWake={true}
       updateRecordTime={updateWakeTime}
+      targetTime={targetWakeTime}
     />
   );
   const bedTimeDisplay = (
@@ -25,6 +33,7 @@ export const WorkList = ({ wakeTimeHook, bedTimeHook, updateWorkHook }) => {
       recordTime={bedTime}
       isWake={false}
       updateRecordTime={updateBedTime}
+      targetTime={targetBedTime}
     />
   );
 
@@ -42,6 +51,7 @@ export const WorkList = ({ wakeTimeHook, bedTimeHook, updateWorkHook }) => {
               setWorkList={setWorkList}
               key={idx}
               idx={idx}
+              targetTime={targetWorkTime}
             />
           );
         })}

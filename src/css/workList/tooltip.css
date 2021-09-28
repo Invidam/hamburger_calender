@@ -1,0 +1,76 @@
+.tooltip {
+  position: relative;
+}
+
+.tooltip .tooltip-content {
+  display: none;
+
+  /* width: 300px; */
+
+  /* background-color: orange; */
+  background-color: rgb(44, 44, 44);
+
+  padding: 5px;
+
+  margin-top: 10px;
+
+  color: white;
+
+  text-align: center;
+  width: 20vw;
+  height: 16vh;
+  position: absolute;
+  bottom: -25px;
+  left: -23vw;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltip-content {
+  display: block;
+}
+
+.tooltip:hover .tooltip-content {
+  position: absolute;
+  background: #120611;
+  border: 1px solid #3b444a;
+}
+.tooltip:hover .tooltip-content:after,
+.tooltip:hover .tooltip-content:before {
+  left: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: "";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.tooltip:hover .tooltip-content:after {
+  border-color: rgba(18, 6, 17, 0);
+  border-left-color: #120611;
+  border-width: 10px;
+  margin-top: -10px;
+}
+.tooltip:hover .tooltip-content:before {
+  border-color: rgba(59, 68, 74, 0);
+  border-left-color: #3b444a;
+  border-width: 11px;
+  margin-top: -11px;
+}
+
+.tooltip-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* background-color: red; */
+}
+
+.tooltip-box__target {
+  padding: 5px;
+  width: 100%;
+  display: flex;
+  /* align-items: center; */
+  justify-content: space-between;
+  /* background-color: red; */
+}

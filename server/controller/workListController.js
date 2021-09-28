@@ -17,7 +17,6 @@ export const postTime = (req, res) => {
 
 export const getTime = (req, res) => {
   const { key, user, date } = req.params;
-  console.log("GETTIME", req.params);
   const ref = db.ref(`users/${user}/date/${date}/workList/${key}`);
 
   ref.once(

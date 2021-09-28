@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import { useDeleteTime } from "../../../../hooks/workList/time/useDeleteTime";
 // import { useDeleteWork } from "../../../../hooks/workList/work/useDeleteWork";
 import { useEditTime } from "../../../../hooks/workList/time/useEditTime";
+import { getDifference, makeDisplayTime } from "../../../../tools/time";
 import { EditTimeWindow } from "../../window/time/EditTimeWindow";
 // import {EditTimeWindow} from "."
 
@@ -28,7 +29,12 @@ const customStyles = {
     backgroundColor: "rgba(0,0,0,0.4)",
   },
 };
-export const TimeRecordDisplay = ({ recordTime, isWake, updateRecordTime }) => {
+export const TimeRecordDisplay = ({
+  recordTime,
+  isWake,
+  updateRecordTime,
+  targetTime,
+}) => {
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const openEditModal = () => setEditModalIsOpen(true);
 
@@ -74,19 +80,55 @@ export const TimeRecordDisplay = ({ recordTime, isWake, updateRecordTime }) => {
       </button>
     </Modal>
   );
+  const targetElement = (
+    <div className="tooltip-box__target">
+      <span className="tooltip-box__key">TargetTime:</span>
+      <span className="tooltip-box__value">
+        {makeDisplayTime(targetTime.hour)}:{makeDisplayTime(targetTime.minute)}
+      </span>
+    </div>
+  );
+  const valueElement = (
+    <div className="tooltip-box__target">
+      <span className="tooltip-box__key">
+        {isWake ? "WakeTime: " : "BedTime: "}
+      </span>
+      <span className="tooltip-box__value">
+        {makeDisplayTime(recordTime.hour)}: {makeDisplayTime(recordTime.minute)}
+      </span>
+    </div>
+  );
+  const diffTime = getDifference(targetTime, recordTime);
+  const diffElement = (
+    <div className="tooltip-box__target">
+      <span className="tooltip-box__key">Difference:</span>
+      <span className="tooltip-box__value">
+        {makeDisplayTime(diffTime.hour)}: {makeDisplayTime(diffTime.minute)}
+      </span>
+    </div>
+  );
+  <span className="tooltip_box__value">{`${isWake ? "Wake" : "Bed"}Time: ${
+    recordTime.hour
+  }: ${recordTime.minute}`}</span>;
   return (
     <div>
       <li
         className={
           isWake
-            ? "workList__wakeTime-display workList__time-display workList__time workList__wakeTime"
-            : "workList__bedTime-display workList__time-display workList__time workList__bedTime"
+            ? "workList__wakeTime-display workList__time-display workList__time workList__wakeTime tooltip"
+            : "workList__bedTime-display workList__time-display workList__time workList__bedTime tooltip"
         }
         onClick={openEditModal}
       >
         {isWake ? "Wake at " : "Sleep at "}
-        {recordTime.hour < 10 ? "0" + recordTime.hour : recordTime.hour}:
-        {recordTime.minute < 10 ? "0" + recordTime.minute : recordTime.minute}
+        {makeDisplayTime(recordTime.hour)}: {makeDisplayTime(recordTime.minute)}
+        <div className="tooltip-content">
+          <div className="tooltip-box">
+            {targetTime.hour !== -1 ? targetElement : ""}
+            {valueElement}
+            {targetTime.hour !== -1 ? diffElement : ""}
+          </div>
+        </div>
       </li>
       {editModal}
     </div>
