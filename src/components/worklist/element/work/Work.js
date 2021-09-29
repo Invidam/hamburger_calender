@@ -52,7 +52,10 @@ export const Work = ({ workItem, workList, setWorkList, idx }) => {
       {editWorkWindow}
       <button
         className="modalWindow__btn"
-        onClick={(event) => onDeleteWork(event, idx)}
+        onClick={(event) => {
+          closeEditModal();
+          onDeleteWork(event, idx);
+        }}
       >
         DELETE
       </button>

@@ -2,7 +2,7 @@ export const useDeleteWork = (workList, setWorkList, callback) => {
   const onDeleteWork = (event, idx) => {
     event.preventDefault();
     const deleteAction = () => {
-      callback();
+      // callback();
       const workListTemp = [...workList];
       workListTemp.splice(idx, 1);
       setWorkList(workListTemp);

@@ -28,7 +28,19 @@ export const getTime = (req, res) => {
     (errorObject) => res.send(errorObject)
   );
 };
-
+export const pushWorkList = (req, res) => {
+  const { user, date } = req.params;
+  const { value, idx } = req.body;
+  if (!db)
+    return res.status(400).json({
+      status: "error",
+      error: "cannot find db",
+    });
+  else {
+    db.ref(`users/${user}/date/${date}/workList/workList/${idx}`).set(value);
+    return res.status(200).json({ status: "success" });
+  }
+};
 export const postWorkList = (req, res) => {
   const { user, date } = req.params;
   const { value } = req.body;

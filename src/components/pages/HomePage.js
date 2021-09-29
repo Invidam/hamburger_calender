@@ -4,7 +4,7 @@ import { WorkListTemplate } from "../worklist/WorkListTemplate";
 import "../../css/calendar.css";
 import { CalendarTemplate } from "../calendar/CalendarTemplate";
 import { useUpdateTime } from "../../hooks/workList/time/useUpdateTime";
-import { useUpdateWork } from "../../hooks/workList/work/useUpdateWork";
+import { useWorkList } from "../../hooks/workList/work/useWorkList";
 import { changeFormatYYYYMMDD } from "../../tools/time";
 
 import { useState } from "react";
@@ -17,8 +17,9 @@ export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
   const date = changeFormatYYYYMMDD(updateDateHook[0], false);
   const wakeTimeHook = useUpdateTime("wakeTime", user, date);
   const bedTimeHook = useUpdateTime("bedTime", user, date);
-  const updateWorkHook = useUpdateWork(user, date);
+  const updateWorkHook = useWorkList(user, date);
 
+  console.log("HOME , ", user, date);
   return (
     <section>
       <article>
@@ -33,6 +34,8 @@ export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
       </article>
       <article>
         <WorkListTemplate
+          user={user}
+          date={date}
           targetTimeObj={targetTimeObj}
           wakeTimeHook={wakeTimeHook}
           bedTimeHook={bedTimeHook}

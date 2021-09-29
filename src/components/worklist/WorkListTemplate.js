@@ -5,11 +5,15 @@ export const WorkListTemplate = ({
   bedTimeHook,
   updateWorkHook,
   targetTimeObj,
+  user,
+  date,
 }) => {
   return (
     <div>
       <h1>Make Hamburger</h1>
       <WorkList
+        user={user}
+        date={date}
         targetTimeObj={targetTimeObj}
         wakeTimeHook={wakeTimeHook}
         bedTimeHook={bedTimeHook}

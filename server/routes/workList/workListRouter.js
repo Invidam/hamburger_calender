@@ -4,6 +4,7 @@ import {
   getWorkList,
   postTime,
   postWorkList,
+  pushWorkList,
 } from "../../controller/workListController.js";
 import { protectorMiddleWare } from "../../middlewares.js";
 
@@ -21,5 +22,6 @@ workListRouter
 workListRouter
   .route("/worklist")
   .all(protectorMiddleWare)
+  .put(pushWorkList)
   .post(postWorkList)
   .get(getWorkList);

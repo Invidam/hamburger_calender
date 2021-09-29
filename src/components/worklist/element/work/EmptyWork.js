@@ -24,16 +24,17 @@ const customStyles = {
     backgroundColor: "rgba(0,0,0,0.4)",
   },
 };
-export const EmptyWork = ({ workList, setWorkList }) => {
+export const EmptyWork = ({ user, date, workList, setWorkList }) => {
   const [addModalIsOpen, setAddModalIsOpen] = useState(false);
   const openAddModal = () => setAddModalIsOpen(true);
   const closeAddModal = () => setAddModalIsOpen(false);
-
   const addWorkWindow = (
     <AddWorkWindow
       workList={workList}
       setWorkList={setWorkList}
       callback={closeAddModal}
+      user={user}
+      date={date}
     />
   );
   const addModal = (

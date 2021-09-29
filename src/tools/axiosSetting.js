@@ -2,8 +2,9 @@ import axios from "axios";
 
 export const getCustomConfig = () => {
   const token = localStorage.getItem("access_token");
+  const date = localStorage.getItem("date");
   const config = {
-    headers: { "x-access-token": token },
+    headers: { "x-access-token": token, "x-access-date": date },
   };
   return config;
 };

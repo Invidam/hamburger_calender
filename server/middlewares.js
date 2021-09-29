@@ -15,6 +15,8 @@ export const publicOnlyMiddleware = (req, res, next) => {
 
 export const protectorMiddleWare = (req, res, next) => {
   const token = req.headers["x-access-token"];
+  const date = req.headers["x-access-date"];
+  console.log(date, typeof date);
   console.log("PRO MIDD", token, token === "undefined");
   if (token && token !== "undefined") next();
   else res.status(401).send("User not logged in.");

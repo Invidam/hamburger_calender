@@ -5,11 +5,14 @@ import { TimeRecordBtn } from "./element/timeBtn/TimeRecordBtn";
 import { EmptyWork } from "./element/work/EmptyWork";
 import { Work } from "./element/work/Work";
 export const WorkList = ({
+  user,
+  date,
   wakeTimeHook,
   bedTimeHook,
   updateWorkHook,
   targetTimeObj,
 }) => {
+  console.log(" WORK, ", user, date);
   const { targetWakeTime, targetBedTime, targetWorkTime } = targetTimeObj;
   const [wakeTime, onClickWakeTime, updateWakeTime] = wakeTimeHook;
   const [bedTime, onClickBedTime, updateBedTime] = bedTimeHook;
@@ -36,11 +39,19 @@ export const WorkList = ({
       targetTime={targetBedTime}
     />
   );
-
-  const emptyWork = <EmptyWork workList={workList} setWorkList={setWorkList} />;
+  console.log(workList);
+  const emptyWork = (
+    <EmptyWork
+      user={user}
+      date={date}
+      workList={workList}
+      setWorkList={setWorkList}
+    />
+  );
 
   return (
     <ol>
+      {workList?.length && workList[0].workTime !== -1 ? workList.length : 0}
       {wakeTime && wakeTime.hour !== -1 ? wakeTimeDisplay : addWakeTimeWindow}
       {workList &&
         workList.map((workItem, idx) => {

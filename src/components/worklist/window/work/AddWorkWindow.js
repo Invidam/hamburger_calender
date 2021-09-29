@@ -4,13 +4,14 @@ import { useTabs } from "../../../../hooks/example/useTabs";
 import { usePushWork } from "../../../../hooks/workList/work/usePushWork";
 import { CustomizeColor } from "./tabs/CustomizeColor";
 import { IngredientList } from "./tabs/IngredientList";
-export const AddWorkWindow = ({ workList, setWorkList, callback }) => {
+export const AddWorkWindow = (props) => {
+  // const {  user, date, workList, setWorkList, callback } = props;
   const {
     onChangeWorkColor,
     onChangeWorkName,
     onChangeWorkTime,
     onSubmitWork,
-  } = usePushWork(workList, setWorkList, callback);
+  } = usePushWork(props);
   const Recommended = <IngredientList onChangeWorkColor={onChangeWorkColor} />;
   const Favorite = <h1>Favorite</h1>;
   const Customize = <CustomizeColor onChangeWorkColor={onChangeWorkColor} />;
