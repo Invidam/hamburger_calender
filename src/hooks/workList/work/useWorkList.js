@@ -3,10 +3,10 @@ import { API } from "../../../tools/axiosSetting";
 
 export const useWorkList = (user, date) => {
   const getEmptyWorkList = () => {
-    return [{ workTime: -1 }];
+    return {};
   };
   const isEmptyWorkList = (workList) =>
-    workList ? workList[0]?.workTime === -1 : true;
+    workList ? !Object.keys(workList).length : true;
 
   const checkWorkList = (workList) =>
     isEmptyWorkList(workList) ? getEmptyWorkList() : workList;
@@ -23,6 +23,7 @@ export const useWorkList = (user, date) => {
     let resWorkList;
     if (user) {
       const data = await API.get(`/api/${user}/${date}/worklist/worklist`);
+      console.log("WORKLIST, data: ", data?.data);
       resWorkList = checkWorkList(data?.data);
     } else {
       resWorkList = JSON.parse(localStorage.getItem("workList"));
@@ -35,12 +36,14 @@ export const useWorkList = (user, date) => {
 
   const updateWorkList = (_workList) => {
     _workList = checkWorkList(_workList);
+    console.log("BEF UPDATE:", _workList);
     setWorkList(_workList);
+    console.log("AFT UPDATE:", workList);
     if (user) {
-      API.post(`/api/${user}/${date}/worklist/worklist`, {
-        user: "TEST",
-        value: _workList,
-      });
+      // API.post(`/api/${user}/${date}/worklist/worklist`, {
+      //   user: "TEST",
+      //   value: _workList,
+      // });
     } else window.localStorage.setItem("workList", JSON.stringify(_workList));
   };
   return [workList, updateWorkList];

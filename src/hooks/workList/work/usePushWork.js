@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { API } from "../../../tools/axiosSetting";
-
+import randomToken from "rand-token";
 export const usePushWork = ({
   user,
   date,
@@ -11,6 +11,7 @@ export const usePushWork = ({
   const [workColor, setColor] = useState();
   const [workName, setWorkName] = useState();
   const [workTime, setWorkTime] = useState();
+  const id = randomToken.generate(16);
   const getIdx = () =>
     workList?.length && workList[0].workTime !== -1 ? workList.length : 0;
 
@@ -34,12 +35,12 @@ export const usePushWork = ({
     return workObj.workName && workObj.workTime && workObj.workColor;
   };
   const pushWork = async (workObj) => {
-    if (!workList || workList[0]?.workTime === -1) setWorkList([workObj]);
-    else setWorkList([...workList, workObj]);
-    const idx = getIdx();
+    workList[id] = workObj;
+    setWorkList();
+    // if (!workList || workList[0]?.workTime === -1) setWorkList([workObj]);
+    // else setWorkList([...workList, workObj]);
     const response = await API.put(`/api/${user}/${date}/worklist/worklist`, {
       value: workObj,
-      idx,
     });
     console.log("PUSH RESPONSE", response);
   };
@@ -56,7 +57,8 @@ export const usePushWork = ({
       event.preventDefault();
       // const workName = event.target.workName.value;
       // const workTime = parseInt(event.target.workTime.value);
-      const workObj = { workName, workTime, workColor };
+
+      const workObj = { workName, workTime, workColor, id };
       let willUpdate = true;
       if (typeof validator === "function") willUpdate = validator(workObj);
       if (willUpdate) {

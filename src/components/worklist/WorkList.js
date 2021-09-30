@@ -12,7 +12,6 @@ export const WorkList = ({
   updateWorkHook,
   targetTimeObj,
 }) => {
-  console.log(" WORK, ", user, date);
   const { targetWakeTime, targetBedTime, targetWorkTime } = targetTimeObj;
   const [wakeTime, onClickWakeTime, updateWakeTime] = wakeTimeHook;
   const [bedTime, onClickBedTime, updateBedTime] = bedTimeHook;
@@ -39,7 +38,7 @@ export const WorkList = ({
       targetTime={targetBedTime}
     />
   );
-  console.log(workList);
+  console.log("WORKLIST, WORLKIST: ", workList);
   const emptyWork = (
     <EmptyWork
       user={user}
@@ -54,14 +53,16 @@ export const WorkList = ({
       {workList?.length && workList[0].workTime !== -1 ? workList.length : 0}
       {wakeTime && wakeTime.hour !== -1 ? wakeTimeDisplay : addWakeTimeWindow}
       {workList &&
-        workList.map((workItem, idx) => {
+        Object.values(workList).map((workItem) => {
           return workItem.workTime === -1 ? undefined : (
             <Work
+              user={user}
+              date={date}
               workItem={workItem}
               workList={workList}
               setWorkList={setWorkList}
-              key={idx}
-              idx={idx}
+              key={workItem.id}
+              id={workItem.id}
               targetTime={targetWorkTime}
             />
           );

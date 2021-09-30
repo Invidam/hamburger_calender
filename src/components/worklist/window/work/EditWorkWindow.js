@@ -3,16 +3,24 @@ import { useTabs } from "../../../../hooks/example/useTabs";
 import { useEditWork } from "../../../../hooks/workList/work/useEditWork";
 import { CustomizeColor } from "./tabs/CustomizeColor";
 import { IngredientList } from "./tabs/IngredientList";
-export const EditWorkWindow = ({ workList, setWorkList, idx, callback }) => {
+export const EditWorkWindow = ({
+  user,
+  date,
+  workList,
+  setWorkList,
+  id,
+  callback,
+}) => {
   const { onChangeWorkColor, onChangeWorkName, onChangeWorkTime, onEditWork } =
-    useEditWork(workList, setWorkList, idx, callback);
+    useEditWork(workList, setWorkList, id, callback, user, date);
   const Recommended = <IngredientList onChangeWorkColor={onChangeWorkColor} />;
   const Favorite = <h1>Favorite</h1>;
   const Customize = <CustomizeColor onChangeWorkColor={onChangeWorkColor} />;
   const tabNames = ["Recommended", "Favorite", "Customize"];
   const Tabs = [Recommended, Favorite, Customize];
   const [currentItem, currentIdx, changeItem] = useTabs(0, Tabs);
-  const workItem = workList[idx];
+  const workItem = workList[id];
+  console.log("WIN", id);
   return (
     <div className="modalWindow">
       <div className="modalWindow__column">
@@ -68,7 +76,7 @@ export const EditWorkWindow = ({ workList, setWorkList, idx, callback }) => {
       <div className="modalWindow__tab-content">{currentItem}</div>
       <button
         className="modalWindow__submit modalWindow__btn"
-        onClick={(event) => onEditWork(event, idx)}
+        onClick={onEditWork}
       >
         SUBMIT
       </button>

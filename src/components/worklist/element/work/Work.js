@@ -25,7 +25,7 @@ const customStyles = {
     backgroundColor: "rgba(0,0,0,0.4)",
   },
 };
-export const Work = ({ workItem, workList, setWorkList, idx }) => {
+export const Work = ({ user, date, workItem, workList, setWorkList, id }) => {
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const openEditModal = () => setEditModalIsOpen(true);
   const closeEditModal = (event) => setEditModalIsOpen(false);
@@ -34,9 +34,11 @@ export const Work = ({ workItem, workList, setWorkList, idx }) => {
 
   const editWorkWindow = (
     <EditWorkWindow
+      user={user}
+      date={date}
       workList={workList}
       setWorkList={setWorkList}
-      idx={idx}
+      id={id}
       callback={closeEditModal}
     />
   );
@@ -54,7 +56,7 @@ export const Work = ({ workItem, workList, setWorkList, idx }) => {
         className="modalWindow__btn"
         onClick={(event) => {
           closeEditModal();
-          onDeleteWork(event, idx);
+          onDeleteWork(event, id);
         }}
       >
         DELETE
@@ -67,17 +69,17 @@ export const Work = ({ workItem, workList, setWorkList, idx }) => {
       </button>
     </Modal>
   );
-
+  console.log("IN WORK, GET: ", workItem);
   return (
     <div>
       <li
         className="workList__work tooltip"
         style={{ backgroundColor: workItem.workColor }}
-        key={idx}
+        key={id}
         onClick={openEditModal}
       >
         {workItem.workName} {workItem.workTime}h
-        <span className="tooltip-content" key={idx}>
+        <span className="tooltip-content" key={id}>
           {workItem.workName} {workItem.workTime}h
         </span>
       </li>

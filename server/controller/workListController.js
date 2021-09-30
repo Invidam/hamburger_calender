@@ -28,19 +28,38 @@ export const getTime = (req, res) => {
     (errorObject) => res.send(errorObject)
   );
 };
-export const pushWorkList = (req, res) => {
+export const pushWork = (req, res) => {
   const { user, date } = req.params;
-  const { value, idx } = req.body;
+  const { value } = req.body;
   if (!db)
     return res.status(400).json({
       status: "error",
       error: "cannot find db",
     });
   else {
-    db.ref(`users/${user}/date/${date}/workList/workList/${idx}`).set(value);
-    return res.status(200).json({ status: "success" });
+    db.ref(`users/${user}/date/${date}/workList/workList/${value.id}`).set(
+      value
+    );
+    return res.status(200).json({ status: "push work success" });
   }
 };
+
+export const editWork = (req, res) => {
+  const { user, date } = req.params;
+  const { value } = req.body;
+  if (!db)
+    return res.status(400).json({
+      status: "error",
+      error: "cannot find db",
+    });
+  else {
+    db.ref(`users/${user}/date/${date}/workList/workList/${value.id}`).set(
+      value
+    );
+    return res.status(200).json({ status: "edit work success" });
+  }
+};
+
 export const postWorkList = (req, res) => {
   const { user, date } = req.params;
   const { value } = req.body;
@@ -63,6 +82,7 @@ export const getWorkList = (req, res) => {
     "value",
     (workListObj) => {
       const workList = workListObj.val();
+      console.log("worklist: ", workList, typeof workList);
       if (!workList) return res.end();
       else return res.json(workList);
     },

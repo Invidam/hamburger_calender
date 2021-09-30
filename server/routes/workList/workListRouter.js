@@ -1,10 +1,10 @@
 import express from "express";
 import {
+  editWork,
   getTime,
   getWorkList,
   postTime,
-  postWorkList,
-  pushWorkList,
+  pushWork,
 } from "../../controller/workListController.js";
 import { protectorMiddleWare } from "../../middlewares.js";
 
@@ -22,6 +22,6 @@ workListRouter
 workListRouter
   .route("/worklist")
   .all(protectorMiddleWare)
-  .put(pushWorkList)
-  .post(postWorkList)
+  .put(pushWork)
+  .post(editWork)
   .get(getWorkList);

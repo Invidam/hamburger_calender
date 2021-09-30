@@ -19,7 +19,7 @@ export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
   const bedTimeHook = useUpdateTime("bedTime", user, date);
   const updateWorkHook = useWorkList(user, date);
 
-  console.log("HOME , ", user, date);
+  console.log("HOME , ", user, date, updateDateHook[0]);
   return (
     <section>
       <article>
