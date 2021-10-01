@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { API } from "../../../tools/axiosSetting";
+import { API, APIv2 } from "../../../tools/API";
+import { LocalStroage } from "../../../tools/LocalStorage";
 
 export const useWorkList = (user, date) => {
   const getEmptyWorkList = () => {
@@ -22,8 +23,8 @@ export const useWorkList = (user, date) => {
   const getWorkList = async () => {
     let resWorkList;
     if (user) {
-      const data = await API.get(`/api/${user}/${date}/worklist/worklist`);
-      console.log("WORKLIST, data: ", data?.data);
+      const data = await APIv2.workList(user, date).get();
+      console.log("useWORKLIST, data: ", data?.data);
       resWorkList = checkWorkList(data?.data);
     } else {
       resWorkList = JSON.parse(localStorage.getItem("workList"));
@@ -34,11 +35,33 @@ export const useWorkList = (user, date) => {
     getWorkList();
   }, [date, user]);
 
+  const setWork = (workObj) => {
+    const id = workObj.id;
+    const _workList = { ...workList };
+    return {
+      create: async () => {
+        _workList[id] = workObj;
+        setWorkList(_workList);
+        if (user) await APIv2.workList(user, date).create(workObj);
+        else LocalStroage.set(_workList);
+      },
+      edit: async () => {
+        _workList[id] = workObj;
+        setWorkList(_workList);
+        if (user) await APIv2.workList(user, date).edit(workObj);
+        else LocalStroage.set(_workList);
+      },
+      delete: async () => {
+        if (!delete _workList[id]) throw new Error("Cannot Delete WorkItem");
+        setWorkList(_workList);
+        if (user) await APIv2.workList(user, date).delete(workObj);
+        else LocalStroage.set(_workList);
+      },
+    };
+  };
   const updateWorkList = (_workList) => {
     _workList = checkWorkList(_workList);
-    console.log("BEF UPDATE:", _workList);
     setWorkList(_workList);
-    console.log("AFT UPDATE:", workList);
     if (user) {
       // API.post(`/api/${user}/${date}/worklist/worklist`, {
       //   user: "TEST",
@@ -46,5 +69,5 @@ export const useWorkList = (user, date) => {
       // });
     } else window.localStorage.setItem("workList", JSON.stringify(_workList));
   };
-  return [workList, updateWorkList];
+  return { workList, updateWorkList, setWork };
 };

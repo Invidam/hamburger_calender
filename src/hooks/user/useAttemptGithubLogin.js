@@ -1,6 +1,6 @@
 import qs from "qs";
 import { useEffect } from "react";
-import { axiosSetting } from "../date/useSetAxios";
+// import { API } from "../date/useSetAxios";
 export const useAttemptGithubLogin = (props) => {
   const { history, location, customLoginHook } = props;
   const login = customLoginHook[3];
@@ -20,7 +20,7 @@ export const useAttemptGithubLogin = (props) => {
       }
     };
     try {
-      axiosSetting();
+      // API(); API를 사용하므로 지웠음
       getToken();
     } catch (e) {
       console.log("HERE? ");

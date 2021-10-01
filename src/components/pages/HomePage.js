@@ -17,7 +17,7 @@ export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
   const date = changeFormatYYYYMMDD(updateDateHook[0], false);
   const wakeTimeHook = useUpdateTime("wakeTime", user, date);
   const bedTimeHook = useUpdateTime("bedTime", user, date);
-  const updateWorkHook = useWorkList(user, date);
+  const workListHook = useWorkList(user, date);
 
   console.log("HOME , ", user, date, updateDateHook[0]);
   return (
@@ -29,7 +29,7 @@ export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
           updateDateHook={updateDateHook}
           wakeTimeHook={wakeTimeHook}
           bedTimeHook={bedTimeHook}
-          updateWorkHook={updateWorkHook}
+          workListHook={workListHook}
         />
       </article>
       <article>
@@ -39,7 +39,7 @@ export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
           targetTimeObj={targetTimeObj}
           wakeTimeHook={wakeTimeHook}
           bedTimeHook={bedTimeHook}
-          updateWorkHook={updateWorkHook}
+          workListHook={workListHook}
         />
       </article>
     </section>

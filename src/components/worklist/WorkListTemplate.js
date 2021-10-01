@@ -3,7 +3,7 @@ import { WorkList } from "./WorkList";
 export const WorkListTemplate = ({
   wakeTimeHook,
   bedTimeHook,
-  updateWorkHook,
+  workListHook,
   targetTimeObj,
   user,
   date,
@@ -17,7 +17,7 @@ export const WorkListTemplate = ({
         targetTimeObj={targetTimeObj}
         wakeTimeHook={wakeTimeHook}
         bedTimeHook={bedTimeHook}
-        updateWorkHook={updateWorkHook}
+        workListHook={workListHook}
       />
     </div>
   );

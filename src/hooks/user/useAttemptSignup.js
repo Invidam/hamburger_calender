@@ -1,6 +1,6 @@
 import isEmail from "validator/lib/isEmail";
 import { useState } from "react";
-import { API } from "../../tools/axiosSetting";
+import { API } from "../../tools/API";
 
 const isUserName = (username) => !/[^\w]/.exec(username);
 

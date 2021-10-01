@@ -31,6 +31,7 @@ export const getTime = (req, res) => {
 export const pushWork = (req, res) => {
   const { user, date } = req.params;
   const { value } = req.body;
+  console.log("VALIUE: ", value);
   if (!db)
     return res.status(400).json({
       status: "error",
@@ -60,6 +61,21 @@ export const editWork = (req, res) => {
   }
 };
 
+export const deleteWork = (req, res) => {
+  const { user, date } = req.params;
+  const { value } = req.body;
+  console.log("VALUE IN DELETE: ", req.body, value);
+  if (!db)
+    return res.status(400).json({
+      status: "error",
+      error: "cannot find db",
+    });
+  else {
+    const ref = db.ref(`users/${user}/date/${date}/workList/workList/`);
+    ref.child(value.id).remove();
+    return res.status(200).json({ status: "delete work success" });
+  }
+};
 export const postWorkList = (req, res) => {
   const { user, date } = req.params;
   const { value } = req.body;

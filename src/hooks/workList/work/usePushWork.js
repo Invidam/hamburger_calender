@@ -1,19 +1,10 @@
 import { useState } from "react";
-import { API } from "../../../tools/axiosSetting";
+import { API } from "../../../tools/API";
 import randomToken from "rand-token";
-export const usePushWork = ({
-  user,
-  date,
-  workList,
-  setWorkList,
-  callback,
-}) => {
+export const usePushWork = ({ setWork, callback }) => {
   const [workColor, setColor] = useState();
   const [workName, setWorkName] = useState();
   const [workTime, setWorkTime] = useState();
-  const id = randomToken.generate(16);
-  const getIdx = () =>
-    workList?.length && workList[0].workTime !== -1 ? workList.length : 0;
 
   const hexToRgba = (color) => {
     const r = parseInt(color.substr(1, 2), 16);
@@ -31,20 +22,12 @@ export const usePushWork = ({
   };
   const onChangeWorkName = (name) => setWorkName(name);
   const onChangeWorkTime = (time) => setWorkTime(parseInt(time));
-  const validator = (workObj) => {
-    return workObj.workName && workObj.workTime && workObj.workColor;
+  const validator = (workItem) => {
+    return workItem.workName && workItem.workTime && workItem.workColor;
   };
-  const pushWork = async (workObj) => {
-    workList[id] = workObj;
-    setWorkList();
-    // if (!workList || workList[0]?.workTime === -1) setWorkList([workObj]);
-    // else setWorkList([...workList, workObj]);
-    const response = await API.put(`/api/${user}/${date}/worklist/worklist`, {
-      value: workObj,
-    });
-    console.log("PUSH RESPONSE", response);
-  };
-  const getErrText = (workObj) => {
+  const pushWorkItem = async (workItem) => await setWork(workItem).create();
+
+  const getErrText = () => {
     let errText = `[ERROR] ${workName ? "" : "WorkName"}${
       !workTime + !workColor > 0 && !workName ? ", " : ""
     }${workTime ? "" : "WorkTime"}${!workColor > 0 && !workTime ? ", " : ""}${
@@ -57,16 +40,16 @@ export const usePushWork = ({
       event.preventDefault();
       // const workName = event.target.workName.value;
       // const workTime = parseInt(event.target.workTime.value);
+      const id = Date.now().toString(16) + randomToken.generate(5);
 
-      const workObj = { workName, workTime, workColor, id };
+      const workItem = { workName, workTime, workColor, id };
       let willUpdate = true;
-      if (typeof validator === "function") willUpdate = validator(workObj);
+      if (typeof validator === "function") willUpdate = validator(workItem);
       if (willUpdate) {
         callback();
-        console.log("work:ist: ", workList);
-        pushWork(workObj);
+        pushWorkItem(workItem);
       } else {
-        throw new Error(getErrText(workObj));
+        throw new Error(getErrText());
       }
     } catch (error) {
       alert(error);

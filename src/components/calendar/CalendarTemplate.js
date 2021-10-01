@@ -7,14 +7,14 @@ export const CalendarTemplate = ({
   updateDateHook,
   wakeTimeHook,
   bedTimeHook,
-  updateWorkHook,
+  workListHook,
 }) => {
   const clickDay = (event, date) => alert("Clicked day: ", date);
   const [date, onUpdateDate] = updateDateHook;
 
   const [wakeTime, onClickWakeTime, updateWakeTime] = wakeTimeHook;
   const [bedTime, onClickBedTime, updateBedTime] = bedTimeHook;
-  const [workList, setWorkList] = updateWorkHook;
+  const { workList, setWorkList } = workListHook;
   const mark = ["2021-09-12", "2021-09-13", "2021-09-14"];
   return (
     <article>

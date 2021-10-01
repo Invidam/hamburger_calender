@@ -9,13 +9,13 @@ export const WorkList = ({
   date,
   wakeTimeHook,
   bedTimeHook,
-  updateWorkHook,
+  workListHook,
   targetTimeObj,
 }) => {
   const { targetWakeTime, targetBedTime, targetWorkTime } = targetTimeObj;
   const [wakeTime, onClickWakeTime, updateWakeTime] = wakeTimeHook;
   const [bedTime, onClickBedTime, updateBedTime] = bedTimeHook;
-  const [workList, setWorkList] = updateWorkHook;
+  const { workList, setWork } = workListHook;
   const addWakeTimeWindow = (
     <TimeRecordBtn onClick={onClickWakeTime} isWake={true} />
   );
@@ -39,14 +39,7 @@ export const WorkList = ({
     />
   );
   console.log("WORKLIST, WORLKIST: ", workList);
-  const emptyWork = (
-    <EmptyWork
-      user={user}
-      date={date}
-      workList={workList}
-      setWorkList={setWorkList}
-    />
-  );
+  const emptyWork = <EmptyWork setWork={setWork} />;
 
   return (
     <ol>
@@ -59,8 +52,7 @@ export const WorkList = ({
               user={user}
               date={date}
               workItem={workItem}
-              workList={workList}
-              setWorkList={setWorkList}
+              setWork={setWork}
               key={workItem.id}
               id={workItem.id}
               targetTime={targetWorkTime}

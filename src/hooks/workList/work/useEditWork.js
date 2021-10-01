@@ -1,17 +1,11 @@
 import { useState } from "react";
-import { API } from "../../../tools/axiosSetting";
+import { API } from "../../../tools/API";
 
-export const useEditWork = (
-  workList,
-  setWorkList,
-  id,
-  callback,
-  user,
-  date
-) => {
-  const [workColor, setColor] = useState(workList[id].workColor);
-  const [workName, setWorkName] = useState(workList[id].workName);
-  const [workTime, setWorkTime] = useState(workList[id].workTime);
+export const useEditWork = (workItem, setWork, callback) => {
+  const { id } = workItem;
+  const [workColor, setColor] = useState(workItem.workColor);
+  const [workName, setWorkName] = useState(workItem.workName);
+  const [workTime, setWorkTime] = useState(workItem.workTime);
 
   const hexToRgba = (color) => {
     const r = parseInt(color.substr(1, 2), 16);
@@ -29,39 +23,34 @@ export const useEditWork = (
   };
   const onChangeWorkName = (name) => setWorkName(name);
   const onChangeWorkTime = (time) => setWorkTime(parseInt(time));
-  const validator = (workObj) => {
-    return workObj.workName && workObj.workTime && workObj.workColor;
+  const validator = (workItem) => {
+    return workItem.workName && workItem.workTime && workItem.workColor;
   };
-  const editWork = (workObj) => {
-    const workListTemp = workList;
-    workListTemp[id] = workObj;
-    console.log("Orig : ", workList);
-    /*
-    ORIG, TEMP가 똑같다. 다르게 해야 인식이 되서 변한다.
-     */
-    console.log("TEMP : ", workListTemp);
-    setWorkList(workListTemp);
-    const response = API.post(`/api/${user}/${date}/worklist/worklist`, {
-      value: workObj,
-    });
-    console.log("PUSH RESPONSE", response);
+  const editWorkItem = async (workItem) => await setWork(workItem).edit();
+
+  const getErrText = () => {
+    let errText = `[ERROR] ${workName ? "" : "WorkName"}${
+      !workTime + !workColor > 0 && !workName ? ", " : ""
+    }${workTime ? "" : "WorkTime"}${!workColor > 0 && !workTime ? ", " : ""}${
+      workColor ? "" : "WorkColor"
+    } ${!workName + !workTime + !workColor > 1 ? "are" : "is"} not entered.`;
+    return errText;
   };
   const onEditWork = (event) => {
-    event.preventDefault();
-    const workObj = { workName, workTime, workColor, id };
-    console.log("EIDT WORK", workObj);
-    let willUpdate = true;
-    if (typeof validator === "function") willUpdate = validator(workObj);
-    if (willUpdate) {
-      callback();
-      editWork(workObj);
-    } else {
-      let errText = `[ERROR] ${workName ? "" : "WorkName"}${
-        !workTime + !workColor > 0 && !workName ? ", " : ""
-      }${workTime ? "" : "WorkTime"}${!workColor > 0 && !workTime ? ", " : ""}${
-        workColor ? "" : "WorkColor"
-      } ${!workName + !workTime + !workColor > 1 ? "are" : "is"} not entered.`;
-      alert(errText);
+    try {
+      event.preventDefault();
+      const workItem = { workName, workTime, workColor, id };
+      console.log("EIDT WORK", workItem);
+      let willUpdate = true;
+      if (typeof validator === "function") willUpdate = validator(workItem);
+      if (willUpdate) {
+        callback();
+        editWorkItem(workItem);
+      } else {
+        throw new Error(getErrText());
+      }
+    } catch (error) {
+      alert(error);
     }
   };
   return { onChangeWorkColor, onChangeWorkName, onChangeWorkTime, onEditWork };

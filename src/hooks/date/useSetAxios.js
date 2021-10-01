@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
-export const axiosSetting = () => {
+export const settingAXIOS = () => {
   axios.interceptors.response.use(
     (res) => {
       return res;
@@ -19,5 +19,5 @@ export const axiosSetting = () => {
 };
 
 export const useSetAxios = () => {
-  useEffect(() => axiosSetting(), []);
+  useEffect(() => settingAXIOS(), []);
 };

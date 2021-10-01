@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  deleteWork,
   editWork,
   getTime,
   getWorkList,
@@ -24,4 +25,5 @@ workListRouter
   .all(protectorMiddleWare)
   .put(pushWork)
   .post(editWork)
+  .delete(deleteWork)
   .get(getWorkList);

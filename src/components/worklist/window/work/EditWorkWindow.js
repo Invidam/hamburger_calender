@@ -3,23 +3,16 @@ import { useTabs } from "../../../../hooks/example/useTabs";
 import { useEditWork } from "../../../../hooks/workList/work/useEditWork";
 import { CustomizeColor } from "./tabs/CustomizeColor";
 import { IngredientList } from "./tabs/IngredientList";
-export const EditWorkWindow = ({
-  user,
-  date,
-  workList,
-  setWorkList,
-  id,
-  callback,
-}) => {
+export const EditWorkWindow = ({ workItem, setWork, callback }) => {
+  const { id } = workItem;
   const { onChangeWorkColor, onChangeWorkName, onChangeWorkTime, onEditWork } =
-    useEditWork(workList, setWorkList, id, callback, user, date);
+    useEditWork(workItem, setWork, callback);
   const Recommended = <IngredientList onChangeWorkColor={onChangeWorkColor} />;
   const Favorite = <h1>Favorite</h1>;
   const Customize = <CustomizeColor onChangeWorkColor={onChangeWorkColor} />;
   const tabNames = ["Recommended", "Favorite", "Customize"];
   const Tabs = [Recommended, Favorite, Customize];
   const [currentItem, currentIdx, changeItem] = useTabs(0, Tabs);
-  const workItem = workList[id];
   console.log("WIN", id);
   return (
     <div className="modalWindow">

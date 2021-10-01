@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { API, updateAPIHeader } from "../../tools/axiosSetting";
+import { API, updateAPIHeader } from "../../tools/API";
 import { getToday } from "../../tools/time";
 
 const verifyToken = async () => {

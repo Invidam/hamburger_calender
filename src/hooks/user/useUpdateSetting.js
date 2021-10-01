@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { API } from "../../tools/axiosSetting";
+import { API } from "../../tools/API";
 
 export const useUpdateSetting = (user) => {
   console.log("UPDATE SETTING HOOK USER: ", user);

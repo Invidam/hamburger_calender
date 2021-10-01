@@ -25,20 +25,18 @@ const customStyles = {
     backgroundColor: "rgba(0,0,0,0.4)",
   },
 };
-export const Work = ({ user, date, workItem, workList, setWorkList, id }) => {
+export const Work = ({ workItem, setWork }) => {
+  const { id } = workItem;
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const openEditModal = () => setEditModalIsOpen(true);
   const closeEditModal = (event) => setEditModalIsOpen(false);
 
-  const { onDeleteWork } = useDeleteWork(workList, setWorkList, closeEditModal);
+  const { onDeleteWork } = useDeleteWork(workItem, setWork, closeEditModal);
 
   const editWorkWindow = (
     <EditWorkWindow
-      user={user}
-      date={date}
-      workList={workList}
-      setWorkList={setWorkList}
-      id={id}
+      workItem={workItem}
+      setWork={setWork}
       callback={closeEditModal}
     />
   );
@@ -52,13 +50,7 @@ export const Work = ({ user, date, workItem, workList, setWorkList, id }) => {
       overlayClassName="Overlay"
     >
       {editWorkWindow}
-      <button
-        className="modalWindow__btn"
-        onClick={(event) => {
-          closeEditModal();
-          onDeleteWork(event, id);
-        }}
-      >
+      <button className="modalWindow__btn" onClick={onDeleteWork}>
         DELETE
       </button>
       <button
