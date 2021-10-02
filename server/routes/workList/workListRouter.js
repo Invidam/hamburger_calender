@@ -1,11 +1,14 @@
 import express from "express";
 import {
+  deleteTime,
   deleteWork,
+  editTime,
   editWork,
   getTime,
   getWorkList,
-  postTime,
   pushWork,
+  putTime,
+  updateWorkList,
 } from "../../controller/workListController.js";
 import { protectorMiddleWare } from "../../middlewares.js";
 
@@ -18,12 +21,19 @@ workListRouter
   .route("/record-time/:key")
   .all(protectorMiddleWare)
   .get(getTime)
-  .post(postTime);
+  .put(putTime)
+  .post(editTime)
+  .delete(deleteTime);
 
 workListRouter
   .route("/worklist")
   .all(protectorMiddleWare)
-  .put(pushWork)
   .post(editWork)
+  .put(pushWork)
   .delete(deleteWork)
   .get(getWorkList);
+
+workListRouter
+  .route("/worklist/update")
+  .all(protectorMiddleWare)
+  .post(updateWorkList);

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "../../css/pages/pages.css";
 import { useAttemptLogin } from "../../hooks/user/useAttemptLogin";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,7 +6,7 @@ import { faGithub } from "@fortawesome/free-brands-svg-icons";
 const element = <FontAwesomeIcon icon={faGithub} />;
 
 export const LoginPage = ({ customLoginHook, history, location }) => {
-  const [user, setUser, authenticated, login, logout] = customLoginHook;
+  const [, , , login] = customLoginHook;
 
   const {
     email,

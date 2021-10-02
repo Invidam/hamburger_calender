@@ -2,7 +2,7 @@ import Calendar from "react-calendar";
 import { changeFormatYYYYMMDD, UTCtoKTC } from "../../tools/time";
 import "../../css/calendar.css";
 import { useState } from "react";
-import { useUpdateTime } from "../../hooks/workList/time/useUpdateTime";
+import { useRecordTime } from "../../hooks/workList/time/useRecordTime";
 export const CalendarTemplate = () => {
   const [value, onChange] = useState(new Date());
   const clickDay = (event, value) => alert("Clicked day: ", value);

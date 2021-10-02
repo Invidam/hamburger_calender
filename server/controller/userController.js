@@ -84,18 +84,6 @@ export const loginNotSocial = async (req, res) => {
   };
   const getUserInfoByEmail = async (email) => {
     const userList = await getUserList();
-    console.log(userList);
-    userList.forEach((user) => {
-      console.log(
-        "USER INFO",
-        user,
-        user?.email && user?.email === email,
-        user?.email,
-        email,
-        typeof email,
-        user?.email === email
-      );
-    });
     return userList.find((user) => user?.email && user?.email === email);
   };
 
@@ -132,11 +120,9 @@ export const loginGithub = async (req, res) => {
       Authorization: `token ${token}`,
     },
   });
-  console.log("USER DATA: ", data);
   //**** */
   const checkExistGithubUser = async (username) => {
     const userList = await getUserList();
-    console.log(userList);
     const findUser = userList.find((user) => user?.username === username);
     if (!findUser) return 0;
     return findUser
@@ -147,7 +133,6 @@ export const loginGithub = async (req, res) => {
   };
 
   const existCode = await checkExistGithubUser(data?.login);
-  console.log("EXIST CODE: ", existCode);
   //이미 존재하는 유저라면, uid가 맞는지 확인.
   if (existCode === NOTEXIST) {
     const userInfo = {
@@ -163,8 +148,6 @@ export const loginGithub = async (req, res) => {
     const access_token = await jwt.sign({
       username: data.login,
     });
-    console.log("TOEKB: ", access_token);
-    console.log(data.login);
     return res.json({ access_token, username: data.login });
   } else {
     //401 error
@@ -174,14 +157,12 @@ export const loginGithub = async (req, res) => {
 
 export const postSetting = (req, res) => {
   const { user, value } = req.body;
-  console.log(req.body, user, value);
   const ref = db.ref(`users/${user}/setting`);
   ref.set(value);
 };
 
 export const getSetting = (req, res) => {
   const { user } = req.params;
-  console.log("GET DATA", req.params, user);
   const ref = db.ref(`users/${user}/setting`);
   ref.once(
     "value",

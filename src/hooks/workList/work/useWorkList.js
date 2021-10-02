@@ -1,41 +1,51 @@
 import { useEffect, useState } from "react";
-import { API, APIv2 } from "../../../tools/API";
+import { APIv2 } from "../../../tools/API";
 import { LocalStroage } from "../../../tools/LocalStorage";
 
+export const isEmptyWorkList = (workList) =>
+  workList ? !Object.keys(workList).length : true;
+export const isEmptyWork = (workObj) =>
+  workObj ? !Object.keys(workObj).length : true;
+const getEmptyWorkList = () => {
+  return {};
+};
+const checkWorkList = (workList) =>
+  isEmptyWorkList(workList) ? getEmptyWorkList() : workList;
+
+// const getInitList = (user) =>
+//   !user && window.localStorage.getItem("workList")
+//     ? JSON.parse(window.localStorage.getItem("workList"))
+//     : [];
+
 export const useWorkList = (user, date) => {
-  const getEmptyWorkList = () => {
-    return {};
-  };
-  const isEmptyWorkList = (workList) =>
-    workList ? !Object.keys(workList).length : true;
-
-  const checkWorkList = (workList) =>
-    isEmptyWorkList(workList) ? getEmptyWorkList() : workList;
-
-  const getInitList = (user) =>
-    !user && window.localStorage.getItem("workList")
-      ? JSON.parse(window.localStorage.getItem("workList"))
-      : [];
-
-  const initList = getInitList();
-  const [workList, setWorkList] = useState(initList);
-
+  // const initList = getInitList();
+  const [workList, setWorkList] = useState("Loading");
   const getWorkList = async () => {
-    let resWorkList;
-    if (user) {
-      const data = await APIv2.workList(user, date).get();
-      console.log("useWORKLIST, data: ", data?.data);
-      resWorkList = checkWorkList(data?.data);
-    } else {
-      resWorkList = JSON.parse(localStorage.getItem("workList"));
+    try {
+      let resWorkList;
+      if (user) {
+        console.log("BEF: ", workList);
+        const data = await APIv2.workList(user, date).get();
+        resWorkList = checkWorkList(data?.data);
+        console.log("USEWORKLIST, data catch");
+        console.log("USEWORKLIST DATA  CATCH  AFT");
+        setWorkList(resWorkList);
+      } else {
+        resWorkList = LocalStroage.workList().get();
+        console.log("USEWORKLIST DATA NO CATCH [][] AFT");
+        setWorkList(resWorkList);
+      }
+    } catch (error) {
+      alert(error);
     }
-    setWorkList(resWorkList);
   };
   useEffect(() => {
+    console.log("GET WORKLIST START");
     getWorkList();
-  }, [date, user]);
+  }, [date]);
 
   const setWork = (workObj) => {
+    console.log("SET WRORK START");
     const id = workObj.id;
     const _workList = { ...workList };
     return {
@@ -43,31 +53,21 @@ export const useWorkList = (user, date) => {
         _workList[id] = workObj;
         setWorkList(_workList);
         if (user) await APIv2.workList(user, date).create(workObj);
-        else LocalStroage.set(_workList);
+        else LocalStroage.workList().set(_workList);
       },
       edit: async () => {
         _workList[id] = workObj;
         setWorkList(_workList);
         if (user) await APIv2.workList(user, date).edit(workObj);
-        else LocalStroage.set(_workList);
+        else LocalStroage.workList().set(_workList);
       },
       delete: async () => {
         if (!delete _workList[id]) throw new Error("Cannot Delete WorkItem");
         setWorkList(_workList);
         if (user) await APIv2.workList(user, date).delete(workObj);
-        else LocalStroage.set(_workList);
+        else LocalStroage.workList().set(_workList);
       },
     };
   };
-  const updateWorkList = (_workList) => {
-    _workList = checkWorkList(_workList);
-    setWorkList(_workList);
-    if (user) {
-      // API.post(`/api/${user}/${date}/worklist/worklist`, {
-      //   user: "TEST",
-      //   value: _workList,
-      // });
-    } else window.localStorage.setItem("workList", JSON.stringify(_workList));
-  };
-  return { workList, updateWorkList, setWork };
+  return [workList, setWork];
 };

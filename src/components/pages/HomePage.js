@@ -3,11 +3,10 @@
 import { WorkListTemplate } from "../worklist/WorkListTemplate";
 import "../../css/calendar.css";
 import { CalendarTemplate } from "../calendar/CalendarTemplate";
-import { useUpdateTime } from "../../hooks/workList/time/useUpdateTime";
+import { useRecordTime } from "../../hooks/workList/time/useRecordTime";
 import { useWorkList } from "../../hooks/workList/work/useWorkList";
 import { changeFormatYYYYMMDD } from "../../tools/time";
 
-import { useState } from "react";
 export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
   // const [date, setDate] = useState(new Date());
   // const [test, testtest] = useState(0);
@@ -15,12 +14,27 @@ export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
   // const mark = ["2021-09-12", "2021-09-13", "2021-09-14"];
   // const updateDateHook = useState(new Date());
   const date = changeFormatYYYYMMDD(updateDateHook[0], false);
-  const wakeTimeHook = useUpdateTime("wakeTime", user, date);
-  const bedTimeHook = useUpdateTime("bedTime", user, date);
+  const wakeTimeHook = useRecordTime("wakeTime", user, date);
+  const bedTimeHook = useRecordTime("bedTime", user, date);
   const workListHook = useWorkList(user, date);
-
-  console.log("HOME , ", user, date, updateDateHook[0]);
-  return (
+  const isLoading = () =>
+    wakeTimeHook[0] === "Loading" ||
+    bedTimeHook[0] === "Loading" ||
+    workListHook[0] === "Loading";
+  console.log("[HOME] , ", user, date, updateDateHook[0]);
+  console.log(
+    "HOME, LOADING CHECK",
+    "WAKE",
+    wakeTimeHook[0],
+    "BED",
+    bedTimeHook[0],
+    "WORK",
+    workListHook[0],
+    isLoading()
+  );
+  return isLoading() ? (
+    <h1>LOADING</h1>
+  ) : (
     <section>
       <article>
         {`Hello ${user}`}

@@ -12,13 +12,14 @@ export const useAttemptSignup = ({ history, locaiton }) => {
     try {
       console.log("CONNET ON REACT-REGISTER page: ");
       console.log(username, email, password);
-      console.log("UN", username, username.length, isUserName(username));
       if (!isEmail(email) || !isUserName(username)) {
         let errText = "";
         if (!isEmail(email)) errText += "Email";
         if (!isEmail(email) && !isUserName(username)) errText += " and ";
         if (!isUserName(username)) errText += "UserName";
-        throw `Unexpected ${errText} Form. Please chek your ${errText}.`;
+        throw new Error(
+          `Unexpected ${errText} Form. Please chek your ${errText}.`
+        );
       }
       if (!username || !email || !password) {
         let errText = `[ERROR] ${username ? "" : "Username"}${
@@ -28,16 +29,14 @@ export const useAttemptSignup = ({ history, locaiton }) => {
         } ${!username + !email + !password > 1 ? "are" : "is"} not entered.`;
         throw errText;
       }
-      const response = await API.post("/auth/signup", {
+      await API.post("/auth/signup", {
         username,
         email,
         password,
       });
-      console.log("RES: ", response);
       alert(`Sign up complete. \nLogin your entered email & password`);
       history.push("/login");
     } catch (error) {
-      console.log("CATCH", error);
       alert(error);
     }
   };

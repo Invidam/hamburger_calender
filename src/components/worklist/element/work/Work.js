@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "react-modal";
+import { useModal } from "../../../../hooks/example/useModal";
 import { useDeleteWork } from "../../../../hooks/workList/work/useDeleteWork";
-import { useEditWork } from "../../../../hooks/workList/work/useEditWork";
 import { EditWorkWindow } from "../../window/work/EditWorkWindow";
 Modal.setAppElement("#root");
 const customStyles = {
@@ -27,10 +27,7 @@ const customStyles = {
 };
 export const Work = ({ workItem, setWork }) => {
   const { id } = workItem;
-  const [editModalIsOpen, setEditModalIsOpen] = useState(false);
-  const openEditModal = () => setEditModalIsOpen(true);
-  const closeEditModal = (event) => setEditModalIsOpen(false);
-
+  const { editModalIsOpen, openEditModal, closeEditModal } = useModal();
   const { onDeleteWork } = useDeleteWork(workItem, setWork, closeEditModal);
 
   const editWorkWindow = (
@@ -61,13 +58,13 @@ export const Work = ({ workItem, setWork }) => {
       </button>
     </Modal>
   );
-  console.log("IN WORK, GET: ", workItem);
+  console.log("[WORK]");
   return (
     <div>
       <li
         className="workList__work tooltip"
         style={{ backgroundColor: workItem.workColor }}
-        key={id}
+        key={"_" + id}
         onClick={openEditModal}
       >
         {workItem.workName} {workItem.workTime}h
@@ -75,7 +72,7 @@ export const Work = ({ workItem, setWork }) => {
           {workItem.workName} {workItem.workTime}h
         </span>
       </li>
-      {editModal}
+      {/* {editModal} */}
     </div>
   );
 };

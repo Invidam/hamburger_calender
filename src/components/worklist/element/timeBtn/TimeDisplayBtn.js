@@ -32,24 +32,15 @@ const customStyles = {
 export const TimeRecordDisplay = ({
   recordTime,
   isWake,
-  updateRecordTime,
+  setTime,
   targetTime,
 }) => {
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const openEditModal = () => setEditModalIsOpen(true);
 
   const closeEditModal = (event) => setEditModalIsOpen(false);
-  const editTimeHook = useEditTime(
-    recordTime,
-    updateRecordTime,
-    isWake,
-    closeEditModal
-  );
-  const { onDeleteTime } = useDeleteTime(
-    recordTime,
-    updateRecordTime,
-    closeEditModal
-  );
+  const editTimeHook = useEditTime(recordTime, setTime, isWake, closeEditModal);
+  const { onDeleteTime } = useDeleteTime(recordTime, setTime, closeEditModal);
   const editTimeWindow = (
     <EditTimeWindow
       recordTime={recordTime}

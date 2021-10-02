@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { API } from "../../tools/API";
 
 export const useUpdateSetting = (user) => {
-  console.log("UPDATE SETTING HOOK USER: ", user);
+  console.log("UPDATE SETTING HOOK USER: ");
   const [targetWorkTime, setTargetWorkTime] = useState(user ? 0 : -1);
   const [targetWakeHour, setTargetWakeHour] = useState(user ? 0 : -1);
   const [targetBedHour, setTargetBedHour] = useState(user ? 0 : -1);
   const [targetWakeMinute, setTargetWakeMinute] = useState(user ? 0 : -1);
   const [targetBedMinute, setTargetBedMinute] = useState(user ? 0 : -1);
-
+  const [load, setLoad] = useState(true);
   const onChangeTargetWorkTime = (workTime) =>
     setTargetWorkTime(parseInt(workTime));
   const onChangeTargetWakeHour = (wakeHour) =>
@@ -22,22 +22,24 @@ export const useUpdateSetting = (user) => {
 
   const getAndUpdateSetting = async () => {
     try {
+      console.log("SETTING");
       const data = await API.get(`/auth/setting/${user}`);
       const settingObj = data?.data;
+      console.log("SETTING END", settingObj);
+      if (load) setLoad(false);
       if (!data) throw new Error("Cannot find data");
-      console.log("SETTING DATA: ", settingObj);
-      setTargetWorkTime(settingObj.targetWorkTime);
-      setTargetWakeHour(settingObj.targetWakeTime.hour);
-      setTargetBedHour(settingObj.targetBedTime.hour);
-      setTargetWakeMinute(settingObj.targetWakeTime.minute);
-      setTargetBedMinute(settingObj.targetBedTime.minute);
+      setTargetWorkTime(settingObj?.targetWorkTime);
+      setTargetWakeHour(settingObj?.targetWakeTime.hour);
+      setTargetBedHour(settingObj?.targetBedTime.hour);
+      setTargetWakeMinute(settingObj?.targetWakeTime.minute);
+      setTargetBedMinute(settingObj?.targetBedTime.minute);
     } catch (error) {
       alert(error);
       // history.push("/setting");
     }
   };
   useEffect(() => {
-    if (user) getAndUpdateSetting();
+    if (user && user !== "Loading") getAndUpdateSetting();
   }, [user]);
 
   const validator = (targetTimeObj) => {
@@ -59,8 +61,6 @@ export const useUpdateSetting = (user) => {
     };
     if (typeof validator === "function") willUpdate = validator(targetTimeObj);
     if (willUpdate) {
-      console.log("SUBMIT: ", targetTimeObj);
-
       API.post(`/auth/setting/${user}`, {
         value: targetTimeObj,
         user,
@@ -83,7 +83,6 @@ export const useUpdateSetting = (user) => {
     targetWakeTime: { hour: targetWakeHour, minute: targetWakeMinute },
     targetBedTime: { hour: targetBedHour, minute: targetBedMinute },
   };
-  console.log("UPDATE SETTING HOOK targetTimeObj: ", targetTimeObj);
   return {
     onEditTargetTime,
     targetWorkTime,
@@ -97,5 +96,6 @@ export const useUpdateSetting = (user) => {
     onChangeTargetBedHour,
     onChangeTargetWakeMinute,
     onChangeTargetBedMinute,
+    load,
   };
 };

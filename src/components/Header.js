@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
 import "../css/header/header.css";
-import { isLoggedin } from "../tools/auth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCog } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faUserCog } from "@fortawesome/free-solid-svg-icons";
 
-const element = (
-  <FontAwesomeIcon icon={faUserCog} size="2x" style={{ fontSize: `18px` }} />
-);
+// const element = (
+//   <FontAwesomeIcon icon={faUserCog} size="2x" style={{ fontSize: `18px` }} />
+// );
 
 export const Header = ({ date, customLoginHook }) => {
-  const [user, setUser, authenticated, login, logout] = customLoginHook;
+  const [user, , authenticated, , logout] = customLoginHook;
 
   const loginColumn = (
     <div className="header__column header-link">

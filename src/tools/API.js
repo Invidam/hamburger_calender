@@ -16,14 +16,12 @@ API.interceptors.response.use(
     return res;
   },
   (e) => {
-    console.log("ERR", e?.response);
     if (e?.response?.status === 401) {
-      console.log("ER1ROR: ", e.response);
       // alert();
       throw new Error(`401 - Unauthorized\n${e.response?.data}`);
     }
-    alert("other err");
-    throw new Error(`toher rerr`);
+    // alert("other err");
+    throw new Error(e);
     // return Promise.reject(e);
   }
 );
@@ -34,6 +32,27 @@ export const updateAPIHeader = () => {
 export class APIv2 {
   static updateHeader() {
     API = axios.create(getCustomConfig());
+  }
+  static recordTime(user, date, key) {
+    try {
+      const url = `/api/${user}/${date}/worklist/record-time/${key}`;
+      return {
+        get: async () => {
+          return await API.get(url);
+        },
+        create: async (data) => {
+          return await API.put(url, { value: data });
+        },
+        edit: async (data) => {
+          return await API.post(url, { value: data });
+        },
+        delete: async (data) => {
+          return await API.delete(url, { data: { value: data } });
+        },
+      };
+    } catch (error) {
+      throw new Error(error);
+    }
   }
   static workList(user, date) {
     try {
@@ -49,8 +68,10 @@ export class APIv2 {
           return await API.post(url, { value: data });
         },
         delete: async (data) => {
-          console.log("IN API DATA: ", data);
           return await API.delete(url, { data: { value: data } });
+        },
+        update: async (data) => {
+          return await API.post(url + "/update", { value: data });
         },
       };
     } catch (error) {

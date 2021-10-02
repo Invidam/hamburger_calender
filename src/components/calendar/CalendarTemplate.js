@@ -1,7 +1,6 @@
 import Calendar from "react-calendar";
 import { changeFormatYYYYMMDD, getToday, UTCtoKTC } from "../../tools/time";
 import "../../css/calendar.css";
-import { useEffect } from "react";
 export const CalendarTemplate = ({
   user,
   updateDateHook,
@@ -9,13 +8,14 @@ export const CalendarTemplate = ({
   bedTimeHook,
   workListHook,
 }) => {
-  const clickDay = (event, date) => alert("Clicked day: ", date);
+  // const clickDay = (event, date) => alert("Clicked day: ", date);
   const [date, onUpdateDate] = updateDateHook;
 
-  const [wakeTime, onClickWakeTime, updateWakeTime] = wakeTimeHook;
-  const [bedTime, onClickBedTime, updateBedTime] = bedTimeHook;
-  const { workList, setWorkList } = workListHook;
+  // const [wakeTime, onClickWakeTime, updateWakeTime] = wakeTimeHook;
+  // const [bedTime, onClickBedTime, updateBedTime] = bedTimeHook;
+  // const { workList, setWorkList } = workListHook;
   const mark = ["2021-09-12", "2021-09-13", "2021-09-14"];
+  console.log("[Calendar]");
   return (
     <article>
       <Calendar

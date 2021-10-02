@@ -1,5 +1,4 @@
 import "../../css/pages/pages.css";
-import { useUpdateSetting } from "../../hooks/user/useUpdateSetting";
 export const SettingPage = ({ updateSettingHook }) => {
   //const = {user,history,location } = props;
   const {

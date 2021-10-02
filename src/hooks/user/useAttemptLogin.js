@@ -17,7 +17,6 @@ export const useAttemptLogin = (login, history) => {
       event.preventDefault();
       const userInfo = { email, password };
       await login(userInfo, "notSocial");
-      console.log("로그인 끝나고 /로 히스토리 푸시 될 예정");
       history.push("/");
     } catch (error) {
       alert(error);

@@ -3,7 +3,7 @@ import "./css/App.css";
 import "./css/calendar.css";
 import { changeFormatYYYYMMDD } from "./tools/time";
 
-import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { NotFoundPage } from "./components/pages/NotFoundPage";
 import { LoginPage } from "./components/pages/LoginPage";
 import { HomePage } from "./components/pages/HomePage";
@@ -12,24 +12,24 @@ import { useLogin } from "./hooks/user/useLogin";
 import { useSetDate } from "./hooks/date/useSetDate";
 import { GithubLoginPage } from "./components/pages/GithubLoginPage";
 import { SignupPage } from "./components/pages/SignupPage";
-import { useSetAxios } from "./hooks/date/useSetAxios";
-import { isLoggedIn } from "./tools/auth";
 import { SettingPage } from "./components/pages/SettingPage";
 import { useUpdateSetting } from "./hooks/user/useUpdateSetting";
 
-const USER = "TEST";
-function App(props) {
+function App() {
   // useSetAxios();
   const updateDateHook = useSetDate();
   const date = changeFormatYYYYMMDD(updateDateHook[0], false);
   const customLoginHook = useLogin();
   const user = customLoginHook[0];
   const isLoggedIn = customLoginHook[2];
-  console.log("APP USER: ", user);
+  console.log("[APP] USER: ", user);
   const updateSettingHook = useUpdateSetting(user);
-  const { targetTimeObj } = updateSettingHook;
-
-  return (
+  const { targetTimeObj, load } = updateSettingHook;
+  const isLoading = () => user === "Loading" || load;
+  console.log("[APP] IS Loading? ", isLoading());
+  return isLoading() ? (
+    <h1> Loading in APP</h1>
+  ) : (
     <Router>
       <Header date={date} customLoginHook={customLoginHook} />
       <main>
@@ -51,7 +51,6 @@ function App(props) {
             render={({ history, location }) => {
               if (isLoggedIn) {
                 history.push("/");
-                // alert("You are already logged in.");
                 return <NotFoundPage />;
               } else
                 return (

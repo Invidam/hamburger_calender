@@ -1,17 +1,23 @@
-export const useDeleteTime = (recordTime, updateRecordTime, callback) => {
+export const useDeleteTime = (recordTime, setTime, callback) => {
   const onDeleteTime = (event) => {
-    event.preventDefault();
-    const deleteAction = () => {
-      callback();
-      updateRecordTime(undefined);
-    };
-    const cancelAction = () => {
-      console.log("CANCEL DELETE Time");
-    };
-    if (window.confirm("Are you sure you want to delete this item?")) {
-      deleteAction();
-    } else {
-      cancelAction();
+    try {
+      event.preventDefault();
+
+      const deleteTime = async () => await setTime(recordTime).delete();
+      const deleteAction = () => {
+        callback();
+        deleteTime(undefined);
+      };
+      const cancelAction = () => {
+        console.log("CANCEL DELETE Time");
+      };
+      if (window.confirm("Are you sure you want to delete this item?")) {
+        deleteAction();
+      } else {
+        cancelAction();
+      }
+    } catch (error) {
+      alert(error);
     }
   };
   return { onDeleteTime };

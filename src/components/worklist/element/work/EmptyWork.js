@@ -1,6 +1,5 @@
 import Modal from "react-modal";
 import { useState } from "react";
-import { usePushWork } from "../../../../hooks/workList/work/usePushWork";
 import { AddWorkWindow } from "../../window/work/AddWorkWindow";
 Modal.setAppElement("#root");
 const customStyles = {
@@ -48,6 +47,7 @@ export const EmptyWork = ({ setWork }) => {
       </button>
     </Modal>
   );
+  console.log("[EMPTY]");
   return (
     <div>
       <li

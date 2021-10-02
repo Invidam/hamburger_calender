@@ -3,10 +3,33 @@ export class LocalStroage {
     return {
       isEmpty: () =>
         localStorage.getItem("workList")
-          ? !JSON.parse(window.localStorage.getItem("workList")).length
+          ? !JSON.parse(localStorage.getItem("workList")).length
           : true,
-      get: () => JSON.parse(window.localStorage.getItem("workList")),
-      set: (workList) => window.localStorage.setItem("workList", workList),
+      get: () => {
+        if (!localStorage.getItem("workList"))
+          localStorage.setItem("workList", "{}");
+        return JSON.parse(localStorage.getItem("workList"));
+      },
+      set: (workList) =>
+        localStorage.setItem("workList", JSON.stringify(workList)),
+      remove: () => localStorage.setItem("workList", "{}"),
+    };
+  }
+  static recordTime(key) {
+    return {
+      isEmpty: () =>
+        localStorage.getItem(key)
+          ? !JSON.parse(localStorage.getItem(key)).length
+          : true,
+      get: () => {
+        if (!localStorage.getItem(key)) localStorage.setItem(key, "{}");
+        return JSON.parse(localStorage.getItem(key));
+      },
+      set: (timeObj) => {
+        timeObj = JSON.stringify(timeObj);
+        localStorage.setItem(key, timeObj);
+      },
+      remove: () => localStorage.setItem(key, "{}"),
     };
   }
 }

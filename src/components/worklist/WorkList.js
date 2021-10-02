@@ -4,6 +4,9 @@ import { TimeRecordDisplay } from "./element/timeBtn/TimeDisplayBtn";
 import { TimeRecordBtn } from "./element/timeBtn/TimeRecordBtn";
 import { EmptyWork } from "./element/work/EmptyWork";
 import { Work } from "./element/work/Work";
+import { isEmptyTimeObj } from "../../hooks/workList/time/useRecordTime";
+import { isEmptyWork } from "../../hooks/workList/work/useWorkList";
+import { useState } from "react";
 export const WorkList = ({
   user,
   date,
@@ -12,10 +15,11 @@ export const WorkList = ({
   workListHook,
   targetTimeObj,
 }) => {
+  const [val, setVal] = useState(0);
   const { targetWakeTime, targetBedTime, targetWorkTime } = targetTimeObj;
-  const [wakeTime, onClickWakeTime, updateWakeTime] = wakeTimeHook;
-  const [bedTime, onClickBedTime, updateBedTime] = bedTimeHook;
-  const { workList, setWork } = workListHook;
+  const [wakeTime, onClickWakeTime, setWakeTime] = wakeTimeHook;
+  const [bedTime, onClickBedTime, setBedTime] = bedTimeHook;
+  const [workList, setWork] = workListHook;
   const addWakeTimeWindow = (
     <TimeRecordBtn onClick={onClickWakeTime} isWake={true} />
   );
@@ -26,7 +30,7 @@ export const WorkList = ({
     <TimeRecordDisplay
       recordTime={wakeTime}
       isWake={true}
-      updateRecordTime={updateWakeTime}
+      setTime={setWakeTime}
       targetTime={targetWakeTime}
     />
   );
@@ -34,33 +38,32 @@ export const WorkList = ({
     <TimeRecordDisplay
       recordTime={bedTime}
       isWake={false}
-      updateRecordTime={updateBedTime}
+      setTime={setBedTime}
       targetTime={targetBedTime}
     />
   );
-  console.log("WORKLIST, WORLKIST: ", workList);
+  console.log("[WORKLIST]", workList);
   const emptyWork = <EmptyWork setWork={setWork} />;
 
   return (
     <ol>
-      {workList?.length && workList[0].workTime !== -1 ? workList.length : 0}
-      {wakeTime && wakeTime.hour !== -1 ? wakeTimeDisplay : addWakeTimeWindow}
+      {isEmptyTimeObj(wakeTime) ? addWakeTimeWindow : wakeTimeDisplay}
       {workList &&
-        Object.values(workList).map((workItem) => {
-          return workItem.workTime === -1 ? undefined : (
+        Object.values(workList).map((workItem, idx) => {
+          return isEmptyWork(workItem) ? undefined : (
             <Work
               user={user}
               date={date}
               workItem={workItem}
               setWork={setWork}
-              key={workItem.id}
+              key={idx}
               id={workItem.id}
               targetTime={targetWorkTime}
             />
           );
         })}
       {emptyWork}
-      {bedTime && bedTime.hour !== -1 ? bedTimeDisplay : addBedTimeWindow}
+      {isEmptyTimeObj(bedTime) ? addBedTimeWindow : bedTimeDisplay}
     </ol>
     // </div>
   );

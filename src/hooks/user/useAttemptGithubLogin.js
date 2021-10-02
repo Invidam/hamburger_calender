@@ -14,7 +14,6 @@ export const useAttemptGithubLogin = (props) => {
         login(userInfo, "github");
         history.push("/");
       } catch (error) {
-        console.log("GITERR", error);
         alert(error);
         history.push("/login");
       }
@@ -23,7 +22,6 @@ export const useAttemptGithubLogin = (props) => {
       // API(); API를 사용하므로 지웠음
       getToken();
     } catch (e) {
-      console.log("HERE? ");
       alert(e);
     }
   }, [location, history]);

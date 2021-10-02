@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { API } from "../../../tools/API";
+// import { API } from "../../../tools/API";
 
 export const useEditWork = (workItem, setWork, callback) => {
   const { id } = workItem;
@@ -15,7 +15,6 @@ export const useEditWork = (workItem, setWork, callback) => {
   };
   const onChangeWorkColor = (color) => {
     if (!color) {
-      console.log("NO", color);
     } else if (color.substr(0, 1) === "#") {
       color = hexToRgba(color);
     }
@@ -40,7 +39,6 @@ export const useEditWork = (workItem, setWork, callback) => {
     try {
       event.preventDefault();
       const workItem = { workName, workTime, workColor, id };
-      console.log("EIDT WORK", workItem);
       let willUpdate = true;
       if (typeof validator === "function") willUpdate = validator(workItem);
       if (willUpdate) {

@@ -23,7 +23,7 @@ themeList.set("vegetable", vegetableTheme);
 export const IngredientList = ({ onChangeWorkColor }) => {
   const themeArray = [...themeList];
   let isFirst = true;
-  const [currentItem, currentIdx, setCurrentIndex] = useTabs(0, themeArray);
+  const [, currentIdx, setCurrentIndex] = useTabs(0, themeArray);
   const onClick = (event, style, idx) => {
     isFirst = false;
     event.preventDefault();

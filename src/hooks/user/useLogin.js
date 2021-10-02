@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { API, updateAPIHeader } from "../../tools/API";
+import { API, APIv2, updateAPIHeader } from "../../tools/API";
+import { LocalStroage } from "../../tools/LocalStorage";
 import { getToday } from "../../tools/time";
 
 const verifyToken = async () => {
@@ -9,7 +10,7 @@ const verifyToken = async () => {
 };
 
 export const useLogin = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState("Loading");
   const setUserInToken = async () => {
     try {
       if (
@@ -20,46 +21,39 @@ export const useLogin = () => {
         throw new Error("access_token not exists.");
       }
       const { username } = await verifyToken();
+      console.log("user find! ", username);
       setUser(username);
     } catch (error) {
+      setUser(undefined);
       console.warn(error);
     }
   };
+  useEffect(() => {
+    setUserInToken();
+  }, []);
   const setDataInLocal = (user) => {
     try {
       const date = getToday();
       updateAPIHeader();
-      if (localStorage.getItem("wakeTime")) {
-        const wakeTime = JSON.parse(localStorage.getItem("wakeTime"));
-        console.log("TO set Data: waketime", wakeTime);
-        API.post(`/api/${user}/${date}/worklist/record-time/wakeTime`, {
-          value: wakeTime,
-        });
-        localStorage.removeItem("wakeTime");
+      if (LocalStroage.recordTime("wakeTime").isEmpty()) {
+        const wakeTime = LocalStroage.recordTime("wakeTime").get();
+        APIv2.recordTime(user, date, "wakeTime").edit(wakeTime);
+        LocalStroage.recordTime("wakeTime").remove();
       }
-      if (localStorage.getItem("bedTime")) {
-        const bedTime = JSON.parse(localStorage.getItem("bedTime"));
-        console.log("TO set Data: bedTime", bedTime);
-        API.post(`/api/${user}/${date}/worklist/record-time/bedTime`, {
-          value: bedTime,
-        });
-        localStorage.removeItem("bedTime");
+      if (LocalStroage.recordTime("bedTime").isEmpty()) {
+        const bedTime = LocalStroage.recordTime("bedTime").get();
+        APIv2.recordTime(user, date, "bedTime").edit(bedTime);
+        LocalStroage.recordTime("bedTime").remove();
       }
-      if (localStorage.getItem("workList")) {
-        const workList = JSON.parse(localStorage.getItem("workList"));
-        console.log("TO set Data: waketime", workList);
-        API.post(`/api/${user}/${date}/worklist/record-time/workList`, {
-          value: workList,
-        });
-        localStorage.removeItem("workList");
+      if (LocalStroage.workList().isEmpty()) {
+        const workList = LocalStroage.workList("workList").get();
+        APIv2.workList(user, date, "workList").update(workList);
+        LocalStroage.workList("workList").remove();
       }
     } catch (error) {
       alert(error);
     }
   };
-  useEffect(() => {
-    if (!user) setUserInToken();
-  }, [user]);
   const authenticated = user != null;
   const login = async (userInfo, socialType) => {
     // setUser(signIn({ email, password }));
