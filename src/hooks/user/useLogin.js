@@ -5,7 +5,7 @@ import { getToday } from "../../tools/time";
 
 const verifyToken = async () => {
   const { token } = JSON.parse(localStorage.getItem("access_token"));
-  const response = await API.post("/api/jwt/verify", { token });
+  const response = await APIv2.auth().verifyToken(token); //await API.post("/api/jwt/verify", { token });
   return response.data.decode;
 };
 
@@ -68,12 +68,15 @@ export const useLogin = () => {
   const login = async (userInfo, socialType) => {
     // setUser(signIn({ email, password }));
     try {
-      const response = await API.post(`/auth/login/${socialType}`, {
-        userInfo,
-      });
+      setLoad(true);
+      // const response = await API.post(`/auth/login/${socialType}`, {
+      //   userInfo,
+      // });
+      const response = await APIv2.auth().login(socialType, userInfo);
       const { access_token, username } = response.data;
       localStorage.setItem("access_token", JSON.stringify(access_token));
       setUser(username);
+      setLoad(false);
       if (localStorage.getItem("access_token")) setDataInLocal(username);
     } catch (error) {
       console.log("WHY NOT ERR");

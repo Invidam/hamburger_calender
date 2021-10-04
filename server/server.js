@@ -4,7 +4,7 @@ import cors from "cors";
 import "dotenv/config";
 // import { workListRouter } from "./routes/workList/workListRouter.js";
 import { authRouter } from "./routes/authRouter.js";
-import { apiRouter } from "./routes/apiRouter.js";
+// import { apiRouter } from "./routes/apiRouter.js";
 import { workListRouter } from "./routes/workList/workListRouter.js";
 const port = 3002;
 const app = express();
@@ -19,6 +19,6 @@ app.use(
 app.use(express.json());
 // app.use("/api", apiRouter);
 app.use("/api/:user/:date/worklist", workListRouter);
-app.use("/api", apiRouter);
+// app.use("/api", apiRouter);
 app.use("/auth", authRouter);
 app.listen(port, () => console.log(`Listening Start on port ${port}`));

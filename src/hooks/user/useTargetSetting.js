@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { API, APIv2 } from "../../tools/API";
 
-export const useUpdateSetting = (user, isLoginLoading) => {
+export const useTargetSetting = (user, isLoginLoading) => {
   console.log("UPDATE SETTING HOOK USER: ");
   const [targetWorkTime, setTargetWorkTime] = useState(user ? 0 : -1);
   const [targetWakeHour, setTargetWakeHour] = useState(user ? 0 : -1);
   const [targetBedHour, setTargetBedHour] = useState(user ? 0 : -1);
   const [targetWakeMinute, setTargetWakeMinute] = useState(user ? 0 : -1);
   const [targetBedMinute, setTargetBedMinute] = useState(user ? 0 : -1);
-  const [isSettingHookLading, setLoad] = useState(true);
+  const [isSettingHookLoading, setLoad] = useState(true);
   const onChangeTargetWorkTime = (workTime) =>
     setTargetWorkTime(parseInt(workTime));
   const onChangeTargetWakeHour = (wakeHour) =>
@@ -35,8 +35,11 @@ export const useUpdateSetting = (user, isLoginLoading) => {
       } else {
         //
       }
-      console.log("SETTING END");
-      if (!isLoginLoading && isSettingHookLading) setLoad(false);
+
+      if (!isLoginLoading && isSettingHookLoading) {
+        setLoad(false);
+        console.log("SETTING END", isSettingHookLoading);
+      }
     } catch (error) {
       alert(error);
       // history.push("/setting");
@@ -101,6 +104,6 @@ export const useUpdateSetting = (user, isLoginLoading) => {
     onChangeTargetBedHour,
     onChangeTargetWakeMinute,
     onChangeTargetBedMinute,
-    isSettingHookLading,
+    isSettingHookLoading,
   };
 };

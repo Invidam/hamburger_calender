@@ -72,7 +72,6 @@ export const getTime = (req, res) => {
 };
 export const deleteTime = (req, res) => {
   const { key, user, date } = req.params;
-  const { value } = req.body;
 
   const { dividedAddress } = divideDate(date);
   if (!db)

@@ -1,6 +1,6 @@
 import isEmail from "validator/lib/isEmail";
 import { useState } from "react";
-import { API } from "../../tools/API";
+import { API, APIv2 } from "../../tools/API";
 
 const isUserName = (username) => !/[^\w]/.exec(username);
 
@@ -29,11 +29,16 @@ export const useAttemptSignup = ({ history, locaiton }) => {
         } ${!username + !email + !password > 1 ? "are" : "is"} not entered.`;
         throw errText;
       }
-      await API.post("/auth/signup", {
+      await APIv2.auth().signup({
         username,
         email,
         password,
       });
+      // await API.post("/auth/signup", {
+      //   username,
+      //   email,
+      //   password,
+      // });
       alert(`Sign up complete. \nLogin your entered email & password`);
       history.push("/login");
     } catch (error) {

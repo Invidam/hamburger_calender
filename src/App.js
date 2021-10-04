@@ -13,7 +13,7 @@ import { useSetDate } from "./hooks/date/useSetDate";
 import { GithubLoginPage } from "./components/pages/GithubLoginPage";
 import { SignupPage } from "./components/pages/SignupPage";
 import { SettingPage } from "./components/pages/SettingPage";
-import { useUpdateSetting } from "./hooks/user/useUpdateSetting";
+import { useTargetSetting } from "./hooks/user/useTargetSetting";
 import { LoadingElement } from "./components/Loading";
 
 function App() {
@@ -23,14 +23,14 @@ function App() {
   const customLoginHook = useLogin();
   const [user, , isLoggedIn, , , isLoginHookLoading] = customLoginHook;
   console.log("[APP] USER: ", user);
-  const updateSettingHook = useUpdateSetting(user, isLoginHookLoading);
-  const { targetTimeObj, isSettingHookLading } = updateSettingHook;
-  const isLoading = () => isLoginHookLoading || isSettingHookLading;
+  const updateSettingHook = useTargetSetting(user, isLoginHookLoading);
+  const { targetTimeObj, isSettingHookLoading } = updateSettingHook;
+  const isLoading = () => isLoginHookLoading || isSettingHookLoading;
   console.log(
     "[APP] IS Loading? ",
     isLoading(),
     isLoginHookLoading,
-    isSettingHookLading
+    isSettingHookLoading
   );
   return isLoading() ? (
     <LoadingElement text={"App Loading. . ."} />

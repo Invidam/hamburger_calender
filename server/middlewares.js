@@ -8,7 +8,8 @@ export const publicOnlyMiddleware = (req, res, next) => {
   //   token !== "undefined",
   //   token && token !== "undefined"
   // );
-  if (token && token !== "undefined")
+  // console.log("PUB ONLY MID, token: ", token, typeof token, JSON.parse(token));
+  if (token && token !== "undefined" && JSON.parse(token))
     res.status(401).send("User already logged in.");
   else next();
 };

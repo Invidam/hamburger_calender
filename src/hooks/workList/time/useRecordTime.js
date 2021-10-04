@@ -68,7 +68,7 @@ export const useRecordTime = (key, user, date) => {
       },
       delete: async () => {
         setRecordTime({});
-        if (user) await APIv2.recordTime(user, date, key).delete(timeObj);
+        if (user) await APIv2.recordTime(user, date, key).delete();
         else LocalStroage.recordTime(key).set({});
       },
     };

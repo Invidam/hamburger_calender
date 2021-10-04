@@ -16,8 +16,10 @@ API.interceptors.response.use(
     return res;
   },
   (e) => {
+    console.log("ERROR IN AXIOS CUSTOM, ", e);
     if (e?.response?.status === 401) {
       // alert();
+      console.log("401, ", e.response?.data);
       throw new Error(`401 - Unauthorized\n${e.response?.data}`);
     }
     // alert("other err");
@@ -26,9 +28,10 @@ API.interceptors.response.use(
   }
 );
 // 로그인 parm: 소셜타입, 유저 정보
+
 // jwt 토큰 parm: 토큰
-// 유저세팅 입력 겟 parms: 유저명
 // 사인업 / 유저정보 객체
+// 유저세팅 입력 겟 parms: 유저명
 
 export const updateAPIHeader = () => {
   API = axios.create(getCustomConfig());
@@ -52,13 +55,24 @@ export class APIv2 {
   static auth() {
     try {
       return {
-        githubLogin: async () => {},
-        login: async () => {},
-        signup: async () => {},
-        verify: async () => {},
+        // githubLogin: async (userInfo) => {
+        //   return await API.post("/auth/login/github", { value: userInfo });
+        // },
+        login: async (socialType, userInfo) => {
+          return await API.post(`/auth/login/${socialType}`, {
+            value: userInfo,
+          });
+        },
+        signup: async (userInfo) => {
+          return await API.post("/auth/signup", { value: userInfo });
+        },
+        verifyToken: async (token) => {
+          return await API.post("/auth/jwt/verify", { token });
+        },
       };
+      // eslint-disable-next-line no-unreachable
     } catch (error) {
-      alert(error);
+      throw new Error(error);
     }
   }
   static updateHeader() {
@@ -77,8 +91,8 @@ export class APIv2 {
         edit: async (data) => {
           return await API.post(url, { value: data });
         },
-        delete: async (data) => {
-          return await API.delete(url, { data: { value: data } });
+        delete: async () => {
+          return await API.delete(url);
         },
       };
     } catch (error) {
