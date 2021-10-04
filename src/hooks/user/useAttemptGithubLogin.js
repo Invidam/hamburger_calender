@@ -1,6 +1,5 @@
 import qs from "qs";
 import { useEffect } from "react";
-// import { API } from "../date/useSetAxios";
 export const useAttemptGithubLogin = (props) => {
   const { history, location, customLoginHook } = props;
   const login = customLoginHook[3];

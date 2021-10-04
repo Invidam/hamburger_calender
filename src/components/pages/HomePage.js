@@ -14,46 +14,18 @@ export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
   // const mark = ["2021-09-12", "2021-09-13", "2021-09-14"];
   // const updateDateHook = useState(new Date());
   const date = changeFormatYYYYMMDD(updateDateHook[0], false);
-  const wakeTimeHook = useRecordTime("wakeTime", user, date);
-  const bedTimeHook = useRecordTime("bedTime", user, date);
-  const workListHook = useWorkList(user, date);
-  const isLoading = () =>
-    wakeTimeHook[0] === "Loading" ||
-    bedTimeHook[0] === "Loading" ||
-    workListHook[0] === "Loading";
-  console.log("[HOME] , ", user, date, updateDateHook[0]);
-  console.log(
-    "HOME, LOADING CHECK",
-    "WAKE",
-    wakeTimeHook[0],
-    "BED",
-    bedTimeHook[0],
-    "WORK",
-    workListHook[0],
-    isLoading()
-  );
-  return isLoading() ? (
-    <h1>LOADING</h1>
-  ) : (
+
+  return (
     <section>
       <article>
         {`Hello ${user}`}
-        <CalendarTemplate
-          user={user}
-          updateDateHook={updateDateHook}
-          wakeTimeHook={wakeTimeHook}
-          bedTimeHook={bedTimeHook}
-          workListHook={workListHook}
-        />
+        <CalendarTemplate updateDateHook={updateDateHook} />
       </article>
       <article>
         <WorkListTemplate
           user={user}
           date={date}
           targetTimeObj={targetTimeObj}
-          wakeTimeHook={wakeTimeHook}
-          bedTimeHook={bedTimeHook}
-          workListHook={workListHook}
         />
       </article>
     </section>

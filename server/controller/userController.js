@@ -156,7 +156,8 @@ export const loginGithub = async (req, res) => {
 };
 
 export const postSetting = (req, res) => {
-  const { user, value } = req.body;
+  const { user } = req.params;
+  const { value } = req.body;
   const ref = db.ref(`users/${user}/setting`);
   ref.set(value);
 };

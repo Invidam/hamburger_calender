@@ -47,6 +47,7 @@ header {
 :root {
   --main-bg-color: rgb(245, 235, 220);
   --main-color: rgb(80, 35, 20);
+
   --main-sub-color: rgb(214, 35, 0);
   --main-sub-color__hover: rgba(167, 27, 0, 1);
   --main-sub-color__active: rgba(80, 35, 20, 1);

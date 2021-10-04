@@ -14,21 +14,26 @@ import { GithubLoginPage } from "./components/pages/GithubLoginPage";
 import { SignupPage } from "./components/pages/SignupPage";
 import { SettingPage } from "./components/pages/SettingPage";
 import { useUpdateSetting } from "./hooks/user/useUpdateSetting";
+import { LoadingElement } from "./components/Loading";
 
 function App() {
   // useSetAxios();
   const updateDateHook = useSetDate();
   const date = changeFormatYYYYMMDD(updateDateHook[0], false);
   const customLoginHook = useLogin();
-  const user = customLoginHook[0];
-  const isLoggedIn = customLoginHook[2];
+  const [user, , isLoggedIn, , , isLoginHookLoading] = customLoginHook;
   console.log("[APP] USER: ", user);
-  const updateSettingHook = useUpdateSetting(user);
-  const { targetTimeObj, load } = updateSettingHook;
-  const isLoading = () => user === "Loading" || load;
-  console.log("[APP] IS Loading? ", isLoading());
+  const updateSettingHook = useUpdateSetting(user, isLoginHookLoading);
+  const { targetTimeObj, isSettingHookLading } = updateSettingHook;
+  const isLoading = () => isLoginHookLoading || isSettingHookLading;
+  console.log(
+    "[APP] IS Loading? ",
+    isLoading(),
+    isLoginHookLoading,
+    isSettingHookLading
+  );
   return isLoading() ? (
-    <h1> Loading in APP</h1>
+    <LoadingElement text={"App Loading. . ."} />
   ) : (
     <Router>
       <Header date={date} customLoginHook={customLoginHook} />

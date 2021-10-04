@@ -4,22 +4,28 @@ import { TimeRecordDisplay } from "./element/timeBtn/TimeDisplayBtn";
 import { TimeRecordBtn } from "./element/timeBtn/TimeRecordBtn";
 import { EmptyWork } from "./element/work/EmptyWork";
 import { Work } from "./element/work/Work";
-import { isEmptyTimeObj } from "../../hooks/workList/time/useRecordTime";
-import { isEmptyWork } from "../../hooks/workList/work/useWorkList";
-import { useState } from "react";
-export const WorkList = ({
-  user,
-  date,
-  wakeTimeHook,
-  bedTimeHook,
-  workListHook,
-  targetTimeObj,
-}) => {
-  const [val, setVal] = useState(0);
+import {
+  isEmptyTimeObj,
+  useRecordTime,
+} from "../../hooks/workList/time/useRecordTime";
+import {
+  isEmptyWork,
+  useWorkList,
+} from "../../hooks/workList/work/useWorkList";
+import { LoadingElement } from "../Loading";
+export const WorkList = ({ user, date, targetTimeObj }) => {
   const { targetWakeTime, targetBedTime, targetWorkTime } = targetTimeObj;
-  const [wakeTime, onClickWakeTime, setWakeTime] = wakeTimeHook;
-  const [bedTime, onClickBedTime, setBedTime] = bedTimeHook;
-  const [workList, setWork] = workListHook;
+  const [wakeTime, onClickWakeTime, setWakeTime, isWakeTimeLoading] =
+    useRecordTime("wakeTime", user, date);
+  const [bedTime, onClickBedTime, setBedTime, isBedTimeLoading] = useRecordTime(
+    "bedTime",
+    user,
+    date
+  );
+  const [workList, setWork, isWorkListLoading] = useWorkList(user, date);
+  const isLoading = () =>
+    isWakeTimeLoading || isBedTimeLoading || isWorkListLoading;
+
   const addWakeTimeWindow = (
     <TimeRecordBtn onClick={onClickWakeTime} isWake={true} />
   );
@@ -45,7 +51,9 @@ export const WorkList = ({
   console.log("[WORKLIST]", workList);
   const emptyWork = <EmptyWork setWork={setWork} />;
 
-  return (
+  return isLoading() ? (
+    <LoadingElement text={"WorkList Loading. . ."} />
+  ) : (
     <ol>
       {isEmptyTimeObj(wakeTime) ? addWakeTimeWindow : wakeTimeDisplay}
       {workList &&
@@ -65,6 +73,6 @@ export const WorkList = ({
       {emptyWork}
       {isEmptyTimeObj(bedTime) ? addBedTimeWindow : bedTimeDisplay}
     </ol>
-    // </div>
   );
+  // </div>
 };

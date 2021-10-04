@@ -1,13 +1,7 @@
 import Calendar from "react-calendar";
 import { changeFormatYYYYMMDD, getToday, UTCtoKTC } from "../../tools/time";
 import "../../css/calendar.css";
-export const CalendarTemplate = ({
-  user,
-  updateDateHook,
-  wakeTimeHook,
-  bedTimeHook,
-  workListHook,
-}) => {
+export const CalendarTemplate = ({ updateDateHook }) => {
   // const clickDay = (event, date) => alert("Clicked day: ", date);
   const [date, onUpdateDate] = updateDateHook;
 

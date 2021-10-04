@@ -19,7 +19,8 @@ const checkWorkList = (workList) =>
 
 export const useWorkList = (user, date) => {
   // const initList = getInitList();
-  const [workList, setWorkList] = useState("Loading");
+  const [isWorkListLoading, setLoad] = useState(true);
+  const [workList, setWorkList] = useState();
   const getWorkList = async () => {
     try {
       let resWorkList;
@@ -35,6 +36,7 @@ export const useWorkList = (user, date) => {
         console.log("USEWORKLIST DATA NO CATCH [][] AFT");
         setWorkList(resWorkList);
       }
+      if (isWorkListLoading) setLoad(false);
     } catch (error) {
       alert(error);
     }
@@ -42,7 +44,7 @@ export const useWorkList = (user, date) => {
   useEffect(() => {
     console.log("GET WORKLIST START");
     getWorkList();
-  }, [date]);
+  }, [date, user]);
 
   const setWork = (workObj) => {
     console.log("SET WRORK START");
@@ -69,5 +71,5 @@ export const useWorkList = (user, date) => {
       },
     };
   };
-  return [workList, setWork];
+  return [workList, setWork, isWorkListLoading];
 };

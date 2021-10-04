@@ -26,7 +26,8 @@ const getNowTimeHHMM = () =>
     .map((numChar) => parseInt(numChar));
 export const useRecordTime = (key, user, date) => {
   // const initVal = getInitList(user, key);
-  const [recordTime, setRecordTime] = useState("Loading");
+  const [recordTime, setRecordTime] = useState();
+  const [isRecordTimeLoading, setLoad] = useState(true);
 
   const getRecordTime = async () => {
     try {
@@ -42,6 +43,7 @@ export const useRecordTime = (key, user, date) => {
         console.log("USERECORDTIME DATA CATCH AFT");
         setRecordTime(resTimeObj);
       }
+      if (isRecordTimeLoading) setLoad(false);
     } catch (error) {
       alert(error);
     }
@@ -49,7 +51,7 @@ export const useRecordTime = (key, user, date) => {
   useEffect(() => {
     console.log("GET RECORD TIME START");
     getRecordTime();
-  }, [date]);
+  }, [date, user]);
 
   const setTime = (timeObj) => {
     timeObj = checkTimeObj(timeObj);
@@ -85,5 +87,5 @@ export const useRecordTime = (key, user, date) => {
     const timeObj = { hour, minute };
     setTime(timeObj).create();
   };
-  return [recordTime, onClick, setTime];
+  return [recordTime, onClick, setTime, isRecordTimeLoading];
 };

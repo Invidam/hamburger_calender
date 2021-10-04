@@ -25,11 +25,42 @@ API.interceptors.response.use(
     // return Promise.reject(e);
   }
 );
+// 로그인 parm: 소셜타입, 유저 정보
+// jwt 토큰 parm: 토큰
+// 유저세팅 입력 겟 parms: 유저명
+// 사인업 / 유저정보 객체
 
 export const updateAPIHeader = () => {
   API = axios.create(getCustomConfig());
 };
 export class APIv2 {
+  static userSetting(user) {
+    try {
+      const url = `/auth/setting/${user}`;
+      return {
+        get: async () => {
+          return await API.get(url);
+        },
+        edit: async (data) => {
+          return await API.post(url, { value: data });
+        },
+      };
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  static auth() {
+    try {
+      return {
+        githubLogin: async () => {},
+        login: async () => {},
+        signup: async () => {},
+        verify: async () => {},
+      };
+    } catch (error) {
+      alert(error);
+    }
+  }
   static updateHeader() {
     API = axios.create(getCustomConfig());
   }

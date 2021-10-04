@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { API } from "../../tools/API";
+import { API, APIv2 } from "../../tools/API";
 
-export const useUpdateSetting = (user) => {
+export const useUpdateSetting = (user, isLoginLoading) => {
   console.log("UPDATE SETTING HOOK USER: ");
   const [targetWorkTime, setTargetWorkTime] = useState(user ? 0 : -1);
   const [targetWakeHour, setTargetWakeHour] = useState(user ? 0 : -1);
   const [targetBedHour, setTargetBedHour] = useState(user ? 0 : -1);
   const [targetWakeMinute, setTargetWakeMinute] = useState(user ? 0 : -1);
   const [targetBedMinute, setTargetBedMinute] = useState(user ? 0 : -1);
-  const [load, setLoad] = useState(true);
+  const [isSettingHookLading, setLoad] = useState(true);
   const onChangeTargetWorkTime = (workTime) =>
     setTargetWorkTime(parseInt(workTime));
   const onChangeTargetWakeHour = (wakeHour) =>
@@ -20,27 +20,31 @@ export const useUpdateSetting = (user) => {
   const onChangeTargetBedMinute = (bedMinute) =>
     setTargetBedMinute(parseInt(bedMinute));
 
-  const getAndUpdateSetting = async () => {
+  const getUserSetting = async () => {
     try {
-      console.log("SETTING");
-      const data = await API.get(`/auth/setting/${user}`);
-      const settingObj = data?.data;
-      console.log("SETTING END", settingObj);
-      if (load) setLoad(false);
-      if (!data) throw new Error("Cannot find data");
-      setTargetWorkTime(settingObj?.targetWorkTime);
-      setTargetWakeHour(settingObj?.targetWakeTime.hour);
-      setTargetBedHour(settingObj?.targetBedTime.hour);
-      setTargetWakeMinute(settingObj?.targetWakeTime.minute);
-      setTargetBedMinute(settingObj?.targetBedTime.minute);
+      if (user) {
+        console.log("SETTING");
+        const data = await APIv2.userSetting(user).get(); //API.get(`/auth/setting/${user}`);
+        const settingObj = data?.data;
+        if (!data) throw new Error("Cannot find data");
+        setTargetWorkTime(settingObj?.targetWorkTime);
+        setTargetWakeHour(settingObj?.targetWakeTime.hour);
+        setTargetBedHour(settingObj?.targetBedTime.hour);
+        setTargetWakeMinute(settingObj?.targetWakeTime.minute);
+        setTargetBedMinute(settingObj?.targetBedTime.minute);
+      } else {
+        //
+      }
+      console.log("SETTING END");
+      if (!isLoginLoading && isSettingHookLading) setLoad(false);
     } catch (error) {
       alert(error);
       // history.push("/setting");
     }
   };
   useEffect(() => {
-    if (user && user !== "Loading") getAndUpdateSetting();
-  }, [user]);
+    getUserSetting();
+  }, [user, isLoginLoading]);
 
   const validator = (targetTimeObj) => {
     return (
@@ -61,10 +65,11 @@ export const useUpdateSetting = (user) => {
     };
     if (typeof validator === "function") willUpdate = validator(targetTimeObj);
     if (willUpdate) {
-      API.post(`/auth/setting/${user}`, {
-        value: targetTimeObj,
-        user,
-      });
+      APIv2.userSetting(user).edit(targetTimeObj);
+      // API.post(`/auth/setting/${user}`, {
+      //   value: targetTimeObj,
+      //   user,
+      // });
     } else {
       const targetWakeTime = targetWakeHour && targetWakeMinute;
       const targetBedTime = targetBedHour && targetBedMinute;
@@ -96,6 +101,6 @@ export const useUpdateSetting = (user) => {
     onChangeTargetBedHour,
     onChangeTargetWakeMinute,
     onChangeTargetBedMinute,
-    load,
+    isSettingHookLading,
   };
 };

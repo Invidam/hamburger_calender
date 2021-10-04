@@ -10,25 +10,35 @@ const verifyToken = async () => {
 };
 
 export const useLogin = () => {
-  const [user, setUser] = useState("Loading");
+  const [user, setUser] = useState();
+  const [isLoginHookLoading, setLoad] = useState(true);
   const setUserInToken = async () => {
     try {
+      console.log(
+        "SET USER IN TOKEN START",
+        typeof localStorage.getItem("access_token"),
+        localStorage.getItem("access_token") === "undefined"
+      );
       if (
         !localStorage.getItem("access_token") ||
         localStorage.getItem("access_token") === "undefined"
       ) {
+        console.log("user FIND! ");
         localStorage.setItem("access_token", "undefined");
-        throw new Error("access_token not exists.");
+        // throw new Error("access_token not exists.");
+      } else {
+        const { username } = await verifyToken();
+        console.log("user find! ", username);
+        setUser(username);
       }
-      const { username } = await verifyToken();
-      console.log("user find! ", username);
-      setUser(username);
+      if (isLoginHookLoading) setLoad(false);
     } catch (error) {
+      alert(error);
       setUser(undefined);
-      console.warn(error);
     }
   };
   useEffect(() => {
+    console.log("USE EFFECT APPROACH");
     setUserInToken();
   }, []);
   const setDataInLocal = (user) => {
@@ -76,5 +86,5 @@ export const useLogin = () => {
     updateAPIHeader();
   };
 
-  return [user, setUser, authenticated, login, logout];
+  return [user, setUser, authenticated, login, logout, isLoginHookLoading];
 };
