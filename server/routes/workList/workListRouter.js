@@ -4,6 +4,7 @@ import {
   deleteWork,
   editTime,
   editWork,
+  getDateInfo,
   getTime,
   getWorkList,
   pushWork,
@@ -37,3 +38,8 @@ workListRouter
   .route("/worklist/update")
   .all(protectorMiddleWare)
   .post(updateWorkList);
+
+workListRouter
+  .route("/worklist/get-all")
+  .all(protectorMiddleWare)
+  .get(getDateInfo);

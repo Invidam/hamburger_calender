@@ -31,6 +31,7 @@ export const useRecordTime = (key, user, date) => {
 
   const getRecordTime = async () => {
     try {
+      setLoad(true);
       let resTimeObj;
       if (user) {
         const data = await APIv2.recordTime(user, date, key).get();
@@ -43,8 +44,9 @@ export const useRecordTime = (key, user, date) => {
         console.log("USERECORDTIME DATA CATCH AFT");
         setRecordTime(resTimeObj);
       }
-      if (isRecordTimeLoading) setLoad(false);
+      setLoad(false);
     } catch (error) {
+      setLoad(false);
       alert(error);
     }
   };

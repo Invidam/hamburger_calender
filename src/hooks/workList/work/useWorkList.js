@@ -23,6 +23,7 @@ export const useWorkList = (user, date) => {
   const [workList, setWorkList] = useState();
   const getWorkList = async () => {
     try {
+      setLoad(true);
       let resWorkList;
       if (user) {
         console.log("BEF: ", workList);
@@ -36,8 +37,9 @@ export const useWorkList = (user, date) => {
         console.log("USEWORKLIST DATA NO CATCH [][] AFT");
         setWorkList(resWorkList);
       }
-      if (isWorkListLoading) setLoad(false);
+      setLoad(false);
     } catch (error) {
+      setLoad(false);
       alert(error);
     }
   };

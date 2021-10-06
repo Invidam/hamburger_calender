@@ -6,6 +6,7 @@ import { CalendarTemplate } from "../calendar/CalendarTemplate";
 import { useRecordTime } from "../../hooks/workList/time/useRecordTime";
 import { useWorkList } from "../../hooks/workList/work/useWorkList";
 import { changeFormatYYYYMMDD } from "../../tools/time";
+import { API } from "../../tools/API";
 
 export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
   // const [date, setDate] = useState(new Date());
@@ -17,10 +18,7 @@ export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
 
   return (
     <section>
-      <article>
-        {`Hello ${user}`}
-        <CalendarTemplate updateDateHook={updateDateHook} />
-      </article>
+      <article>{`Hello ${user}`}</article>
       <article>
         <WorkListTemplate
           user={user}

@@ -1,12 +1,7 @@
+import { changeFormatYYYYMMDD, divideDate } from "../tools/time.js";
+// import { divideDate } from "../";
 import { db } from "../routes/firebase/config.js";
 
-const divideDate = (date) => {
-  const year = date.substr(0, 4);
-  const month = date.substr(5, 2);
-  const day = date.substr(8, 2);
-  const dividedAddress = `${year}/${month}/${day}`;
-  return { year, month, day, dividedAddress };
-};
 export const postTime = (req, res) => {
   // res.end
   const { key, user, date } = req.params;
@@ -169,3 +164,108 @@ export const getWorkList = (req, res) => {
     (errorObject) => res.send(errorObject)
   );
 };
+
+const getDateRange = (date) => {
+  const getDate = (year, month, day) => new Date(year, month, day);
+  const getDateDay = (date) => date.getDay();
+  const isSunday = (date) => getDateDay(date) === 0;
+  const isSaturday = (date) => getDateDay(date) === 6;
+  const getFirstDay = (date) => {
+    // const prevMonthDayList = [];
+    const prevDateMonth = ((new Date(date).getMonth() + 12 - 1) % 12) + 1;
+    const prevDateYear = new Date(date).getMonth()
+      ? new Date(date).getFullYear()
+      : new Date(date).getFullYear() - 1;
+    let lastDay = 0;
+    let prevDate = getDate(prevDateYear, prevDateMonth, lastDay);
+    do {
+      // prevMonthDayList.push(changeFormatYYYYMMDD(prevDate, false));
+      lastDay--;
+      prevDate = getDate(prevDateYear, prevDateMonth, lastDay);
+    } while (!isSunday(prevDate));
+    return changeFormatYYYYMMDD(prevDate, false);
+    // return prevMonthDayList;
+  };
+  const getLastDay = (date) => {
+    // const nextMonthDayList = [];
+    const nextDateMonth = (new Date(date).getMonth() + 2) % 12;
+    const nextDateYear =
+      new Date(date).getMonth() !== 11
+        ? new Date(date).getFullYear()
+        : new Date(date).getFullYear() + 1;
+    let firstDay = 1;
+    let nextDate = getDate(nextDateYear, nextDateMonth - 1, firstDay);
+    do {
+      // nextMonthDayList.push(changeFormatYYYYMMDD(nextDate, false));
+      firstDay++;
+      nextDate = getDate(nextDateYear, nextDateMonth - 1, firstDay);
+    } while (!isSaturday(nextDate));
+    return changeFormatYYYYMMDD(nextDate, false);
+    // return nextMonthDayList;
+  };
+  // const getCurrMonthDay = (date) => {
+  //   const currMonthDayList = [];
+  //   const currDateYear = new Date(date).getFullYear();
+  //   const currDateMonth = new Date(date).getMonth();
+  //   let firstDay = 1;
+  //   let currDate = getDate(currDateYear, currDateMonth, firstDay);
+  //   while (currDate.getMonth() === currDateMonth) {
+  //     currMonthDayList.push(changeFormatYYYYMMDD(currDate, false));
+  //     currDate = getDate(currDateYear, currDateMonth, ++firstDay);
+  //   }
+  //   return currMonthDayList;
+  // };
+  const firstDay = getFirstDay(date);
+  const lastDay = getLastDay(date);
+  return [firstDay, lastDay];
+};
+
+export const getDateInfo = async (req, res) => {
+  const { user, date } = req.params;
+  const [firstDay, lastDay] = getDateRange(date);
+
+  const dividedFirstDay = divideDate(firstDay).dividedAddressYYYYMM;
+  const dividedAddress = divideDate(date).dividedAddressYYYYMM;
+  const dividedLastDay = divideDate(lastDay).dividedAddressYYYYMM;
+
+  const prevMonthRef = db.ref(`users/${user}/date/${dividedFirstDay}`);
+  const currMonthRef = db.ref(`users/${user}/date/${dividedAddress}`);
+  const nextMonthRef = db.ref(`users/${user}/date/${dividedLastDay}`);
+  const dateInfo = [];
+  await prevMonthRef.once(
+    "value",
+    (workList) => {
+      const enteredWorkList = workList.val();
+      if (enteredWorkList)
+        Object.keys(enteredWorkList).forEach((keys) => {
+          dateInfo.push(`${dividedFirstDay.replace("/", "-")}-${keys}`);
+        });
+    },
+    (errorObject) => console.log("ERR OBJ: ", errorObject)
+  );
+  await currMonthRef.once(
+    "value",
+    (workList) => {
+      const enteredWorkList = workList.val();
+      if (enteredWorkList)
+        Object.keys(enteredWorkList).forEach((keys) => {
+          dateInfo.push(`${dividedAddress.replace("/", "-")}-${keys}`);
+        });
+    },
+    (errorObject) => console.log("ERR OBJ: ", errorObject)
+  );
+  await nextMonthRef.once(
+    "value",
+    (workList) => {
+      const enteredWorkList = workList.val();
+      if (enteredWorkList)
+        Object.keys(enteredWorkList).forEach((keys) => {
+          dateInfo.push(`${dividedLastDay.replace("/", "-")}-${keys}`);
+        });
+    },
+    (errorObject) => console.log("ERR OBJ: ", errorObject)
+  );
+  console.log("ENDD", dateInfo);
+  return res.json(dateInfo);
+};
+// };

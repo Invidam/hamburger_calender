@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import "../css/header/header.css";
+import { changeFormatYYYYMMDD } from "../tools/time";
+import { CalendarTemplate } from "./calendar/CalendarTemplate";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faUserCog } from "@fortawesome/free-solid-svg-icons";
 
@@ -7,7 +9,8 @@ import "../css/header/header.css";
 //   <FontAwesomeIcon icon={faUserCog} size="2x" style={{ fontSize: `18px` }} />
 // );
 
-export const Header = ({ date, customLoginHook }) => {
+export const Header = ({ updateDateHook, customLoginHook }) => {
+  const date = changeFormatYYYYMMDD(updateDateHook[0], false);
   const [user, , authenticated, , logout] = customLoginHook;
 
   const loginColumn = (
@@ -58,7 +61,11 @@ export const Header = ({ date, customLoginHook }) => {
         </div>
         {!authenticated ? loginColumn : logoutColumn}
       </div>
-      <span className="">{date}</span>
+      <div className="">
+        {date}
+
+        <CalendarTemplate user={user} updateDateHook={updateDateHook} />
+      </div>
       <span className="">{authenticated ? `Hello ${user}` : ""}</span>
     </header>
   );

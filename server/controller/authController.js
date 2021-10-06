@@ -124,7 +124,9 @@ export const loginNotSocial = async (req, res) => {
 
     return res.json({ access_token, username: userInfo.username });
   } catch (error) {
-    return res.status(401).send(error);
+    console.log(error.name, "\n", error.message, "\n", error.stack);
+
+    return res.status(401).send(error.message);
   }
 };
 export const loginGithub = async (req, res) => {
@@ -185,7 +187,7 @@ export const loginGithub = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.status(401).send(error);
+    return res.status(401).send(error.message);
   }
 };
 

@@ -29,14 +29,20 @@ function App() {
   console.log(
     "[APP] IS Loading? ",
     isLoading(),
+    "login",
     isLoginHookLoading,
+    "setting",
     isSettingHookLoading
   );
   return isLoading() ? (
     <LoadingElement text={"App Loading. . ."} />
   ) : (
     <Router>
-      <Header date={date} customLoginHook={customLoginHook} />
+      <Header
+        date={date}
+        updateDateHook={updateDateHook}
+        customLoginHook={customLoginHook}
+      />
       <main>
         {JSON.stringify(targetTimeObj)}
         <Switch>

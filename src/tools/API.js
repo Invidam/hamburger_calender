@@ -19,6 +19,7 @@ API.interceptors.response.use(
     console.log("ERROR IN AXIOS CUSTOM, ", e);
     if (e?.response?.status === 401) {
       // alert();
+      console.log(e.response.data);
       console.log("401, ", e.response?.data);
       throw new Error(`401 - Unauthorized\n${e.response?.data}`);
     }
@@ -105,6 +106,9 @@ export class APIv2 {
       return {
         get: async () => {
           return await API.get(url);
+        },
+        getAll: async () => {
+          return await API.get(url + "/get-all");
         },
         create: async (data) => {
           return await API.put(url, { value: data });

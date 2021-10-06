@@ -79,6 +79,7 @@ export const useLogin = () => {
       setLoad(false);
       if (localStorage.getItem("access_token")) setDataInLocal(username);
     } catch (error) {
+      setLoad(false);
       console.log("WHY NOT ERR");
       throw error;
     }

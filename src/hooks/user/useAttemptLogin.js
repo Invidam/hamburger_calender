@@ -1,6 +1,6 @@
 import qs from "qs";
 import { useState } from "react";
-
+import isEmail from "validator/lib/isEmail";
 const baseUrl = "https://github.com/login/oauth/authorize";
 const authConfig = {
   client_id: "44089da06c95a868c4cb",
@@ -16,6 +16,8 @@ export const useAttemptLogin = (login, history) => {
     try {
       event.preventDefault();
       const userInfo = { email, password };
+      if (!isEmail(email)) throw new Error("Entered Email form is wrong");
+      if (!password) throw new Error("Password is empty");
       await login(userInfo, "notSocial");
       history.push("/");
     } catch (error) {

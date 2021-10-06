@@ -22,8 +22,8 @@ export const useTargetSetting = (user, isLoginLoading) => {
 
   const getUserSetting = async () => {
     try {
-      if (user) {
-        console.log("SETTING");
+      if (user && !isLoginLoading) {
+        console.log("SETTIN-G", user);
         const data = await APIv2.userSetting(user).get(); //API.get(`/auth/setting/${user}`);
         const settingObj = data?.data;
         if (!data) throw new Error("Cannot find data");
@@ -38,9 +38,10 @@ export const useTargetSetting = (user, isLoginLoading) => {
 
       if (!isLoginLoading && isSettingHookLoading) {
         setLoad(false);
-        console.log("SETTING END", isSettingHookLoading);
+        console.log("SETTIN-G END", isSettingHookLoading);
       }
     } catch (error) {
+      setLoad(false);
       alert(error);
       // history.push("/setting");
     }
