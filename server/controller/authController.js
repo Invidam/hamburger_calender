@@ -192,10 +192,12 @@ export const loginGithub = async (req, res) => {
 };
 
 export const postSetting = (req, res) => {
+  console.log("REACH");
   const { user } = req.params;
   const { value } = req.body;
   const ref = db.ref(`users/${user}/setting`);
   ref.set(value);
+  return res.status(200).json({ status: "edit setting success" });
 };
 
 export const getSetting = (req, res) => {

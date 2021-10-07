@@ -1,19 +1,17 @@
 import "../../css/pages/pages.css";
+import { useTargetSettingOnPage } from "../../hooks/user/useTargetSettingOnPage";
 export const SettingPage = ({ updateSettingHook }) => {
   //const = {user,history,location } = props;
+  // const { onEditTargetTime, targetTimeObj } = updateSettingHook;
   const {
-    onEditTargetTime,
-    targetWorkTime,
+    displayObj,
     onChangeTargetWorkTime,
-    targetWakeHour,
-    targetBedHour,
-    targetWakeMinute,
-    targetBedMinute,
     onChangeTargetWakeHour,
     onChangeTargetBedHour,
     onChangeTargetWakeMinute,
     onChangeTargetBedMinute,
-  } = updateSettingHook;
+    onEditTargetTime,
+  } = useTargetSettingOnPage(updateSettingHook);
   return (
     <section className="page">
       <div className="page-input-box">
@@ -24,13 +22,12 @@ export const SettingPage = ({ updateSettingHook }) => {
             <span className="setting__text">TargetWorkTime: </span>
             <div className="setting__input-box">
               <input
-                value={targetWorkTime || 0}
+                value={displayObj.targetWorkTime}
                 type="number"
                 step="1"
                 min="0"
                 max="23"
                 name="hour"
-                placeholder="0"
                 className="setting__input setting__input-username"
                 onChange={({ target: { value } }) =>
                   onChangeTargetWorkTime(value)
@@ -43,27 +40,25 @@ export const SettingPage = ({ updateSettingHook }) => {
             <span className="setting__text">TargetWakeTime: </span>
             <div className="setting__input-box">
               <input
-                value={targetWakeHour || 0}
+                value={displayObj.targetWakeTime.hour}
                 className="setting__input setting__input-email"
                 type="number"
                 step="1"
                 min="0"
                 max="23"
                 name="hour"
-                placeholder="0"
                 onChange={({ target: { value } }) =>
                   onChangeTargetWakeHour(value)
                 }
               />
               h
               <input
-                value={targetWakeMinute || 0}
+                value={displayObj.targetWakeTime.minute}
                 type="number"
                 step="1"
                 min="0"
                 max="59"
                 name="minute"
-                placeholder="0"
                 className="setting__input setting__input-username"
                 onChange={({ target: { value } }) =>
                   onChangeTargetWakeMinute(value)
@@ -76,13 +71,12 @@ export const SettingPage = ({ updateSettingHook }) => {
             <span className="setting__text">TargetBedTime: </span>
             <div className="setting__input-box">
               <input
-                value={targetBedHour || 0}
+                value={displayObj.targetBedTime.hour}
                 type="number"
                 step="1"
                 min="0"
                 max="23"
                 name="hour"
-                placeholder="0"
                 className="setting__input setting__input-password"
                 onChange={({ target: { value } }) =>
                   onChangeTargetBedHour(value)
@@ -90,13 +84,12 @@ export const SettingPage = ({ updateSettingHook }) => {
               />
               h
               <input
-                value={targetBedMinute || 0}
+                value={displayObj.targetBedTime.minute}
                 type="number"
                 step="1"
                 min="0"
                 max="59"
                 name="minute"
-                placeholder="0"
                 className="setting__input setting__input-username"
                 onChange={({ target: { value } }) =>
                   onChangeTargetBedMinute(value)

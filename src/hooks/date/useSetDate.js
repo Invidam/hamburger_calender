@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getToday } from "../../tools/time";
+import { changeFormatYYYYMMDD, getToday } from "../../tools/time";
 
 export const useSetDate = () => {
   const today = getToday();
@@ -7,11 +7,13 @@ export const useSetDate = () => {
   if (localStorage.getItem("date"))
     localDateObj = JSON.parse(localStorage.getItem("date"));
   // console.log(localDateObj);
-  const initVal =
+  const initVal = changeFormatYYYYMMDD(
     localDateObj && localDateObj.today === today
       ? new Date(localDateObj.clickedDate)
-      : new Date();
+      : new Date()
+  );
   // console.log(initVal, typeof initVal, new Date());
   const [date, setDate] = useState(initVal);
-  return [date, setDate];
+  const onUpdateDate = (dateObj) => setDate(changeFormatYYYYMMDD(dateObj));
+  return [date, onUpdateDate];
 };

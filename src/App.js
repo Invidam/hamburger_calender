@@ -19,7 +19,7 @@ import { LoadingElement } from "./components/Loading";
 function App() {
   // useSetAxios();
   const updateDateHook = useSetDate();
-  const date = changeFormatYYYYMMDD(updateDateHook[0], false);
+  const date = updateDateHook[0];
   const customLoginHook = useLogin();
   const [user, , isLoggedIn, , , isLoginHookLoading] = customLoginHook;
   console.log("[APP] USER: ", user);
@@ -39,7 +39,6 @@ function App() {
   ) : (
     <Router>
       <Header
-        date={date}
         updateDateHook={updateDateHook}
         customLoginHook={customLoginHook}
       />

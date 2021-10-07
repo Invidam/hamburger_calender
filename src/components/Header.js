@@ -10,7 +10,7 @@ import { CalendarTemplate } from "./calendar/CalendarTemplate";
 // );
 
 export const Header = ({ updateDateHook, customLoginHook }) => {
-  const date = changeFormatYYYYMMDD(updateDateHook[0], false);
+  const date = updateDateHook[0];
   const [user, , authenticated, , logout] = customLoginHook;
 
   const loginColumn = (

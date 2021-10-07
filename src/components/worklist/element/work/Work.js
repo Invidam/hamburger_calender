@@ -72,7 +72,7 @@ export const Work = ({ workItem, setWork }) => {
           {workItem.workName} {workItem.workTime}h
         </span>
       </li>
-      {/* {editModal} */}
+      {editModal}
     </div>
   );
 };

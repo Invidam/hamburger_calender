@@ -20,8 +20,8 @@ export const useDateInfo = (user, date) => {
     }
   };
   useEffect(() => {
-    let nextDate = befDate === date ? activeDate : date;
-    console.log("BEF: ", befDate, "CURR: ", nextDate);
+    let nextDate = befDate === date ? (activeDate ? activeDate : date) : date;
+    console.log("BEF: ", befDate, "CURR: ", nextDate, activeDate, date);
     if (user && (!befDate || !isEqualYYYYMMDateStr(befDate, nextDate)))
       getUserInfo(nextDate);
     befDate = nextDate;

@@ -14,7 +14,7 @@ export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
   // const clickDay = (event, value) => alert("Clicked day: ", value);
   // const mark = ["2021-09-12", "2021-09-13", "2021-09-14"];
   // const updateDateHook = useState(new Date());
-  const date = changeFormatYYYYMMDD(updateDateHook[0], false);
+  const date = updateDateHook[0];
 
   return (
     <section>

@@ -5,12 +5,8 @@ import axios from "axios";
 import { useDateInfo } from "../../hooks/calendar/useDateInfo";
 import { LoadingElement } from "../Loading";
 export const CalendarTemplate = ({ user, updateDateHook }) => {
-  // const clickDay = (event, date) => alert("Clicked day: ", date);
-  let [date, onUpdateDate] = updateDateHook;
-  const [mark, isDateInfoLoad, setActiveDate] = useDateInfo(
-    user,
-    changeFormatYYYYMMDD(date)
-  );
+  const [date, onUpdateDate] = updateDateHook;
+  const [mark, isDateInfoLoad, setActiveDate] = useDateInfo(user, date);
   // console.log("DATE INFO: ", dateInfo);
   // const mark = dateInfo[0];
   console.log("[Calendar]");
@@ -24,8 +20,11 @@ export const CalendarTemplate = ({ user, updateDateHook }) => {
     <article>
       <Calendar
         className="caldendar"
-        onChange={onUpdateDate}
-        value={date}
+        onChange={(value) => {
+          console.log("value:", value);
+          onUpdateDate(value);
+        }}
+        value={new Date(date)}
         locale={"en"}
         calendarType={"US"}
         onClickDay={(date, event) => {
