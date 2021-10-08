@@ -21,7 +21,9 @@ article {
   flex-direction: column;
   align-items: center;
 }
-li:not(.ingredient__item) {
+/* li:not(.ingredient__item) */
+.workList__work,
+.workList__time {
   padding: 10px;
   border: 1px solid black;
   margin-top: 10px;

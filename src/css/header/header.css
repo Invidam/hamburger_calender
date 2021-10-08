@@ -47,9 +47,11 @@
   cursor: pointer;
 }
 .header-link__elem:hover {
+  transition: background-color 0.5s;
   background-color: var(--main-sub-color__hover);
 }
 
 .header-link__elem:active {
+  transition: background-color 0.5s;
   background-color: var(--main-sub-color__active);
 }

@@ -1,10 +1,16 @@
 // import "../../css/workList/workList.css";
-// import { WorkList } from "./WorkList";
-export const WorkListTemplate = ({ targetTimeObj, user, date }) => {
+
+import { ListView } from "./ListView";
+export const ListViewTemplate = ({ targetTimeObj, user, date, setDate }) => {
   return (
     <div>
-      <h1>Make Hamburger</h1>
-      <WorkList user={user} date={date} targetTimeObj={targetTimeObj} />
+      <h1>List View Template</h1>
+      <ListView
+        user={user}
+        date={date}
+        setDate={setDate}
+        targetTimeObj={targetTimeObj}
+      />
     </div>
   );
 };

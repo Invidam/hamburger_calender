@@ -49,29 +49,37 @@ export const WorkList = ({ user, date, targetTimeObj }) => {
     />
   );
   console.log("[WORKLIST]", workList);
+  const wakeTimeElement = isEmptyTimeObj(wakeTime)
+    ? addWakeTimeWindow
+    : wakeTimeDisplay;
+  const bedTimeElemnt = isEmptyTimeObj(bedTime)
+    ? addBedTimeWindow
+    : bedTimeDisplay;
+  const workListElement =
+    workList &&
+    Object.values(workList).map((workItem, idx) => {
+      return isEmptyWork(workItem) ? undefined : (
+        <Work
+          user={user}
+          date={date}
+          workItem={workItem}
+          setWork={setWork}
+          key={idx}
+          id={workItem.id}
+          targetTime={targetWorkTime}
+        />
+      );
+    });
   const emptyWork = <EmptyWork setWork={setWork} />;
 
   return isLoading() ? (
     <LoadingElement text={"WorkList Loading. . ."} />
   ) : (
     <ol>
-      {isEmptyTimeObj(wakeTime) ? addWakeTimeWindow : wakeTimeDisplay}
-      {workList &&
-        Object.values(workList).map((workItem, idx) => {
-          return isEmptyWork(workItem) ? undefined : (
-            <Work
-              user={user}
-              date={date}
-              workItem={workItem}
-              setWork={setWork}
-              key={idx}
-              id={workItem.id}
-              targetTime={targetWorkTime}
-            />
-          );
-        })}
+      {wakeTimeElement}
+      {workListElement}
       {emptyWork}
-      {isEmptyTimeObj(bedTime) ? addBedTimeWindow : bedTimeDisplay}
+      {bedTimeElemnt}
     </ol>
   );
   // </div>

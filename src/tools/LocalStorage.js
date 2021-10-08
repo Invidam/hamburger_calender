@@ -32,6 +32,42 @@ export class LocalStroage {
       remove: () => localStorage.setItem(key, "{}"),
     };
   }
+  static accessToken() {
+    return {
+      isEmpty: () =>
+        localStorage.getItem("access_token")
+          ? localStorage.getItem("access_token") === "undefined"
+          : true,
+      get: () => {
+        if (!localStorage.getItem("access_token"))
+          localStorage.setItem("access_token", "undefined");
+        return JSON.parse(localStorage.getItem("access_token"));
+      },
+      set: (token) => {
+        token = JSON.stringify(token);
+        localStorage.setItem("access_token", token);
+      },
+      remove: () => localStorage.setItem("access_token", "undefined"),
+    };
+  }
+  static date() {
+    return {
+      isEmpty: () =>
+        localStorage.getItem("date")
+          ? localStorage.getItem("date") === "undefined"
+          : true,
+      get: () => {
+        if (!localStorage.getItem("date"))
+          localStorage.setItem("date", "undefined");
+        return JSON.parse(localStorage.getItem("date"));
+      },
+      set: (dateObj) => {
+        dateObj = JSON.stringify(dateObj);
+        localStorage.setItem("date", dateObj);
+      },
+      remove: () => localStorage.setItem("date", "undefined"),
+    };
+  }
 }
 
 //API.workList("SR","1212-12-12").create({ab:"c"});

@@ -1,3 +1,3 @@
-export const isLoggedin = () =>
-  !!localStorage.getItem("access_token") &&
-  localStorage.getItem("access_token") !== "undefined";
+import { LocalStroage } from "./LocalStorage";
+
+export const isLoggedin = () => !LocalStroage.accessToken().isEmpty();

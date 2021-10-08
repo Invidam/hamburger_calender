@@ -4,6 +4,7 @@ import "../../css/calendar.css";
 import axios from "axios";
 import { useDateInfo } from "../../hooks/calendar/useDateInfo";
 import { LoadingElement } from "../Loading";
+import { LocalStroage } from "../../tools/LocalStorage";
 export const CalendarTemplate = ({ user, updateDateHook }) => {
   const [date, onUpdateDate] = updateDateHook;
   const [mark, isDateInfoLoad, setActiveDate] = useDateInfo(user, date);
@@ -30,9 +31,9 @@ export const CalendarTemplate = ({ user, updateDateHook }) => {
         onClickDay={(date, event) => {
           const localDateObj = {
             today: getToday(),
-            clickedDate: UTCtoKTC(date),
+            clickedDate: changeFormatYYYYMMDD(date),
           };
-          localStorage.setItem("date", JSON.stringify(localDateObj));
+          LocalStroage.date().set(localDateObj);
         }}
         onActiveStartDateChange={({ activeStartDate, value, view }) => {
           console.log("Changed view to: ", activeStartDate, value, view);

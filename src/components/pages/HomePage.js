@@ -7,6 +7,7 @@ import { useRecordTime } from "../../hooks/workList/time/useRecordTime";
 import { useWorkList } from "../../hooks/workList/work/useWorkList";
 import { changeFormatYYYYMMDD } from "../../tools/time";
 import { API } from "../../tools/API";
+import { ListViewTemplate } from "../listview/ListViewTemplate";
 
 export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
   // const [date, setDate] = useState(new Date());
@@ -15,10 +16,19 @@ export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
   // const mark = ["2021-09-12", "2021-09-13", "2021-09-14"];
   // const updateDateHook = useState(new Date());
   const date = updateDateHook[0];
+  const setDate = updateDateHook[1];
 
   return (
     <section>
-      <article>{`Hello ${user}`}</article>
+      <article>
+        {`Hello ${user}`}
+        <ListViewTemplate
+          user={user}
+          date={date}
+          setDate={setDate}
+          targetTimeObj={targetTimeObj}
+        />
+      </article>
       <article>
         <WorkListTemplate
           user={user}

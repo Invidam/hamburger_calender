@@ -39,3 +39,17 @@ export const isEqualYYYYMMDateObj = (date1, date2) =>
   date1.getMonth() === date2.getMonth();
 export const isEqualYYYYMMDateStr = (date1, date2) =>
   date1.substr(0, 7) === date2.substr(0, 7);
+
+export const getAddedDateStr = (date, value) => {
+  if (typeof date === "string") date = new Date(date);
+  let tomorrow = new Date(date);
+  tomorrow.setDate(date.getDate() + value);
+  return changeFormatYYYYMMDD(tomorrow, true);
+};
+
+export const getAddedDateObj = (date, value) => {
+  if (typeof date === "string") date = new Date(date);
+  let tomorrow = new Date(date);
+  tomorrow.setDate(date.getDate() + value);
+  return tomorrow;
+};

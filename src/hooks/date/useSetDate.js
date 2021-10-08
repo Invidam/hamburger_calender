@@ -1,11 +1,11 @@
 import { useState } from "react";
+import { LocalStroage } from "../../tools/LocalStorage";
 import { changeFormatYYYYMMDD, getToday } from "../../tools/time";
 
 export const useSetDate = () => {
   const today = getToday();
   let localDateObj;
-  if (localStorage.getItem("date"))
-    localDateObj = JSON.parse(localStorage.getItem("date"));
+  if (!LocalStroage.date().isEmpty()) localDateObj = LocalStroage.date().get();
   // console.log(localDateObj);
   const initVal = changeFormatYYYYMMDD(
     localDateObj && localDateObj.today === today

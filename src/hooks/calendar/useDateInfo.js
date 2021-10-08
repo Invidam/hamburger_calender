@@ -10,6 +10,7 @@ export const useDateInfo = (user, date) => {
 
   const getUserInfo = async (nextDate) => {
     try {
+      console.log("GET USER IFNO START");
       setLoad(true);
       const data = await APIv2.workList(user, nextDate).getAll();
       if (!data?.data) throw new Error("Cannot found Your Work List");
@@ -21,7 +22,16 @@ export const useDateInfo = (user, date) => {
   };
   useEffect(() => {
     let nextDate = befDate === date ? (activeDate ? activeDate : date) : date;
-    console.log("BEF: ", befDate, "CURR: ", nextDate, activeDate, date);
+    console.log(
+      "BEF: ",
+      befDate,
+      "CURR: ",
+      nextDate,
+      activeDate,
+      date,
+      user,
+      !befDate || !isEqualYYYYMMDateStr(befDate, nextDate)
+    );
     if (user && (!befDate || !isEqualYYYYMMDateStr(befDate, nextDate)))
       getUserInfo(nextDate);
     befDate = nextDate;

@@ -4,7 +4,7 @@ import { LocalStroage } from "../../tools/LocalStorage";
 import { getToday } from "../../tools/time";
 
 const verifyToken = async () => {
-  const { token } = JSON.parse(localStorage.getItem("access_token"));
+  const { token } = LocalStroage.accessToken().get();
   const response = await APIv2.auth().verifyToken(token); //await API.post("/api/jwt/verify", { token });
   return response.data.decode;
 };
@@ -14,17 +14,9 @@ export const useLogin = () => {
   const [isLoginHookLoading, setLoad] = useState(true);
   const setUserInToken = async () => {
     try {
-      console.log(
-        "SET USER IN TOKEN START",
-        typeof localStorage.getItem("access_token"),
-        localStorage.getItem("access_token") === "undefined"
-      );
-      if (
-        !localStorage.getItem("access_token") ||
-        localStorage.getItem("access_token") === "undefined"
-      ) {
+      if (LocalStroage.accessToken().isEmpty()) {
         console.log("user FIND! ");
-        localStorage.setItem("access_token", "undefined");
+        LocalStroage.accessToken().set(undefined);
         // throw new Error("access_token not exists.");
       } else {
         const { username } = await verifyToken();
@@ -74,10 +66,10 @@ export const useLogin = () => {
       // });
       const response = await APIv2.auth().login(socialType, userInfo);
       const { access_token, username } = response.data;
-      localStorage.setItem("access_token", JSON.stringify(access_token));
+      LocalStroage.accessToken().set(access_token);
       setUser(username);
       setLoad(false);
-      if (localStorage.getItem("access_token")) setDataInLocal(username);
+      if (!LocalStroage.accessToken().isEmpty()) setDataInLocal(username);
     } catch (error) {
       setLoad(false);
       console.log("WHY NOT ERR");
@@ -86,7 +78,7 @@ export const useLogin = () => {
   };
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("access_token");
+    LocalStroage.accessToken().remove();
     updateAPIHeader();
   };
 

@@ -1,0 +1,17 @@
+.listView-list {
+  list-style: none;
+}
+.listView-element {
+  float: left;
+  padding: 5px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+.listView-element:hover {
+  transition: background-color 0.5s;
+  background-color: rgba(140, 140, 140, 0.796);
+}
+
+.listView-element:active {
+  background-color: var(--main-sub-color__active);
+}
