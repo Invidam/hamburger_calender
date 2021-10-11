@@ -1,3 +1,5 @@
+import { APIv2 } from "./API";
+
 export class LocalStroage {
   static workList() {
     return {
@@ -39,15 +41,21 @@ export class LocalStroage {
           ? localStorage.getItem("access_token") === "undefined"
           : true,
       get: () => {
-        if (!localStorage.getItem("access_token"))
+        if (this.accessToken().isEmpty()) {
           localStorage.setItem("access_token", "undefined");
+          return undefined;
+        }
         return JSON.parse(localStorage.getItem("access_token"));
       },
       set: (token) => {
         token = JSON.stringify(token);
         localStorage.setItem("access_token", token);
+        APIv2.updateHeader();
       },
-      remove: () => localStorage.setItem("access_token", "undefined"),
+      remove: () => {
+        localStorage.setItem("access_token", "undefined");
+        APIv2.updateHeader();
+      },
     };
   }
   static date() {
@@ -57,8 +65,10 @@ export class LocalStroage {
           ? localStorage.getItem("date") === "undefined"
           : true,
       get: () => {
-        if (!localStorage.getItem("date"))
+        if (this.date().isEmpty()) {
           localStorage.setItem("date", "undefined");
+          return undefined;
+        }
         return JSON.parse(localStorage.getItem("date"));
       },
       set: (dateObj) => {

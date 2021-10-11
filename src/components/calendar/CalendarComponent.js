@@ -3,6 +3,7 @@ import { changeFormatYYYYMMDD, UTCtoKTC } from "../../tools/time";
 import "../../css/calendar.css";
 import { useState } from "react";
 import { useRecordTime } from "../../hooks/workList/time/useRecordTime";
+import { LocalStroage } from "../../tools/LocalStorage";
 export const CalendarTemplate = () => {
   const [value, onChange] = useState(new Date());
   const clickDay = (event, value) => alert("Clicked day: ", value);
@@ -21,7 +22,8 @@ export const CalendarTemplate = () => {
             hour: parseInt(changeFormatYYYYMMDD(value).substr(5, 2), 10),
             minute: parseInt(changeFormatYYYYMMDD(value).substr(8, 2), 10),
           };
-          window.localStorage.setItem("wakeTime", JSON.stringify(timeObj));
+          LocalStroage.recordTime("wakeTime").set(timeObj);
+          // window.localStorage.setItem("wakeTime", JSON.stringify(timeObj));
         }}
         tileClassName={({ date, view }) => {
           if (

@@ -64,7 +64,7 @@ export const Header = ({ updateDateHook, customLoginHook }) => {
       <div className="">
         {date}
 
-        <CalendarTemplate user={user} updateDateHook={updateDateHook} />
+        {/* <CalendarTemplate user={user} updateDateHook={updateDateHook} /> */}
       </div>
       <span className="">{authenticated ? `Hello ${user}` : ""}</span>
     </header>

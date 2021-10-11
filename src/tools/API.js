@@ -1,8 +1,9 @@
 import axios from "axios";
+import { LocalStroage } from "./LocalStorage";
 
 export const getCustomConfig = () => {
-  const token = localStorage.getItem("access_token");
-  const date = localStorage.getItem("date");
+  const token = LocalStroage.accessToken().get();
+  const date = LocalStroage.date().get();
   const config = {
     headers: { "x-access-token": token, "x-access-date": date },
   };
@@ -38,6 +39,9 @@ export const updateAPIHeader = () => {
   API = axios.create(getCustomConfig());
 };
 export class APIv2 {
+  static updateHeader() {
+    API = axios.create(getCustomConfig());
+  }
   static userSetting(user) {
     try {
       const url = `/auth/setting/${user}`;
@@ -75,9 +79,6 @@ export class APIv2 {
     } catch (error) {
       throw new Error(error);
     }
-  }
-  static updateHeader() {
-    API = axios.create(getCustomConfig());
   }
   static recordTime(user, date, key) {
     try {

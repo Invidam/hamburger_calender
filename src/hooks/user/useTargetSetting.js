@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { API, APIv2 } from "../../tools/API";
-const makeTargetTimeObj = (
+const maketargetSetting = (
   targetWorkTime,
   targetWakeHour,
   targetWakeMinute,
@@ -15,31 +15,35 @@ const makeTargetTimeObj = (
 };
 export const useTargetSetting = (user, isLoginLoading) => {
   console.log("UPDATE SETTING HOOK USER: ");
-  const [targetWorkTime, setTargetWorkTime] = useState(-1);
-  const [targetWakeHour, setTargetWakeHour] = useState(-1);
-  const [targetBedHour, setTargetBedHour] = useState(-1);
-  const [targetWakeMinute, setTargetWakeMinute] = useState(-1);
-  const [targetBedMinute, setTargetBedMinute] = useState(-1);
-  const [isSettingHookLoading, setLoad] = useState(true);
+  const [targetSetting, setTargetSetting] = useState({
+    targetWorkTime: -1,
+    targetWakeTime: { hour: -1, minute: -1 },
+    targetBedTime: { hour: -1, minute: -1 },
+  });
+  // const [targetWorkTime, setTargetWorkTime] = useState(-1);
+  // const [targetWakeHour, setTargetWakeHour] = useState(-1);
+  // const [targetBedHour, setTargetBedHour] = useState(-1);
+  // const [targetWakeMinute, setTargetWakeMinute] = useState(-1);
+  // const [targetBedMinute, setTargetBedMinute] = useState(-1);
+  const [isSettingHookLoading, setLoad] = useState(false);
   const getUserSetting = async () => {
     try {
+      console.log("SETTING USE EFFECT : ", user, isLoginLoading);
       if (user && !isLoginLoading) {
         console.log("SETTIN-G", user);
+        setLoad(true);
         const data = await APIv2.userSetting(user).get(); //API.get(`/auth/setting/${user}`);
+        setLoad(false);
         const settingObj = data?.data;
         if (!data) throw new Error("Cannot find data");
-        setTargetWorkTime(settingObj?.targetWorkTime);
-        setTargetWakeHour(settingObj?.targetWakeTime.hour);
-        setTargetBedHour(settingObj?.targetBedTime.hour);
-        setTargetWakeMinute(settingObj?.targetWakeTime.minute);
-        setTargetBedMinute(settingObj?.targetBedTime.minute);
+        setTargetSetting(settingObj);
+        // setTargetWorkTime(settingObj?.targetWorkTime);
+        // setTargetWakeHour(settingObj?.targetWakeTime.hour);
+        // setTargetBedHour(settingObj?.targetBedTime.hour);
+        // setTargetWakeMinute(settingObj?.targetWakeTime.minute);
+        // setTargetBedMinute(settingObj?.targetBedTime.minute);
       } else {
         //
-      }
-
-      if (!isLoginLoading && isSettingHookLoading) {
-        setLoad(false);
-        console.log("SETTIN-G END", isSettingHookLoading);
       }
     } catch (error) {
       setLoad(false);
@@ -48,41 +52,56 @@ export const useTargetSetting = (user, isLoginLoading) => {
     }
   };
   useEffect(() => {
-    getUserSetting();
+    if (user && !isLoginLoading) getUserSetting();
   }, [user, isLoginLoading]);
 
-  const validator = (targetTimeObj) => {
+  const validator = (targetSetting) => {
     return (
-      targetTimeObj.targetWorkTime !== -1 &&
-      targetTimeObj.targetWakeTime.hour !== -1 &&
-      targetTimeObj.targetBedTime.hour !== -1 &&
-      targetTimeObj.targetWakeTime.minute !== -1 &&
-      targetTimeObj.targetBedTime.minute !== -1
+      targetSetting.targetWorkTime !== -1 &&
+      targetSetting.targetWakeTime.hour !== -1 &&
+      targetSetting.targetBedTime.hour !== -1 &&
+      targetSetting.targetWakeTime.minute !== -1 &&
+      targetSetting.targetBedTime.minute !== -1
     );
   };
-  const setTargetTime = (targetTimeObj) => {
+  const setTargetTime = (targetSetting) => {
     try {
       let willUpdate = true;
       console.log("EDIT TARGET");
       if (typeof validator === "function")
-        willUpdate = validator(targetTimeObj);
+        willUpdate = validator(targetSetting);
       if (willUpdate) {
         console.log("API START~~");
-        APIv2.userSetting(user).edit(targetTimeObj);
-        setTargetWorkTime(targetTimeObj?.targetWorkTime);
-        setTargetWakeHour(targetTimeObj?.targetWakeTime.hour);
-        setTargetBedHour(targetTimeObj?.targetBedTime.hour);
-        setTargetWakeMinute(targetTimeObj?.targetWakeTime.minute);
-        setTargetBedMinute(targetTimeObj?.targetBedTime.minute);
+        APIv2.userSetting(user).edit(targetSetting);
+        setTargetSetting(targetSetting);
+        // setTargetWorkTime(targetSetting?.targetWorkTime);
+        // setTargetWakeHour(targetSetting?.targetWakeTime.hour);
+        // setTargetBedHour(targetSetting?.targetBedTime.hour);
+        // setTargetWakeMinute(targetSetting?.targetWakeTime.minute);
+        // setTargetBedMinute(targetSetting?.targetBedTime.minute);
       } else {
-        const targetWakeTime = targetWakeHour && targetWakeMinute;
-        const targetBedTime = targetBedHour && targetBedMinute;
-        let errText = `[ERROR] ${targetWorkTime ? "" : "TargetWorkTime"}${
-          !targetWakeTime + !targetBedTime > 0 && !targetWorkTime ? ", " : ""
-        }${targetWakeTime ? "" : "TargetWakeTime"}${
-          !targetBedTime > 0 && !targetWakeTime ? ", " : ""
-        }${targetBedTime ? "" : "TargetBedtime"} ${
-          !targetWorkTime + !targetWakeTime + !targetBedTime > 1 ? "are" : "is"
+        const targetWakeTime =
+          targetSetting?.targetWakeHour && targetSetting?.targetWakeMinute;
+        const targetBedTime =
+          targetSetting?.targetBedHour && targetSetting?.targetBedMinute;
+        let errText = `[ERROR] ${
+          targetSetting?.targetWorkTime ? "" : "TargetWorkTime"
+        }${
+          !targetSetting?.targetWakeTime + !targetSetting?.targetBedTime > 0 &&
+          !targetSetting?.targetWorkTime
+            ? ", "
+            : ""
+        }${targetSetting?.targetWakeTime ? "" : "TargetWakeTime"}${
+          !targetSetting?.targetBedTime > 0 && !targetSetting?.targetWakeTime
+            ? ", "
+            : ""
+        }${targetSetting?.targetBedTime ? "" : "TargetBedtime"} ${
+          !targetSetting?.targetWorkTime +
+            !targetSetting?.targetWakeTime +
+            !targetSetting?.targetBedTime >
+          1
+            ? "are"
+            : "is"
         } not entered.`;
         throw new Error(errText);
       }
@@ -90,16 +109,16 @@ export const useTargetSetting = (user, isLoginLoading) => {
       alert(error);
     }
   };
-  const targetTimeObj = makeTargetTimeObj(
-    targetWorkTime,
-    targetWakeHour,
-    targetBedHour,
-    targetWakeMinute,
-    targetBedMinute
-  );
+  // const targetSetting = maketargetSetting(
+  //   targetWorkTime,
+  //   targetWakeHour,
+  //   targetBedHour,
+  //   targetWakeMinute,
+  //   targetBedMinute
+  // );
   return {
     setTargetTime,
-    targetTimeObj,
+    targetSetting,
     isSettingHookLoading,
   };
 };

@@ -13,8 +13,8 @@ import {
   useWorkList,
 } from "../../hooks/workList/work/useWorkList";
 import { LoadingElement } from "../Loading";
-export const WorkList = ({ user, date, targetTimeObj }) => {
-  const { targetWakeTime, targetBedTime, targetWorkTime } = targetTimeObj;
+export const WorkList = ({ user, date, targetSetting }) => {
+  const { targetWakeTime, targetBedTime, targetWorkTime } = targetSetting;
   const [wakeTime, onClickWakeTime, setWakeTime, isWakeTimeLoading] =
     useRecordTime("wakeTime", user, date);
   const [bedTime, onClickBedTime, setBedTime, isBedTimeLoading] = useRecordTime(

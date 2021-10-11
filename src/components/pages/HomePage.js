@@ -9,7 +9,7 @@ import { changeFormatYYYYMMDD } from "../../tools/time";
 import { API } from "../../tools/API";
 import { ListViewTemplate } from "../listview/ListViewTemplate";
 
-export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
+export const HomePage = ({ user, updateDateHook, targetSetting }) => {
   // const [date, setDate] = useState(new Date());
   // const [test, testtest] = useState(0);
   // const clickDay = (event, value) => alert("Clicked day: ", value);
@@ -26,14 +26,14 @@ export const HomePage = ({ user, updateDateHook, targetTimeObj }) => {
           user={user}
           date={date}
           setDate={setDate}
-          targetTimeObj={targetTimeObj}
+          targetSetting={targetSetting}
         />
       </article>
       <article>
         <WorkListTemplate
           user={user}
           date={date}
-          targetTimeObj={targetTimeObj}
+          targetSetting={targetSetting}
         />
       </article>
     </section>

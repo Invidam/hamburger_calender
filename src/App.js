@@ -22,17 +22,19 @@ function App() {
   const date = updateDateHook[0];
   const customLoginHook = useLogin();
   const [user, , isLoggedIn, , , isLoginHookLoading] = customLoginHook;
-  console.log("[APP] USER: ", user);
   const updateSettingHook = useTargetSetting(user, isLoginHookLoading);
-  const { targetTimeObj, isSettingHookLoading } = updateSettingHook;
+  const { targetSetting, isSettingHookLoading } = updateSettingHook;
+  console.log("[APP] USER: ", user);
   const isLoading = () => isLoginHookLoading || isSettingHookLoading;
   console.log(
     "[APP] IS Loading? ",
     isLoading(),
     "login",
     isLoginHookLoading,
+    user,
     "setting",
-    isSettingHookLoading
+    isSettingHookLoading,
+    targetSetting
   );
   return isLoading() ? (
     <LoadingElement text={"App Loading. . ."} />
@@ -43,7 +45,7 @@ function App() {
         customLoginHook={customLoginHook}
       />
       <main>
-        {JSON.stringify(targetTimeObj)}
+        {JSON.stringify(targetSetting)}
         <Switch>
           <Route
             exact
@@ -51,7 +53,7 @@ function App() {
             render={() => (
               <HomePage
                 user={user}
-                targetTimeObj={targetTimeObj}
+                targetSetting={targetSetting}
                 updateDateHook={updateDateHook}
               />
             )}

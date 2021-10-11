@@ -19,15 +19,16 @@ const checkWorkList = (workList) =>
 
 export const useWorkList = (user, date) => {
   // const initList = getInitList();
-  const [isWorkListLoading, setLoad] = useState(true);
+  const [isWorkListLoading, setLoad] = useState(false);
   const [workList, setWorkList] = useState();
   const getWorkList = async () => {
     try {
-      setLoad(true);
       let resWorkList;
       if (user) {
         console.log("BEF: ", workList);
+        setLoad(true);
         const data = await APIv2.workList(user, date).get();
+        setLoad(false);
         resWorkList = checkWorkList(data?.data);
         console.log("USEWORKLIST, data catch");
         console.log("USEWORKLIST DATA  CATCH  AFT");
@@ -37,7 +38,6 @@ export const useWorkList = (user, date) => {
         console.log("USEWORKLIST DATA NO CATCH [][] AFT");
         setWorkList(resWorkList);
       }
-      setLoad(false);
     } catch (error) {
       setLoad(false);
       alert(error);

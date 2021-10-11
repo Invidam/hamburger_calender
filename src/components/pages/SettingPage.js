@@ -2,7 +2,7 @@ import "../../css/pages/pages.css";
 import { useTargetSettingOnPage } from "../../hooks/user/useTargetSettingOnPage";
 export const SettingPage = ({ updateSettingHook }) => {
   //const = {user,history,location } = props;
-  // const { onEditTargetTime, targetTimeObj } = updateSettingHook;
+  // const { onEditTargetTime, targetSetting } = updateSettingHook;
   const {
     displayObj,
     onChangeTargetWorkTime,

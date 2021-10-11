@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { API, APIv2 } from "../../tools/API";
 
-const makeTargetTimeObj = (
+const maketargetSetting = (
   targetWorkTime,
   targetWakeHour,
   targetWakeMinute,
@@ -14,32 +14,32 @@ const makeTargetTimeObj = (
     targetBedTime: { hour: targetBedHour, minute: targetBedMinute },
   };
 };
-export const useTargetSettingOnPage = ({ targetTimeObj, setTargetTime }) => {
-  console.log("UPDATE SETTING PAGE HOOK USER: ", targetTimeObj);
+export const useTargetSettingOnPage = ({ targetSetting, setTargetTime }) => {
+  console.log("UPDATE SETTING PAGE HOOK USER: ", targetSetting);
   const [targetWorkTime, setTargetWorkTime] = useState(
-    targetTimeObj?.targetWorkTime === -1
+    targetSetting?.targetWorkTime === -1
       ? undefined
-      : targetTimeObj?.targetWorkTime
+      : targetSetting?.targetWorkTime
   );
   const [targetWakeHour, setTargetWakeHour] = useState(
-    targetTimeObj?.targetWakeTime.hour === -1
+    targetSetting?.targetWakeTime.hour === -1
       ? undefined
-      : targetTimeObj?.targetWakeTime.hour
+      : targetSetting?.targetWakeTime.hour
   );
   const [targetBedHour, setTargetBedHour] = useState(
-    targetTimeObj?.targetBedTime.hour === -1
+    targetSetting?.targetBedTime.hour === -1
       ? undefined
-      : targetTimeObj?.targetBedTime.hour
+      : targetSetting?.targetBedTime.hour
   );
   const [targetWakeMinute, setTargetWakeMinute] = useState(
-    targetTimeObj?.targetWakeTime.minute === -1
+    targetSetting?.targetWakeTime.minute === -1
       ? undefined
-      : targetTimeObj?.targetWakeTime.minute
+      : targetSetting?.targetWakeTime.minute
   );
   const [targetBedMinute, setTargetBedMinute] = useState(
-    targetTimeObj?.targetBedTime.minute === -1
+    targetSetting?.targetBedTime.minute === -1
       ? undefined
-      : targetTimeObj?.targetBedTime.minute
+      : targetSetting?.targetBedTime.minute
   );
   const onChangeTargetWorkTime = (workTime) =>
     setTargetWorkTime(parseInt(workTime));
@@ -55,7 +55,7 @@ export const useTargetSettingOnPage = ({ targetTimeObj, setTargetTime }) => {
   const onEditTargetTime = (event) => {
     event.preventDefault();
     setTargetTime(
-      makeTargetTimeObj(
+      maketargetSetting(
         targetWorkTime,
         targetWakeHour,
         targetBedHour,
@@ -64,7 +64,7 @@ export const useTargetSettingOnPage = ({ targetTimeObj, setTargetTime }) => {
       )
     );
   };
-  const displayObj = makeTargetTimeObj(
+  const displayObj = maketargetSetting(
     targetWorkTime,
     targetWakeHour,
     targetBedHour,

@@ -35,6 +35,7 @@ export const useDateInfo = (user, date) => {
     if (user && (!befDate || !isEqualYYYYMMDateStr(befDate, nextDate)))
       getUserInfo(nextDate);
     befDate = nextDate;
+    if (!user) setDateInfo([]);
   }, [user, date, activeDate]);
   return [dateInfo, isDateInfoLoad, setActiveDate];
 };

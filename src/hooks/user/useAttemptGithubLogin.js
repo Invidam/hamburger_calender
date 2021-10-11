@@ -1,27 +1,26 @@
 import qs from "qs";
 import { useEffect } from "react";
-export const useAttemptGithubLogin = (props) => {
-  const { history, location, customLoginHook } = props;
+export const useAttemptGithubLogin = ({
+  history,
+  location,
+  customLoginHook,
+}) => {
   const login = customLoginHook[3];
-  useEffect(() => {
-    const getToken = async () => {
-      const { code } = qs.parse(location?.search, {
-        ignoreQueryPrefix: true,
-      });
-      try {
-        const userInfo = { code };
-        login(userInfo, "github");
-        history.push("/");
-      } catch (error) {
-        alert(error);
-        history.push("/login");
-      }
-    };
+  const getToken = async () => {
+    const { code } = qs.parse(location?.search, {
+      ignoreQueryPrefix: true,
+    });
     try {
-      // API(); API를 사용하므로 지웠음
-      getToken();
-    } catch (e) {
-      alert(e);
+      const userInfo = { code };
+      await login(userInfo, "github");
+      history.push("/");
+    } catch (error) {
+      alert(error);
+      history.push("/login");
     }
+  };
+  useEffect(() => {
+    console.log("ATT GITHUB LOGIN EFFECT", location, history);
+    getToken();
   }, [location, history]);
 };

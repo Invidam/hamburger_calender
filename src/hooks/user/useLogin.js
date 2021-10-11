@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { API, APIv2, updateAPIHeader } from "../../tools/API";
+import { APIv2, updateAPIHeader } from "../../tools/API";
 import { LocalStroage } from "../../tools/LocalStorage";
 import { getToday } from "../../tools/time";
 
@@ -11,21 +11,44 @@ const verifyToken = async () => {
 
 export const useLogin = () => {
   const [user, setUser] = useState();
-  const [isLoginHookLoading, setLoad] = useState(true);
+  const [isTokenLoading, setLoadInToken] = useState(false);
+  const [isLoginLoading, setLoadInLoading] = useState(false);
+  const [isLoginHookLoading, setLoad] = useState(false);
+  useEffect(() => {
+    console.log(
+      "TOKEN",
+      isTokenLoading,
+      "LOGIN",
+      isLoginLoading,
+      "RESULT: ",
+      isTokenLoading || isLoginLoading
+    );
+    setLoad(isTokenLoading || isLoginLoading);
+  }, [isTokenLoading, isLoginLoading]);
   const setUserInToken = async () => {
     try {
       if (LocalStroage.accessToken().isEmpty()) {
         console.log("user FIND! ");
         LocalStroage.accessToken().set(undefined);
         // throw new Error("access_token not exists.");
+        console.log(
+          "TOKEN",
+          isTokenLoading,
+          "LOGIN",
+          isLoginLoading,
+          "RESULT: ",
+          isTokenLoading || isLoginLoading
+        );
       } else {
+        setLoadInToken(true);
         const { username } = await verifyToken();
         console.log("user find! ", username);
+        setLoadInToken(false);
         setUser(username);
       }
-      if (isLoginHookLoading) setLoad(false);
     } catch (error) {
       alert(error);
+      setLoadInToken(false);
       setUser(undefined);
     }
   };
@@ -60,7 +83,7 @@ export const useLogin = () => {
   const login = async (userInfo, socialType) => {
     // setUser(signIn({ email, password }));
     try {
-      setLoad(true);
+      setLoadInLoading(true);
       // const response = await API.post(`/auth/login/${socialType}`, {
       //   userInfo,
       // });
@@ -68,11 +91,12 @@ export const useLogin = () => {
       const { access_token, username } = response.data;
       LocalStroage.accessToken().set(access_token);
       setUser(username);
-      setLoad(false);
-      if (!LocalStroage.accessToken().isEmpty()) setDataInLocal(username);
+      if (!LocalStroage.accessToken().isEmpty()) {
+        setDataInLocal(username);
+        setLoadInLoading(false);
+      }
     } catch (error) {
-      setLoad(false);
-      console.log("WHY NOT ERR");
+      setLoadInLoading(false);
       throw error;
     }
   };
