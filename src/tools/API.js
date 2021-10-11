@@ -107,9 +107,21 @@ export class APIv2 {
         get: async () => {
           return await API.get(url);
         },
-        getAll: async () => {
-          return await API.get(url + "/get-all");
+        dataInfo: async () => {
+          return await API.get(url + "/date-info");
         },
+        edit: async (data) => {
+          return await API.post(url, { value: data });
+        },
+      };
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  static work(user, date) {
+    try {
+      const url = `/api/${user}/${date}/worklist/work`;
+      return {
         create: async (data) => {
           return await API.put(url, { value: data });
         },
@@ -118,9 +130,6 @@ export class APIv2 {
         },
         delete: async (data) => {
           return await API.delete(url, { data: { value: data } });
-        },
-        update: async (data) => {
-          return await API.post(url + "/update", { value: data });
         },
       };
     } catch (error) {

@@ -12,7 +12,7 @@ export const useDateInfo = (user, date) => {
     try {
       console.log("GET USER IFNO START");
       setLoad(true);
-      const data = await APIv2.workList(user, nextDate).getAll();
+      const data = await APIv2.workList(user, nextDate).dataInfo();
       if (!data?.data) throw new Error("Cannot found Your Work List");
       setDateInfo(data?.data);
       setLoad(false);

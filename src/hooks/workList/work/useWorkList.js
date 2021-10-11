@@ -56,19 +56,19 @@ export const useWorkList = (user, date) => {
       create: async () => {
         _workList[id] = workObj;
         setWorkList(_workList);
-        if (user) await APIv2.workList(user, date).create(workObj);
+        if (user) await APIv2.work(user, date).create(workObj);
         else LocalStroage.workList().set(_workList);
       },
       edit: async () => {
         _workList[id] = workObj;
         setWorkList(_workList);
-        if (user) await APIv2.workList(user, date).edit(workObj);
+        if (user) await APIv2.work(user, date).edit(workObj);
         else LocalStroage.workList().set(_workList);
       },
       delete: async () => {
         if (!delete _workList[id]) throw new Error("Cannot Delete WorkItem");
         setWorkList(_workList);
-        if (user) await APIv2.workList(user, date).delete(workObj);
+        if (user) await APIv2.work(user, date).delete(workObj);
         else LocalStroage.workList().set(_workList);
       },
     };

@@ -7,9 +7,9 @@ import {
   getDateInfo,
   getTime,
   getWorkList,
-  pushWork,
+  putWork,
   putTime,
-  updateWorkList,
+  editWorkList,
 } from "../../controller/workListController.js";
 import { protectorMiddleWare } from "../../middlewares.js";
 
@@ -27,19 +27,19 @@ workListRouter
   .delete(deleteTime);
 
 workListRouter
-  .route("/worklist")
+  .route("/work")
   .all(protectorMiddleWare)
   .post(editWork)
-  .put(pushWork)
-  .delete(deleteWork)
-  .get(getWorkList);
+  .put(putWork)
+  .delete(deleteWork);
 
 workListRouter
-  .route("/worklist/update")
+  .route("/worklist")
   .all(protectorMiddleWare)
-  .post(updateWorkList);
+  .get(getWorkList)
+  .post(editWorkList);
 
 workListRouter
-  .route("/worklist/get-all")
+  .route("/worklist/date-info")
   .all(protectorMiddleWare)
   .get(getDateInfo);

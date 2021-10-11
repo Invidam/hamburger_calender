@@ -49,7 +49,7 @@ export const useLogin = () => {
       }
       if (LocalStroage.workList().isEmpty()) {
         const workList = LocalStroage.workList("workList").get();
-        APIv2.workList(user, date, "workList").update(workList);
+        APIv2.workList(user, date, "workList").edit(workList);
         LocalStroage.workList("workList").remove();
       }
     } catch (error) {

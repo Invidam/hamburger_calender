@@ -80,7 +80,7 @@ export const deleteTime = (req, res) => {
     return res.status(200).json({ status: "delete time success" });
   }
 };
-export const pushWork = (req, res) => {
+export const putWork = (req, res) => {
   const { user, date } = req.params;
   const { value } = req.body;
 
@@ -134,7 +134,7 @@ export const deleteWork = (req, res) => {
     return res.status(200).json({ status: "delete work success" });
   }
 };
-export const updateWorkList = (req, res) => {
+export const editWorkList = (req, res) => {
   const { user, date } = req.params;
   const { value } = req.body;
   const { dividedAddress } = divideDate(date);
