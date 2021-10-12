@@ -44,7 +44,7 @@ export const useWorkList = (user, date) => {
     }
   };
   useEffect(() => {
-    console.log("GET WORKLIST START");
+    console.log("GET WORKLIST START", date, user);
     getWorkList();
   }, [date, user]);
 

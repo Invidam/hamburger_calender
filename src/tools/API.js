@@ -137,6 +137,27 @@ export class APIv2 {
       throw new Error(error);
     }
   }
+  static listView(user, startDate) {
+    try {
+      const url = `/api/${user}/${startDate}/listview/listview`;
+      return {
+        get: async () => {
+          return await API.get(url);
+        },
+        create: async (data) => {
+          return await API.put(url, { value: data });
+        },
+        edit: async (data) => {
+          return await API.post(url, { value: data });
+        },
+        delete: async () => {
+          return await API.delete(url);
+        },
+      };
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 }
 
 //API.workList("SR","1212-12-12").create({ab:"c"});

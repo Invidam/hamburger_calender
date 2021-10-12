@@ -27,13 +27,12 @@ const getNowTimeHHMM = () =>
 export const useRecordTime = (key, user, date) => {
   // const initVal = getInitList(user, key);
   const [recordTime, setRecordTime] = useState();
-  const [isRecordTimeLoading, setLoad] = useState(false);
+  const [isRecordTimeLoading, setLoad] = useState(true);
 
   const getRecordTime = async () => {
     try {
       let resTimeObj;
-      if (user) {
-        setLoad(true);
+      if (user && isRecordTimeLoading) {
         const data = await APIv2.recordTime(user, date, key).get();
         setLoad(false);
         resTimeObj = checkTimeObj(data?.data);
@@ -51,6 +50,7 @@ export const useRecordTime = (key, user, date) => {
     }
   };
   useEffect(() => {
+    console.log("GET EVENT START");
     getRecordTime();
     return () => setLoad(false);
   }, [date, user]);

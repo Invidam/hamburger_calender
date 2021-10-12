@@ -60,17 +60,17 @@ export const useLogin = () => {
     try {
       const date = getToday();
       updateAPIHeader();
-      if (LocalStroage.recordTime("wakeTime").isEmpty()) {
+      if (!LocalStroage.recordTime("wakeTime").isEmpty()) {
         const wakeTime = LocalStroage.recordTime("wakeTime").get();
         APIv2.recordTime(user, date, "wakeTime").edit(wakeTime);
         LocalStroage.recordTime("wakeTime").remove();
       }
-      if (LocalStroage.recordTime("bedTime").isEmpty()) {
+      if (!LocalStroage.recordTime("bedTime").isEmpty()) {
         const bedTime = LocalStroage.recordTime("bedTime").get();
         APIv2.recordTime(user, date, "bedTime").edit(bedTime);
         LocalStroage.recordTime("bedTime").remove();
       }
-      if (LocalStroage.workList().isEmpty()) {
+      if (!LocalStroage.workList().isEmpty()) {
         const workList = LocalStroage.workList("workList").get();
         APIv2.workList(user, date, "workList").edit(workList);
         LocalStroage.workList("workList").remove();

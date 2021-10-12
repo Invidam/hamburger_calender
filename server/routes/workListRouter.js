@@ -10,8 +10,8 @@ import {
   putWork,
   putTime,
   editWorkList,
-} from "../../controller/workListController.js";
-import { protectorMiddleWare } from "../../middlewares.js";
+} from "../controller/workListController.js";
+import { protectorMiddleWare } from "../middlewares.js";
 
 export const workListRouter = express.Router({ mergeParams: true });
 workListRouter.get("/hello", (req, res) => {

@@ -5,18 +5,19 @@ export const ListView = ({ user, date, setDate }) => {
     isListViewLoading,
     startDate,
     listView,
-    onClickAddBtn,
-    onClickSubtractBtn,
+    onClickRightBtn,
+    onClickLeftBtn,
   } = useListView(user, date, setDate);
   return (
     <ol className="listView-list">
-      <li className="listView-element" onClick={onClickSubtractBtn}>
+      <li className="listView-element" onClick={onClickLeftBtn}>
         ◀
       </li>
-      <li className="listView-element" onClick={onClickAddBtn}>
+      <li className="listView-element" onClick={onClickRightBtn}>
         test
       </li>
-      <li className="listView-element" onClick={onClickAddBtn}>
+      {JSON.stringify(listView)}
+      <li className="listView-element" onClick={onClickRightBtn}>
         ▶
       </li>
     </ol>
