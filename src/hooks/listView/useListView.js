@@ -12,11 +12,11 @@ export const useListView = (user, date, setDate) => {
 
   const onClickLeftBtn = () => {
     savedListView["1"] = 2;
-    setStratDate(getAddedDateStr(startDate, 1));
+    setStratDate(getAddedDateStr(startDate, -1));
   };
   const onClickRightBtn = () => {
     console.log(savedListView);
-    setStratDate(getAddedDateStr(startDate, -1));
+    setStratDate(getAddedDateStr(startDate, 1));
   };
 
   useEffect(() => {
@@ -29,6 +29,7 @@ export const useListView = (user, date, setDate) => {
         const data = await APIv2.listView(user, startDate).get();
         setLoad(false);
         if (!data?.data) throw new Error("List View cann't found");
+        console.log("DATA : LISTVIEW ", data?.data);
         setListView(data?.data);
       }
     } catch (error) {
@@ -37,7 +38,12 @@ export const useListView = (user, date, setDate) => {
   };
   useEffect(() => {
     //setListView를 좀 더 스마트하게 바꾸어야 한다.
+    console.log("Set list view start L or R");
+  }, [startDate]);
+  useEffect(() => {
+    //setListView를 좀 더 스마트하게 바꾸어야 한다.
     console.log("Set list view start");
+    getListView();
   }, [startDate]);
   return {
     isListViewLoading,

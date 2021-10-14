@@ -1,5 +1,14 @@
 import { useListView } from "../../hooks/listView/useListView";
 import "../../css/listView/listView.css";
+import { View } from "./View";
+import { getAddedDateObj, getAddedDateStr } from "../../tools/time";
+import { LoadingElement } from "../Loading";
+import { EmptyView } from "./EmptyView";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
+
+const leftCaret = <FontAwesomeIcon icon={faCaretLeft} size="5x" />;
+const rightCaret = <FontAwesomeIcon icon={faCaretRight} size="5x" />;
 export const ListView = ({ user, date, setDate }) => {
   const {
     isListViewLoading,
@@ -8,17 +17,42 @@ export const ListView = ({ user, date, setDate }) => {
     onClickRightBtn,
     onClickLeftBtn,
   } = useListView(user, date, setDate);
-  return (
+  return isListViewLoading ? (
+    <LoadingElement text={"ListView Loading. . ."} />
+  ) : (
     <ol className="listView-list">
-      <li className="listView-element" onClick={onClickLeftBtn}>
-        ◀
+      <li
+        className="listView-element listView-element__btn"
+        onClick={onClickLeftBtn}
+      >
+        <span className="listView-element__btn-text">{leftCaret} </span>
       </li>
-      <li className="listView-element" onClick={onClickRightBtn}>
-        test
-      </li>
-      {JSON.stringify(listView)}
-      <li className="listView-element" onClick={onClickRightBtn}>
-        ▶
+      {listView
+        ? listView.map((view, idx) => {
+            return (
+              <li className="listView-element" key={idx}>
+                {view ? (
+                  <View
+                    viewObj={view}
+                    setDate={setDate}
+                    viewDate={getAddedDateStr(startDate, idx)}
+                  />
+                ) : (
+                  <EmptyView
+                    viewObj={view}
+                    setDate={setDate}
+                    viewDate={getAddedDateStr(startDate, idx)}
+                  />
+                )}
+              </li>
+            );
+          })
+        : "NO"}
+      <li
+        className="listView-element listView-element__btn"
+        onClick={onClickRightBtn}
+      >
+        <span className="listView-element__btn-text">{rightCaret}</span>
       </li>
     </ol>
   );

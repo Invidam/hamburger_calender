@@ -13,8 +13,14 @@ section {
   display: flex;
   height: auto;
 }
+/* aside {
+  width: 20vw;
+  height: 80vh;
+  border: 1px solid green;
+} */
 article {
   width: 50vw;
+  height: 80vh;
   border: 1px solid blue;
   /* padding: 50px; */
   display: flex;

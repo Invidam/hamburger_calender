@@ -20,6 +20,7 @@ export const HomePage = ({ user, updateDateHook, targetSetting }) => {
 
   return (
     <section>
+      <aside> test</aside>
       <article>
         {`Hello ${user}`}
         <ListViewTemplate

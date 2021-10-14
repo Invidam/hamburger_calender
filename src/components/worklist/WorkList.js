@@ -70,7 +70,12 @@ export const WorkList = ({ user, date, targetSetting }) => {
         />
       );
     });
-  const emptyWork = <EmptyWork setWork={setWork} />;
+  const emptyWork =
+    !workList || Object.values(workList)?.length < 5 ? (
+      <EmptyWork setWork={setWork} />
+    ) : (
+      ""
+    );
 
   return isLoading() ? (
     <LoadingElement text={"WorkList Loading. . ."} />
