@@ -24,6 +24,16 @@ export const getDifference = (timeObj1, timeObj2) => {
   return { hour, minute };
 };
 
+export const getDiffDayInStr = (d1, d2) => {
+  d1 = new Date(d1);
+  d2 = new Date(d2);
+  return Math.floor((d2 > d1 ? d2 - d1 : d1 - d2) / 86400000);
+};
+export const subtractDayInStr = (d1, d2) => {
+  d1 = new Date(d1);
+  d2 = new Date(d2);
+  return Math.floor((d2 - d1) / 86400000);
+};
 export const divideDate = (date) => {
   const year = date.substr(0, 4);
   const month = date.substr(5, 2);

@@ -8,7 +8,7 @@ listViewRouter.get("/hello", (req, res) => {
   res.send({ greeting: "Hello React X Node j1s" });
 });
 
-listViewRouter.route("/listview").all(protectorMiddleWare).get(getListView);
+listViewRouter.route("/").all(protectorMiddleWare).get(getListView);
 
 // listViewRouter
 //   .route("/worklist")

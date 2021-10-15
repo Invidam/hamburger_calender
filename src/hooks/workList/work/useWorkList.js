@@ -46,6 +46,7 @@ export const useWorkList = (user, date) => {
   useEffect(() => {
     console.log("GET WORKLIST START", date, user);
     getWorkList();
+    return () => setLoad(false);
   }, [date, user]);
 
   const setWork = (workObj) => {

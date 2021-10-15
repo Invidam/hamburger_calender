@@ -1,3 +1,11 @@
+.workList {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: space-between; */
+}
 .workList__wakeTime {
   border-top-left-radius: 32px;
   border-top-right-radius: 32px;
@@ -13,10 +21,18 @@
 }
 .empty-element:hover {
   transition: background-color 0.5s;
-  background-color: rgba(140, 140, 140, 0.796);
+  background-color: rgba(208, 208, 208, 0.796);
   cursor: pointer;
 }
 
+.empty-element.workList__time {
+  background-color: rgba(89, 89, 89, 0.707);
+}
+.empty-element.workList__time:hover {
+  transition: background-color 0.5s;
+  background-color: rgba(67, 67, 67, 0.796);
+  cursor: pointer;
+}
 .workList__time-display {
   background-color: rgba(250, 193, 88, 0.8);
 }

@@ -34,12 +34,9 @@ workListRouter
   .delete(deleteWork);
 
 workListRouter
-  .route("/worklist")
+  .route("")
   .all(protectorMiddleWare)
   .get(getWorkList)
   .post(editWorkList);
 
-workListRouter
-  .route("/worklist/date-info")
-  .all(protectorMiddleWare)
-  .get(getDateInfo);
+workListRouter.route("/date-info").all(protectorMiddleWare).get(getDateInfo);

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { LocalStroage } from "./LocalStorage";
+import qs from "qs";
 
 export const getCustomConfig = () => {
   const token = LocalStroage.accessToken().get();
@@ -103,7 +104,7 @@ export class APIv2 {
   }
   static workList(user, date) {
     try {
-      const url = `/api/${user}/${date}/worklist/worklist`;
+      const url = `/api/${user}/${date}/worklist`;
       return {
         get: async () => {
           return await API.get(url);
@@ -137,22 +138,25 @@ export class APIv2 {
       throw new Error(error);
     }
   }
-  static listView(user, startDate) {
+  static listView(user, startDate, endDate) {
     try {
-      const url = `/api/${user}/${startDate}/listview/listview`;
+      const url = `/api/${user}/listview`;
+      const queryObj = { startDate, endDate };
+      const queryString = qs.stringify(queryObj);
+      console.log("QS: ", queryObj, queryString);
       return {
         get: async () => {
-          return await API.get(url);
+          return await API.get(url + `?${queryString}`);
         },
-        create: async (data) => {
-          return await API.put(url, { value: data });
-        },
-        edit: async (data) => {
-          return await API.post(url, { value: data });
-        },
-        delete: async () => {
-          return await API.delete(url);
-        },
+        // create: async (data) => {
+        //   return await API.put(url, { value: data });
+        // },
+        // edit: async (data) => {
+        //   return await API.post(url, { value: data });
+        // },
+        // delete: async () => {
+        //   return await API.delete(url);
+        // },
       };
     } catch (error) {
       throw new Error(error);

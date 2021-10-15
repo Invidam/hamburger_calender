@@ -6,7 +6,7 @@ export const useEditTime = (recordTime, setTime, isWake, callback) => {
   const validator = (timeObj) => {
     return timeObj.hour && timeObj.minute;
   };
-  const onChangeHour = (hour) => setHour(hour);
+  const onChangeHour = (hour) => setHour(parseInt(hour));
   const onChangeMinute = (minute) => setMinute(parseInt(minute));
   const getErrText = () => `${isWake ? "WakeTime" : "BedTime"} is not entered.`;
   const editTime = async (timeObj) => await setTime(timeObj).edit();

@@ -25,12 +25,13 @@ export const useTargetSetting = (user, isLoginLoading) => {
   // const [targetBedHour, setTargetBedHour] = useState(-1);
   // const [targetWakeMinute, setTargetWakeMinute] = useState(-1);
   // const [targetBedMinute, setTargetBedMinute] = useState(-1);
-  const [isSettingHookLoading, setLoad] = useState(true);
+  const [isSettingHookLoading, setLoad] = useState(false);
   const getUserSetting = async () => {
     try {
       console.log("SETTING USE EFFECT : ", user, isLoginLoading);
       if (user && !isLoginLoading) {
         console.log("SETTIN-G", user);
+        setLoad(true);
         const data = await APIv2.userSetting(user).get(); //API.get(`/auth/setting/${user}`);
         setLoad(false);
         const settingObj = data?.data;

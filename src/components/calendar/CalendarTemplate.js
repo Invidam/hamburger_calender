@@ -7,7 +7,7 @@ import { LoadingElement } from "../Loading";
 import { LocalStroage } from "../../tools/LocalStorage";
 export const CalendarTemplate = ({ user, updateDateHook }) => {
   const [date, onUpdateDate] = updateDateHook;
-  const [mark, isDateInfoLoad, setActiveDate] = useDateInfo(user, date);
+  const [mark, setActiveDate] = useDateInfo(user, date);
   // console.log("DATE INFO: ", dateInfo);
   // const mark = dateInfo[0];
   console.log("[Calendar]");
@@ -19,22 +19,21 @@ export const CalendarTemplate = ({ user, updateDateHook }) => {
   // ) :
   return (
     <article>
+      {`mark: ${mark}`}
       <Calendar
         className="caldendar"
         onChange={(value) => {
-          console.log("value:", value);
+          console.log("CHANGE EVENT", value);
           onUpdateDate(value);
+          console.log("value:", value);
+          // onUpdateDate(value);
         }}
         value={new Date(date)}
         locale={"en"}
         calendarType={"US"}
-        onClickDay={(date, event) => {
-          const localDateObj = {
-            today: getToday(),
-            clickedDate: changeFormatYYYYMMDD(date),
-          };
-          LocalStroage.date().set(localDateObj);
-        }}
+        // onClickDay={(date, event) => {
+        //   console.log("CLICK EVENT", date);
+        // }}
         onActiveStartDateChange={({ activeStartDate, value, view }) => {
           console.log("Changed view to: ", activeStartDate, value, view);
 

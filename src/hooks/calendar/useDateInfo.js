@@ -5,25 +5,30 @@ let befDate;
 
 export const useDateInfo = (user, date) => {
   const [dateInfo, setDateInfo] = useState();
+
   const [activeDate, setActiveDate] = useState();
-  const [isDateInfoLoad, setLoad] = useState(true);
+  // const [isDateInfoLoad, setLoad] = useState(true);
 
   const getUserInfo = async (nextDate) => {
     try {
-      console.log("GET USER IFNO START");
-      setLoad(true);
-      const data = await APIv2.workList(user, nextDate).dataInfo();
-      if (!data?.data) throw new Error("Cannot found Your Work List");
-      setDateInfo(data?.data);
-      setLoad(false);
+      if (user) {
+        // setLoad(true);
+        const data = await APIv2.workList(user, nextDate).dataInfo();
+        // setLoad(false);
+        if (!data?.data) throw new Error("Cannot found Your Work List");
+        const response = data.data;
+
+        setDateInfo(response);
+      } else {
+        setDateInfo([]);
+      }
     } catch (error) {
       alert(error);
     }
   };
   useEffect(() => {
-    let nextDate = befDate === date ? (activeDate ? activeDate : date) : date;
+    let nextDate = activeDate ? activeDate : date;
     console.log(
-      "BEF: ",
       befDate,
       "CURR: ",
       nextDate,
@@ -32,10 +37,9 @@ export const useDateInfo = (user, date) => {
       user,
       !befDate || !isEqualYYYYMMDateStr(befDate, nextDate)
     );
-    if (user && (!befDate || !isEqualYYYYMMDateStr(befDate, nextDate)))
-      getUserInfo(nextDate);
-    befDate = nextDate;
-    if (!user) setDateInfo([]);
+    getUserInfo(nextDate);
+    // if (user) befDate = nextDate;
   }, [user, date, activeDate]);
-  return [dateInfo, isDateInfoLoad, setActiveDate];
+  useEffect(() => {}, [dateInfo]);
+  return [dateInfo, setActiveDate];
 };

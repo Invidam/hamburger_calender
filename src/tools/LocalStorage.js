@@ -78,6 +78,26 @@ export class LocalStroage {
       remove: () => localStorage.setItem("date", "undefined"),
     };
   }
+  static startDate() {
+    return {
+      isEmpty: () =>
+        localStorage.getItem("startDate")
+          ? localStorage.getItem("startDate") === "undefined"
+          : true,
+      get: () => {
+        if (this.startDate().isEmpty()) {
+          localStorage.setItem("startDate", "undefined");
+          return undefined;
+        }
+        return JSON.parse(localStorage.getItem("startDate"));
+      },
+      set: (dateObj) => {
+        dateObj = JSON.stringify(dateObj);
+        localStorage.setItem("startDate", dateObj);
+      },
+      remove: () => localStorage.setItem("startDate", "undefined"),
+    };
+  }
 }
 
 //API.workList("SR","1212-12-12").create({ab:"c"});

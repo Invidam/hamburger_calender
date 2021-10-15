@@ -14,6 +14,14 @@ export const useSetDate = () => {
   );
   // console.log(initVal, typeof initVal, new Date());
   const [date, setDate] = useState(initVal);
-  const onUpdateDate = (dateObj) => setDate(changeFormatYYYYMMDD(dateObj));
+  const onUpdateDate = (dateObj) => {
+    // console.log()
+    const localDateObj = {
+      today: getToday(),
+      clickedDate: changeFormatYYYYMMDD(dateObj),
+    };
+    LocalStroage.date().set(localDateObj);
+    setDate(changeFormatYYYYMMDD(dateObj));
+  };
   return [date, onUpdateDate];
 };
