@@ -38,7 +38,6 @@ export class Deque {
       ret.push(itr.value);
       itr = itr.next;
     }
-    console.log("[deq] print: ", text, ret);
   }
   pop_front(cnt = 1) {
     while (cnt--) {
@@ -94,8 +93,7 @@ export class Deque {
 // const arr = [1, 2, 3, 4, 5];
 
 // const deq = new Deque(arr, 2);
-// console.log(deq);
-// console.log(deq.length);
+
 // deq.print();
 
 // deq.push_back(new Node(6));
@@ -107,5 +105,3 @@ export class Deque {
 // deq.print();
 // deq.pop_front();
 // deq.print();
-// console.log(deq.length);
-// console.log(deq.getInRange(0, 5));

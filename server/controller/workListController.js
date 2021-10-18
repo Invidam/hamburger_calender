@@ -223,6 +223,7 @@ const getDateRange = (date) => {
 export const getDateInfo = async (req, res) => {
   const { user, date } = req.params;
   const [firstDay, lastDay] = getDateRange(date);
+  console.log("FIRST: ", firstDay, "LAST: ", lastDay);
 
   const dividedFirstDay = divideDate(firstDay).dividedAddressYYYYMM;
   const dividedAddress = divideDate(date).dividedAddressYYYYMM;
@@ -238,7 +239,8 @@ export const getDateInfo = async (req, res) => {
       const enteredWorkList = workList.val();
       if (enteredWorkList)
         Object.keys(enteredWorkList).forEach((keys) => {
-          dateInfo.push(`${dividedFirstDay.replace("/", "-")}-${keys}`);
+          const dateStr = `${dividedFirstDay.replace("/", "-")}-${keys}`;
+          if (firstDay <= dateStr && dateStr <= lastDay) dateInfo.push(dateStr);
         });
     },
     (errorObject) => console.log("ERR OBJ: ", errorObject)
@@ -249,7 +251,8 @@ export const getDateInfo = async (req, res) => {
       const enteredWorkList = workList.val();
       if (enteredWorkList)
         Object.keys(enteredWorkList).forEach((keys) => {
-          dateInfo.push(`${dividedAddress.replace("/", "-")}-${keys}`);
+          const dateStr = `${dividedAddress.replace("/", "-")}-${keys}`;
+          if (firstDay <= dateStr && dateStr <= lastDay) dateInfo.push(dateStr);
         });
     },
     (errorObject) => console.log("ERR OBJ: ", errorObject)
@@ -260,7 +263,8 @@ export const getDateInfo = async (req, res) => {
       const enteredWorkList = workList.val();
       if (enteredWorkList)
         Object.keys(enteredWorkList).forEach((keys) => {
-          dateInfo.push(`${dividedLastDay.replace("/", "-")}-${keys}`);
+          const dateStr = `${dividedLastDay.replace("/", "-")}-${keys}`;
+          if (firstDay <= dateStr && dateStr <= lastDay) dateInfo.push(dateStr);
         });
     },
     (errorObject) => console.log("ERR OBJ: ", errorObject)

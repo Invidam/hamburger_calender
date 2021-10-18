@@ -52,7 +52,7 @@ export const useTargetSetting = (user, isLoginLoading) => {
     }
   };
   useEffect(() => {
-    if (user && !isLoginLoading) getUserSetting();
+    getUserSetting();
   }, [user, isLoginLoading]);
 
   const validator = (targetSetting) => {

@@ -28,7 +28,7 @@ const emptyWorkItem = (
     {" "}
   </li>
 );
-export const View = ({ viewObj, setDate, viewDate }) => {
+export const View = ({ isLoad, viewObj, setDate, viewDate }) => {
   const workListItem = viewObj?.workList
     ? Object.values(viewObj?.workList).map((workItem, idx) => {
         return isEmptyWork(workItem) ? "" : workItemContent(workItem, idx);
@@ -37,7 +37,11 @@ export const View = ({ viewObj, setDate, viewDate }) => {
   const viewContent = (
     <div
       className="listView__item-box"
-      onClick={() => setDate(new Date(viewDate))}
+      onClick={() =>
+        !isLoad
+          ? setDate(new Date(viewDate))
+          : console.log("[deq] status: ", isLoad)
+      }
     >
       <span className="listView__item-date"> {viewDate.substr(5)}</span>
       <ol>

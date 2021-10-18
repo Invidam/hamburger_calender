@@ -21,13 +21,12 @@ export const ListView = ({ user, date, setDate, workList }) => {
     onClickRightBtn,
     onClickLeftBtn,
   } = useListView(user, date, setDate, workList);
-  return isListViewLoading ? (
-    <LoadingElement text={"ListView Loading. . ."} />
-  ) : (
+  return (
     <ol className="listView-list">
       <li
         className="listView-element listView-element__btn"
         onClick={onClickLeftBtn}
+        // disabled={isListViewLoading}
       >
         <span className="listView-element__btn-text">{leftCaret} </span>
       </li>
@@ -39,6 +38,7 @@ export const ListView = ({ user, date, setDate, workList }) => {
                   <View
                     viewObj={view}
                     setDate={setDate}
+                    isLoad={isListViewLoading}
                     viewDate={getAddedDateStr(
                       startDate,
                       idx + Math.floor((ARRAY_LENGTH - DISPLAY_LENGTH) / 2)
@@ -48,6 +48,7 @@ export const ListView = ({ user, date, setDate, workList }) => {
                   <EmptyView
                     viewObj={view}
                     setDate={setDate}
+                    isLoad={isListViewLoading}
                     viewDate={getAddedDateStr(
                       startDate,
                       idx + Math.floor((ARRAY_LENGTH - DISPLAY_LENGTH) / 2)
@@ -61,6 +62,7 @@ export const ListView = ({ user, date, setDate, workList }) => {
       <li
         className="listView-element listView-element__btn"
         onClick={onClickRightBtn}
+        disabled={isListViewLoading}
       >
         <span className="listView-element__btn-text">{rightCaret}</span>
       </li>

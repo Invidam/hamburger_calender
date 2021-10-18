@@ -32,26 +32,26 @@ const getListViewInOtherMonth = async (user, arrLength, startDate, endDate) => {
           // listView.push(value);
           const idx = getIdxByDayDiff(startDate, dividedStartMonth, key);
           listView[idx] = value?.workList;
-          console.log(`[${idx}]`, dividedEndMonth, key);
+          // console.log(`[${idx}]`, dividedEndMonth, key);
         }
-    },
-    (errorObject) => console.log("ERR OBJ: ", errorObject)
+    }
+    // (errorObject) => console.log("ERR OBJ: ", errorObject)
   );
   await endMonthRef.once(
     "value",
     (workList) => {
       const enteredWorkList = workList.val();
-      console.log("WL: ", enteredWorkList, typeof enteredWorkList);
+      // console.log("WL: ", enteredWorkList, typeof enteredWorkList);
       if (enteredWorkList)
         for (const [key, value] of Object.entries(enteredWorkList)) {
           if (key > dividedEndDay) continue;
           // listView.push(value);
           const idx = getIdxByDayDiff(startDate, dividedEndMonth, key);
           listView[idx] = value?.workList;
-          console.log(`[${idx}]`, dividedEndMonth, key);
+          // console.log(`[${idx}]`, dividedEndMonth, key);
         }
-    },
-    (errorObject) => console.log("ERR OBJ: ", errorObject)
+    }
+    // (errorObject) => console.log("ERR OBJ: ", errorObject)
   );
   return listView;
 };
@@ -65,7 +65,7 @@ const getListViewInSameMonth = async (user, arrLength, startDate, endDate) => {
     "value",
     (workList) => {
       const enteredWorkList = workList.val();
-      console.log("WL: ", enteredWorkList, typeof enteredWorkList);
+      // console.log("WL: ", enteredWorkList, typeof enteredWorkList);
       if (enteredWorkList)
         for (const [key, value] of Object.entries(enteredWorkList)) {
           if (key < dividedStartDay || key > dividedEndDay) continue;
@@ -73,10 +73,10 @@ const getListViewInSameMonth = async (user, arrLength, startDate, endDate) => {
 
           const idx = getIdxByDayDiff(startDate, dividedAddressYYYYMM, key);
           listView[idx] = value?.workList;
-          console.log(`[${idx}]`, dividedAddressYYYYMM, key);
+          // console.log(`[${idx}]`, dividedAddressYYYYMM, key);
         }
-    },
-    (errorObject) => console.log("ERR OBJ: ", errorObject)
+    }
+    // (errorObject) => console.log("ERR OBJ: ", errorObject)
   );
 
   return listView;
@@ -84,10 +84,10 @@ const getListViewInSameMonth = async (user, arrLength, startDate, endDate) => {
 export const getListView = async (req, res) => {
   const { user } = req.params;
   const { startDate, endDate } = req.query;
-  console.log("LV", startDate, endDate);
+  // console.log("LV", startDate, endDate);
   const arrLength = getDiffDayInStr(startDate, endDate) + 1;
   const diffCode = getTimeStrDiffCode(startDate, endDate);
-  console.log(startDate, endDate, diffCode);
+  // console.log(startDate, endDate, diffCode);
   let listView;
   if (diffCode === YEAR || diffCode === MONTH) {
     listView = await getListViewInOtherMonth(
@@ -104,7 +104,7 @@ export const getListView = async (req, res) => {
       endDate
     );
   }
-  console.log("LV: ", listView?.length, listView);
+  // console.log("LV: ", listView?.length, listView);
   res.json(listView);
 };
 

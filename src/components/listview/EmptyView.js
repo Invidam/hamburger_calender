@@ -1,8 +1,12 @@
-export const EmptyView = ({ viewObj, setDate, viewDate }) => {
+export const EmptyView = ({ isLoad, viewObj, setDate, viewDate }) => {
   const viewContent = (
     <div
       className="listView__item-box"
-      onClick={() => setDate(new Date(viewDate))}
+      onClick={() =>
+        !isLoad
+          ? setDate(new Date(viewDate))
+          : console.log("[deq] status: ", isLoad)
+      }
     >
       <span className="listView__item-date"> {viewDate.substr(5)}</span>
     </div>

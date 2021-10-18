@@ -7,7 +7,7 @@ import { LoadingElement } from "../Loading";
 import { LocalStroage } from "../../tools/LocalStorage";
 export const CalendarTemplate = ({ user, updateDateHook }) => {
   const [date, onUpdateDate] = updateDateHook;
-  const [mark, setActiveDate] = useDateInfo(user, date);
+  const [mark, getUserInfo] = useDateInfo(user, date);
   // console.log("DATE INFO: ", dateInfo);
   // const mark = dateInfo[0];
   console.log("[Calendar]");
@@ -37,7 +37,8 @@ export const CalendarTemplate = ({ user, updateDateHook }) => {
         onActiveStartDateChange={({ activeStartDate, value, view }) => {
           console.log("Changed view to: ", activeStartDate, value, view);
 
-          setActiveDate(changeFormatYYYYMMDD(activeStartDate));
+          // setActiveDate(changeFormatYYYYMMDD(activeStartDate));
+          getUserInfo(changeFormatYYYYMMDD(activeStartDate));
         }}
         tileClassName={({ date, view }) => {
           if (
