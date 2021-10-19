@@ -18,6 +18,7 @@ import { LoadingElement } from "./components/Loading";
 
 function App() {
   // useSetAxios();
+  console.log("[App] START-----------------------------------------");
   const updateDateHook = useSetDate();
   const date = updateDateHook[0];
   const customLoginHook = useLogin();

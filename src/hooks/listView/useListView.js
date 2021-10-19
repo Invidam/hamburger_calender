@@ -106,6 +106,7 @@ export const useListView = (user, date, setDate, workList) => {
     if (user && startDate) {
       const response = await getListView(startDate, getEndDate(startDate));
       listDeque = new Deque(response, DISPLAY_LENGTH);
+      listDeque.print("listview");
       setListView(listDeque.get());
     }
   };
@@ -131,7 +132,7 @@ export const useListView = (user, date, setDate, workList) => {
     // );
     const dateDiff = subtractDayInStr(befStartDate, startDate);
     if (!listDeque || !befStartDate || dateDiff > 2 || dateDiff < -2)
-      updateListView();
+      await updateListView();
     else if (dateDiff !== 0) await moveListView(startDate, dateDiff);
     // updateListView(startDate);
     befStartDate = startDate;

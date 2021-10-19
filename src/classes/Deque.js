@@ -38,6 +38,7 @@ export class Deque {
       ret.push(itr.value);
       itr = itr.next;
     }
+    console.log(text, ret);
   }
   pop_front(cnt = 1) {
     while (cnt--) {

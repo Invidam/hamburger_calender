@@ -10,7 +10,10 @@ export const useDateInfo = (user, date) => {
 
   const getUserInfo = async (nextDate) => {
     try {
+      console.log("info, CANCEL?", cancel);
       if (!nextDate) return;
+      if (cancel) return;
+      // console.log("info, NOT CANCEL");
       if (user) {
         // setLoad(true);
         const data = await APIv2.workList(user, nextDate).dataInfo();
@@ -18,7 +21,7 @@ export const useDateInfo = (user, date) => {
         if (!data?.data) throw new Error("Cannot found Your Work List");
         const response = data.data;
         console.log("USER INFO SETTING STRAT", nextDate, response);
-        if (!cancel) setDateInfo(response);
+        setDateInfo(response);
       } else {
         // setDateInfo();
       }
@@ -28,6 +31,7 @@ export const useDateInfo = (user, date) => {
     }
   };
   useEffect(() => {
+    console.log("DATE INFO GET", user, date);
     getUserInfo(date);
 
     return () => (cancel = true);

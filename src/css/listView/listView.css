@@ -73,3 +73,8 @@
   padding-right: 3%;
   margin-bottom: 5px;
 }
+
+.listView-loading {
+  cursor: default;
+  /* background-color: red; */
+}

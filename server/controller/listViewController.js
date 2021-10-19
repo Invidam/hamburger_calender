@@ -104,7 +104,7 @@ export const getListView = async (req, res) => {
       endDate
     );
   }
-  // console.log("LV: ", listView?.length, listView);
+  console.log("LV: ", listView?.length, listView);
   res.json(listView);
 };
 

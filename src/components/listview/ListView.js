@@ -22,18 +22,29 @@ export const ListView = ({ user, date, setDate, workList }) => {
     onClickLeftBtn,
   } = useListView(user, date, setDate, workList);
   return (
-    <ol className="listView-list">
+    <ol
+      className={
+        isListViewLoading ? "listView-list listView-loading" : "listView-list"
+      }
+    >
       <li
-        className="listView-element listView-element__btn"
+        className={`listView-element listView-element__btn ${
+          isListViewLoading ? "listView-loading" : ""
+        }`}
         onClick={onClickLeftBtn}
         // disabled={isListViewLoading}
       >
-        <span className="listView-element__btn-text">{leftCaret} </span>
+        <span className={`listView-element__btn-text`}>{leftCaret} </span>
       </li>
       {listView
         ? listView.map((view, idx) => {
             return (
-              <li className="listView-element" key={idx}>
+              <li
+                className={`listView-element ${
+                  isListViewLoading ? "listView-loading" : ""
+                }`}
+                key={idx}
+              >
                 {view ? (
                   <View
                     viewObj={view}
@@ -60,7 +71,9 @@ export const ListView = ({ user, date, setDate, workList }) => {
           })
         : "NO"}
       <li
-        className="listView-element listView-element__btn"
+        className={`listView-element listView-element__btn ${
+          isListViewLoading ? "listView-loading" : ""
+        }`}
         onClick={onClickRightBtn}
         disabled={isListViewLoading}
       >

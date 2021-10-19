@@ -14,7 +14,7 @@ const maketargetSetting = (
   };
 };
 export const useTargetSetting = (user, isLoginLoading) => {
-  console.log("UPDATE SETTING HOOK USER: ");
+  console.log("UPDATE SETTING HOOK USER: ", user, isLoginLoading);
   const [targetSetting, setTargetSetting] = useState({
     targetWorkTime: -1,
     targetWakeTime: { hour: -1, minute: -1 },
@@ -25,18 +25,18 @@ export const useTargetSetting = (user, isLoginLoading) => {
   // const [targetBedHour, setTargetBedHour] = useState(-1);
   // const [targetWakeMinute, setTargetWakeMinute] = useState(-1);
   // const [targetBedMinute, setTargetBedMinute] = useState(-1);
-  const [isSettingHookLoading, setLoad] = useState(false);
+  const [isSettingHookLoading, setLoad] = useState(true);
   const getUserSetting = async () => {
     try {
       console.log("SETTING USE EFFECT : ", user, isLoginLoading);
       if (user && !isLoginLoading) {
         console.log("SETTIN-G", user);
-        setLoad(true);
+        // setLoad(true);
         const data = await APIv2.userSetting(user).get(); //API.get(`/auth/setting/${user}`);
-        setLoad(false);
         const settingObj = data?.data;
         if (!data) throw new Error("Cannot find data");
         setTargetSetting(settingObj);
+        setLoad(false);
         // setTargetWorkTime(settingObj?.targetWorkTime);
         // setTargetWakeHour(settingObj?.targetWakeTime.hour);
         // setTargetBedHour(settingObj?.targetBedTime.hour);

@@ -11,12 +11,12 @@ const verifyToken = async () => {
 
 export const useLogin = () => {
   const [user, setUser] = useState();
-  const [isTokenLoading, setLoadInToken] = useState(false);
+  const [isTokenLoading, setLoadInToken] = useState(true);
   const [isLoginLoading, setLoadInLoading] = useState(false);
-  const [isLoginHookLoading, setLoad] = useState(false);
+  const [isLoginHookLoading, setLoad] = useState(true);
   useEffect(() => {
     console.log(
-      "TOKEN",
+      "[login]TOKEN",
       isTokenLoading,
       "LOGIN",
       isLoginLoading,
