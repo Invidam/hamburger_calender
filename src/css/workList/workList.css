@@ -59,3 +59,25 @@
 .workList__work {
   color: black;
 }
+
+.workList-header {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  width: 45vw;
+  margin-left: 1vw;
+  justify-content: space-between;
+}
+
+.workList-icon {
+  /* position: absolute; */
+  top: 3vh;
+  right: 1vw;
+  color: rgb(137 100 88 / 45%);
+  /* border: 1px solid silver; */
+  /* text-shadow: 0px 0px 5px blue;
+  filter: drop-shadow(30px 10px 4px #4444dd); */
+  /* filter: drop-shadow(-1px -1px 1px rgb(171 158 140)); */
+  /* rgba(157, 149, 138, 0.3); */
+  height: 22px;
+}

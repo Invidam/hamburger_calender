@@ -10,6 +10,7 @@ import {
   putWork,
   putTime,
   editWorkList,
+  getGrade,
 } from "../controller/workListController.js";
 import { protectorMiddleWare } from "../middlewares.js";
 
@@ -40,3 +41,5 @@ workListRouter
   .post(editWorkList);
 
 workListRouter.route("/date-info").all(protectorMiddleWare).get(getDateInfo);
+
+workListRouter.route("/grade").all(protectorMiddleWare).get(getGrade);

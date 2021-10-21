@@ -1,4 +1,10 @@
-import { changeFormatYYYYMMDD, divideDate } from "../tools/time.js";
+import {
+  changeFormatYYYYMMDD,
+  divideDate,
+  getAddedHHMM,
+  getDifference,
+  HHMMcompare,
+} from "../tools/time.js";
 // import { divideDate } from "../";
 import { db } from "../routes/firebase/config.js";
 
@@ -273,3 +279,169 @@ export const getDateInfo = async (req, res) => {
   return res.json(dateInfo);
 };
 // };
+
+const RECORDTIME_LIMIT_HOUR = 2;
+const RECORDTIME_MAX_GRADE = 2;
+const WORKLIST_LIMIT_HOUR = 6;
+const WORKLIST_MAX_GRADE = 6;
+const getWorkListTimeSum = async (user, date) => {
+  const { dividedAddress } = divideDate(date);
+  const ref = db.ref(`users/${user}/date/${dividedAddress}/workList`);
+  let workListRes,
+    workTimeSum = 0;
+  await ref.once(
+    "value",
+    (Object) => {
+      workListRes = Object.val();
+    },
+    (errorObject) => {
+      throw new Error(errorObject);
+    }
+  );
+  if (workListRes.workList) {
+    Object.values(workListRes.workList).forEach((workItem, idx) => {
+      workTimeSum += workItem.workTime;
+    });
+  }
+  const workListObj = {
+    wakeTime: workListRes?.wakeTime,
+    bedTime: workListRes?.bedTime,
+    workTimeSum,
+  };
+  return workListObj;
+};
+const getSetting = async (user) => {
+  const ref = db.ref(`users/${user}/setting`);
+  let ret;
+  await ref.once(
+    "value",
+    (settingObj) => {
+      const setting = settingObj.val();
+      if (!setting) throw new Error("Can't find Setting");
+      else ret = setting;
+    },
+    (errorObject) => {
+      throw new Error(errorObject);
+    }
+  );
+  return ret;
+};
+
+const getGradeInRecordTime = (time1, time2) => {
+  const maxTime = { hour: 24, minute: 0 };
+  const minTime = { hour: 0, minute: 0 };
+  const cand1 = getDifference(time1, time2);
+  const cand2 = getAddedHHMM(
+    getDifference(maxTime, time1),
+    getDifference(minTime, time2)
+  );
+  const cand3 = getAddedHHMM(
+    getDifference(maxTime, time2),
+    getDifference(minTime, time1)
+  );
+  const diff = HHMMcompare(cand1, cand2)
+    ? HHMMcompare(cand1, cand3)
+      ? cand1
+      : cand3
+    : HHMMcompare(cand2, cand3)
+    ? cand2
+    : cand3;
+  //F- t1 + t2   24 - 23 + 1 = 2
+  const diffHour = diff.hour + diff.minute / 60;
+  const makeGreadeInRecordTime = (limit, max, time) => {
+    const ret = Math.ceil(max - (time / limit) * max);
+    return ret > max ? max : ret < 0 ? 0 : ret;
+  };
+  return [
+    makeGreadeInRecordTime(
+      RECORDTIME_LIMIT_HOUR,
+      RECORDTIME_MAX_GRADE,
+      diffHour
+    ),
+    diff,
+  ];
+};
+const getGradeInWorkList = (hour1, hour2) => {
+  const diff = Math.abs(hour1 - hour2);
+  const makeGreadeInWorkList = (limit, max, time) => {
+    const ret = Math.floor((time / limit) * max);
+    return ret > max ? max : ret;
+  };
+  return [
+    makeGreadeInWorkList(WORKLIST_LIMIT_HOUR, WORKLIST_MAX_GRADE, diff),
+    diff,
+  ];
+};
+const makeGrade = (workListObj, settingObj) => {
+  try {
+    if (
+      !settingObj?.targetWakeTime ||
+      !settingObj?.targetBedTime ||
+      !settingObj?.targetWorkTime
+    )
+      throw new Error("can't find Target time Object");
+    const [wakeTimeGrade, wakeTimeDiff] = getGradeInRecordTime(
+      settingObj.targetWakeTime,
+      workListObj.wakeTime
+    );
+    const [bedTimeGrade, bedTimeDiff] = getGradeInRecordTime(
+      settingObj.targetBedTime,
+      workListObj.bedTime
+    );
+    const [workListGrade, workimeDiff] = getGradeInWorkList(
+      settingObj.targetWorkTime,
+      workListObj.workTimeSum
+    );
+    const difference = {
+      wakeTimeDiff,
+      bedTimeDiff,
+      workimeDiff,
+    };
+    return [
+      {
+        wakeTimeGrade,
+        bedTimeGrade,
+        workListGrade,
+      },
+      difference,
+    ];
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+// export const getGrade = async (user, date) => {
+//   //db에서 날짜 자체를 ㄱ가져옴 workSum, wakeTime, bedTime 가져옴
+//   //db에서 target 을 가져옴
+//   // target을 이용해 별점을 매겨 worksum wT bT와 함게 리턴
+//   const date = "2021-10-21";
+//   const user = "Invidam";
+//   try {
+//     const workListObj = await getWorkListTimeSum(user, date);
+//     const settingObj = await getSetting(user);
+//     console.log(workListObj, settingObj);
+//     const grade = makeGrade(workListObj, settingObj);
+//     console.log({ grade, value: workListObj, target: settingObj });
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+export const getGrade = async (req, res) => {
+  const { user, date } = req.params;
+  try {
+    const workListObj = await getWorkListTimeSum(user, date);
+    const settingObj = await getSetting(user);
+    console.log(workListObj, settingObj);
+    const [grade, difference] = makeGrade(workListObj, settingObj);
+    return res.json({
+      grade,
+      value: workListObj,
+      target: settingObj,
+      difference,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      status: "error",
+      error: error,
+    });
+  }
+};

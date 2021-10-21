@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { API, APIv2 } from "../../tools/API";
-const maketargetSetting = (
+const makeTargetSetting = (
   targetWorkTime,
   targetWakeHour,
   targetWakeMinute,
@@ -13,13 +13,10 @@ const maketargetSetting = (
     targetBedTime: { hour: targetBedHour, minute: targetBedMinute },
   };
 };
+const makeEmptySetting = () => makeTargetSetting(-1, -1, -1, -1, -1);
 export const useTargetSetting = (user, isLoginLoading) => {
   console.log("UPDATE SETTING HOOK USER: ", user, isLoginLoading);
-  const [targetSetting, setTargetSetting] = useState({
-    targetWorkTime: -1,
-    targetWakeTime: { hour: -1, minute: -1 },
-    targetBedTime: { hour: -1, minute: -1 },
-  });
+  const [targetSetting, setTargetSetting] = useState(makeEmptySetting());
   // const [targetWorkTime, setTargetWorkTime] = useState(-1);
   // const [targetWakeHour, setTargetWakeHour] = useState(-1);
   // const [targetBedHour, setTargetBedHour] = useState(-1);
@@ -109,7 +106,7 @@ export const useTargetSetting = (user, isLoginLoading) => {
       alert(error);
     }
   };
-  // const targetSetting = maketargetSetting(
+  // const targetSetting = makeTargetSetting(
   //   targetWorkTime,
   //   targetWakeHour,
   //   targetBedHour,

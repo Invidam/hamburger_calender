@@ -98,9 +98,18 @@ export const TimeRecordDisplay = ({
       </span>
     </div>
   );
-  <span className="tooltip_box__value">{`${isWake ? "Wake" : "Bed"}Time: ${
-    recordTime.hour
-  }: ${recordTime.minute}`}</span>;
+  // <span className="tooltip_box__value">{`${isWake ? "Wake" : "Bed"}Time: ${
+  //   recordTime.hour
+  // }: ${recordTime.minute}`}</span>;
+  const tooltipBox = (
+    <div className="tooltip-content">
+      <div className="tooltip-box">
+        {targetTime.hour !== -1 ? targetElement : ""}
+        {valueElement}
+        {targetTime.hour !== -1 ? diffElement : ""}
+      </div>
+    </div>
+  );
   return (
     <div>
       <li
@@ -113,13 +122,7 @@ export const TimeRecordDisplay = ({
       >
         {isWake ? "Wake at " : "Sleep at "}
         {makeDisplayTime(recordTime.hour)}: {makeDisplayTime(recordTime.minute)}
-        <div className="tooltip-content">
-          <div className="tooltip-box">
-            {targetTime.hour !== -1 ? targetElement : ""}
-            {valueElement}
-            {targetTime.hour !== -1 ? diffElement : ""}
-          </div>
-        </div>
+        {tooltipBox}
       </li>
       {editModal}
     </div>

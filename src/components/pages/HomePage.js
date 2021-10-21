@@ -16,19 +16,16 @@ export const HomePage = ({ user, updateDateHook, targetSetting }) => {
   // const mark = ["2021-09-12", "2021-09-13", "2021-09-14"];
   // const updateDateHook = useState(new Date());
   const date = updateDateHook[0];
-  const workListHook = useWorkList(user, date);
   //const [workList, setWork, isWorkListLoading]
   const setDate = updateDateHook[1];
 
   return (
     <section>
-      <aside> test</aside>
       <article>
         {`Hello ${user}`}
         <ListViewTemplate
           user={user}
           date={date}
-          workList={workListHook[0]}
           setDate={setDate}
           targetSetting={targetSetting}
         />
@@ -38,7 +35,6 @@ export const HomePage = ({ user, updateDateHook, targetSetting }) => {
           user={user}
           date={date}
           targetSetting={targetSetting}
-          workListHook={workListHook}
         />
       </article>
     </section>

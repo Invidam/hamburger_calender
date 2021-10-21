@@ -26,15 +26,15 @@ export const useTargetSettingOnPage = ({ targetSetting, setTargetTime }) => {
       ? undefined
       : targetSetting?.targetWakeTime.hour
   );
-  const [targetBedHour, setTargetBedHour] = useState(
-    targetSetting?.targetBedTime.hour === -1
-      ? undefined
-      : targetSetting?.targetBedTime.hour
-  );
   const [targetWakeMinute, setTargetWakeMinute] = useState(
     targetSetting?.targetWakeTime.minute === -1
       ? undefined
       : targetSetting?.targetWakeTime.minute
+  );
+  const [targetBedHour, setTargetBedHour] = useState(
+    targetSetting?.targetBedTime.hour === -1
+      ? undefined
+      : targetSetting?.targetBedTime.hour
   );
   const [targetBedMinute, setTargetBedMinute] = useState(
     targetSetting?.targetBedTime.minute === -1
@@ -45,10 +45,12 @@ export const useTargetSettingOnPage = ({ targetSetting, setTargetTime }) => {
     setTargetWorkTime(parseInt(workTime));
   const onChangeTargetWakeHour = (wakeHour) =>
     setTargetWakeHour(parseInt(wakeHour));
+  const onChangeTargetWakeMinute = (wakeMinute) => {
+    console.log(" CHANGE WWKAE TIME MIUUTE", wakeMinute);
+    setTargetWakeMinute(parseInt(wakeMinute));
+  };
   const onChangeTargetBedHour = (bedHour) =>
     setTargetBedHour(parseInt(bedHour));
-  const onChangeTargetWakeMinute = (wakeMinute) =>
-    setTargetWakeMinute(parseInt(wakeMinute));
   const onChangeTargetBedMinute = (bedMinute) =>
     setTargetBedMinute(parseInt(bedMinute));
 
@@ -67,8 +69,8 @@ export const useTargetSettingOnPage = ({ targetSetting, setTargetTime }) => {
   const displayObj = maketargetSetting(
     targetWorkTime,
     targetWakeHour,
-    targetBedHour,
     targetWakeMinute,
+    targetBedHour,
     targetBedMinute
   );
   console.log("DIS", displayObj);
@@ -76,8 +78,8 @@ export const useTargetSettingOnPage = ({ targetSetting, setTargetTime }) => {
     displayObj,
     onChangeTargetWorkTime,
     onChangeTargetWakeHour,
-    onChangeTargetBedHour,
     onChangeTargetWakeMinute,
+    onChangeTargetBedHour,
     onChangeTargetBedMinute,
     onEditTargetTime,
   };

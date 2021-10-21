@@ -13,14 +13,14 @@ import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 
 const leftCaret = <FontAwesomeIcon icon={faCaretLeft} size="5x" />;
 const rightCaret = <FontAwesomeIcon icon={faCaretRight} size="5x" />;
-export const ListView = ({ user, date, setDate, workList }) => {
+export const ListView = ({ user, date, setDate }) => {
   const {
     isListViewLoading,
     startDate,
     listView,
     onClickRightBtn,
     onClickLeftBtn,
-  } = useListView(user, date, setDate, workList);
+  } = useListView(user, date, setDate);
   return (
     <ol
       className={

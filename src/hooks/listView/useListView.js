@@ -67,7 +67,7 @@ const getDeqNeedDate = (startDate, dateDiff) => {
   return [startDate, endDate];
 };
 // getAddedDateStr(startDate, ARRAY_LENGTH - 1);
-export const useListView = (user, date, setDate, workList) => {
+export const useListView = (user, date, setDate) => {
   const [startDate, setStratDate] = useState(getStartDate(date));
   const [listView, setListView] = useState();
   const [isListViewLoading, setLoad] = useState(false);

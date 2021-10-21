@@ -1,20 +1,20 @@
 import "../../css/workList/workList.css";
 import { WorkList } from "./WorkList";
-export const WorkListTemplate = ({
-  targetSetting,
-  user,
-  date,
-  workListHook,
-}) => {
+import { faCog } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const CogElement = (
+  <FontAwesomeIcon className="workList-icon" icon={faCog} size="2x" />
+);
+export const WorkListTemplate = ({ targetSetting, user, date }) => {
   return (
     <div className="workList">
-      <h1>Make Hamburger</h1>
-      <WorkList
-        user={user}
-        date={date}
-        targetSetting={targetSetting}
-        workListHook={workListHook}
-      />
+      <header className="workList-header">
+        <h1>Make Hamburger</h1>
+
+        {CogElement}
+      </header>
+      <WorkList user={user} date={date} targetSetting={targetSetting} />
     </div>
   );
 };

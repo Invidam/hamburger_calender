@@ -23,7 +23,14 @@ export const getDifference = (timeObj1, timeObj2) => {
   const minute = diff % 60;
   return { hour, minute };
 };
-
+export const getAddedHHMM = (time1, time2) => {
+  return { hour: time1.hour + time2.hour, minute: time1.minute + time2.minute };
+};
+export const HHMMcompare = (time1, time2) => {
+  return time1.hour === time2.hour
+    ? time1.hour < time2.hour
+    : time1.hour < time2.hour;
+};
 export const getDiffDayInStr = (d1, d2) => {
   d1 = new Date(d1);
   d2 = new Date(d2);

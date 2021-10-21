@@ -2,6 +2,7 @@ import { useState } from "react";
 import Modal from "react-modal";
 import { useModal } from "../../../../hooks/example/useModal";
 import { useDeleteWork } from "../../../../hooks/workList/work/useDeleteWork";
+import { getDifference, makeDisplayTime } from "../../../../tools/time";
 import { EditWorkWindow } from "../../window/work/EditWorkWindow";
 Modal.setAppElement("#root");
 const customStyles = {
@@ -25,7 +26,7 @@ const customStyles = {
     backgroundColor: "rgba(0,0,0,0.4)",
   },
 };
-export const Work = ({ workItem, setWork }) => {
+export const Work = ({ workItem, setWork, targetTime, workTimeSum }) => {
   const { id } = workItem;
   const { editModalIsOpen, openEditModal, closeEditModal } = useModal();
   const { onDeleteWork } = useDeleteWork(workItem, setWork, closeEditModal);
@@ -58,6 +59,54 @@ export const Work = ({ workItem, setWork }) => {
       </button>
     </Modal>
   );
+  const targetElement = (
+    <div className="tooltip-box__target">
+      <span className="tooltip-box__key">TargetTime:</span>
+      <span className="tooltip-box__value">{targetTime}h</span>
+    </div>
+  );
+  const valueElement = (
+    <div className="tooltip-box__target">
+      <span className="tooltip-box__key">Worktime Sum:</span>
+      <span className="tooltip-box__value">{workTimeSum}h</span>
+    </div>
+  );
+
+  const valueElement2 = (
+    <div className="tooltip-box__target">
+      <span className="tooltip-box__key">Worktime :</span>
+      <span className="tooltip-box__value">{workItem.workTime}h</span>
+    </div>
+  );
+  const diffTime = targetTime - workTimeSum;
+  console.log("[wt] ", targetTime, workTimeSum, diffTime);
+  const diffElement = (
+    <div className="tooltip-box__target">
+      <span className="tooltip-box__key">Difference:</span>
+      <span className="tooltip-box__value">
+        {/* {diffTime > 0 ? "+" : "-"} */}
+        {diffTime}h
+      </span>
+    </div>
+  );
+  // <span className="tooltip_box__value">{`${isWake ? "Wake" : "Bed"}Time: ${
+  //   recordTime.hour
+  // }: ${recordTime.minute}`}</span>;
+  const tooltipBox = (
+    <div className="tooltip-content">
+      <div className="tooltip-box">
+        {targetTime.hour !== -1 ? targetElement : ""}
+        {valueElement}
+        {/* {valueElement2} */}
+        {targetTime.hour !== -1 ? diffElement : ""}
+      </div>
+    </div>
+  );
+  // const tooltipBox = (
+  //   <span className="tooltip-content" key={id}>
+  //     {workItem.workName} {workItem.workTime}h targetTime workTimeSum
+  //   </span>
+  // );
   console.log("[WORK]");
   return (
     <div>
@@ -67,10 +116,7 @@ export const Work = ({ workItem, setWork }) => {
         key={"_" + id}
         onClick={openEditModal}
       >
-        {workItem.workName} {workItem.workTime}h
-        <span className="tooltip-content" key={id}>
-          {workItem.workName} {workItem.workTime}h
-        </span>
+        {workItem.workName} {workItem.workTime}h{tooltipBox}
       </li>
       {editModal}
     </div>

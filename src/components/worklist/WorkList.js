@@ -13,6 +13,7 @@ import {
   useWorkList,
 } from "../../hooks/workList/work/useWorkList";
 import { LoadingElement } from "../Loading";
+import { APIv2 } from "../../tools/API";
 export const WorkList = ({ user, date, targetSetting, workListHook }) => {
   const { targetWakeTime, targetBedTime, targetWorkTime } = targetSetting;
   const [wakeTime, onClickWakeTime, setWakeTime, isWakeTimeLoading] =
@@ -22,7 +23,10 @@ export const WorkList = ({ user, date, targetSetting, workListHook }) => {
     user,
     date
   );
-  const [workList, setWork, isWorkListLoading] = workListHook;
+  const [workList, setWork, isWorkListLoading, workTimeSum] = useWorkList(
+    user,
+    date
+  );
 
   const isLoading = () =>
     isWakeTimeLoading || isBedTimeLoading || isWorkListLoading;
@@ -61,13 +65,11 @@ export const WorkList = ({ user, date, targetSetting, workListHook }) => {
     Object.values(workList).map((workItem, idx) => {
       return isEmptyWork(workItem) ? undefined : (
         <Work
-          user={user}
-          date={date}
           workItem={workItem}
           setWork={setWork}
           key={idx}
-          id={workItem.id}
           targetTime={targetWorkTime}
+          workTimeSum={workTimeSum}
         />
       );
     });
@@ -81,12 +83,23 @@ export const WorkList = ({ user, date, targetSetting, workListHook }) => {
   return isLoading() ? (
     <LoadingElement text={"WorkList Loading. . ."} />
   ) : (
-    <ol>
-      {wakeTimeElement}
-      {workListElement}
-      {emptyWork}
-      {bedTimeElemnt}
-    </ol>
+    <div>
+      <ol>
+        {wakeTimeElement}
+        {workListElement}
+        {emptyWork}
+        {bedTimeElemnt}
+      </ol>
+      <button
+        onClick={async () => {
+          const res = await APIv2.workList(user, date).grade();
+          console.log(res.data);
+        }}
+      >
+        {" "}
+        CLICK
+      </button>
+    </div>
   );
   // </div>
 };

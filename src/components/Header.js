@@ -55,7 +55,7 @@ export const Header = ({ updateDateHook, customLoginHook }) => {
         </div>
         {!authenticated ? loginColumn : logoutColumn}
       </div>
-      <div className="">
+      <div className="header__calendar">
         {date}
 
         <CalendarTemplate user={user} updateDateHook={updateDateHook} />

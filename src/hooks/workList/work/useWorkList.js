@@ -21,6 +21,7 @@ export const useWorkList = (user, date) => {
   // const initList = getInitList();
   const [isWorkListLoading, setLoad] = useState(false);
   const [workList, setWorkList] = useState();
+  const [workTimeSum, setWorkTimeSum] = useState(0);
   const getWorkList = async () => {
     try {
       let resWorkList;
@@ -74,5 +75,13 @@ export const useWorkList = (user, date) => {
       },
     };
   };
-  return [workList, setWork, isWorkListLoading];
+  useEffect(() => {
+    let sum = 0;
+    workList &&
+      Object.values(workList).map((workItem, idx) => {
+        sum += workItem.workTime;
+      });
+    setWorkTimeSum(sum);
+  }, [workList]);
+  return [workList, setWork, isWorkListLoading, workTimeSum];
 };

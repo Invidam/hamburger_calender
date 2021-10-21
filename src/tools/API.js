@@ -106,6 +106,9 @@ export class APIv2 {
     try {
       const url = `/api/${user}/${date}/worklist`;
       return {
+        grade: async () => {
+          return await API.get(url + "/grade");
+        },
         get: async () => {
           return await API.get(url);
         },
