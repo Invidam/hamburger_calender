@@ -8,6 +8,7 @@ import { useWorkList } from "../../hooks/workList/work/useWorkList";
 import { changeFormatYYYYMMDD } from "../../tools/time";
 import { API } from "../../tools/API";
 import { ListViewTemplate } from "../listview/ListViewTemplate";
+import { TodoListTemplate } from "../todoList/TodoListTemplate";
 
 export const HomePage = ({ user, updateDateHook, targetSetting }) => {
   // const [date, setDate] = useState(new Date());
@@ -36,6 +37,7 @@ export const HomePage = ({ user, updateDateHook, targetSetting }) => {
           date={date}
           targetSetting={targetSetting}
         />
+        <TodoListTemplate user={user} date={date} />
       </article>
     </section>
   );

@@ -165,6 +165,39 @@ export class APIv2 {
       throw new Error(error);
     }
   }
+  static todoList(user, date) {
+    try {
+      const url = `/api/${user}/${date}/todolist`;
+      return {
+        get: async () => {
+          return await API.get(url);
+        },
+        edit: async (data) => {
+          return await API.post(url, { value: data });
+        },
+      };
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  static todo(user, date) {
+    try {
+      const url = `/api/${user}/${date}/todolist/todo`;
+      return {
+        create: async (data) => {
+          return await API.put(url, { value: data });
+        },
+        edit: async (data) => {
+          return await API.post(url, { value: data });
+        },
+        delete: async (data) => {
+          return await API.delete(url, { data: { value: data } });
+        },
+      };
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 }
 
 //API.workList("SR","1212-12-12").create({ab:"c"});

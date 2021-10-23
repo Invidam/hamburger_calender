@@ -98,6 +98,22 @@ export class LocalStroage {
       remove: () => localStorage.setItem("startDate", "undefined"),
     };
   }
+  static todoList() {
+    return {
+      isEmpty: () =>
+        localStorage.getItem("todoList")
+          ? !JSON.parse(localStorage.getItem("todoList")).length
+          : true,
+      get: () => {
+        if (!localStorage.getItem("todoList"))
+          localStorage.setItem("todoList", "{}");
+        return JSON.parse(localStorage.getItem("todoList"));
+      },
+      set: (todoList) =>
+        localStorage.setItem("todoList", JSON.stringify(todoList)),
+      remove: () => localStorage.setItem("todoList", "{}"),
+    };
+  }
 }
 
 //API.workList("SR","1212-12-12").create({ab:"c"});
