@@ -38,6 +38,7 @@ export const useTodoList = (user, date) => {
         else LocalStroage.todoList().set(_todoList);
       },
       edit: async () => {
+        console.log("EDIT TODO LIST", todoObj);
         _todoList[id] = todoObj;
         setTodoList(_todoList);
         if (user) await APIv2.todo(user, date).edit(todoObj);

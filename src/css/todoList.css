@@ -1,0 +1,23 @@
+.todo-item {
+  /* border: 1px solid black; */
+}
+
+.todo-input__content {
+  -webkit-appearance: none;
+  outline: none;
+  background-color: inherit;
+  border: 1px solid green;
+}
+
+.todo-input__text {
+  width: 60%;
+}
+
+.todo-input__date {
+  font-size: 5px;
+  width: 20%;
+}
+
+.todo-input__priority {
+  width: 15%;
+}
