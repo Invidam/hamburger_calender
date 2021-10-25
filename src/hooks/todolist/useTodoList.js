@@ -13,7 +13,7 @@ export const useTodoList = (user, date) => {
         const data = await APIv2.todoList(user, date).get(sortType);
         setLoad(false);
         const resTodoList = data?.data;
-        if (!resTodoList) throw new Error("TodoList can't found");
+        if (!data) throw new Error("TodoList can't found");
         setTodoList(resTodoList);
       } else {
         const resTodoList = LocalStroage.todoList.get(sortType);

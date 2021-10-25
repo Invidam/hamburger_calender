@@ -1,0 +1,36 @@
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+// import "../../css/todoList.css";
+import "react-datepicker/dist/react-datepicker.css";
+
+// CSS Modules, react-datepicker-cssmodules.css
+// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+
+export const DatePick = ({ date, onChangeDate, isEditMode }) => {
+  return isEditMode ? (
+    <DatePicker
+      className={`todo__content todo__date todo-input__content`}
+      selected={date ? new Date(date) : undefined}
+      onChange={(value) => onChangeDate(value)}
+      minDate={new Date()}
+      dateFormat="yy/MM/dd"
+      // placeholderText="Deadline"
+      customInput={undefined}
+
+      // disabledKeyboardNavigation={true}
+    />
+  ) : (
+    <DatePicker
+      className={`todo__content todo__date todo-display__content`}
+      selected={date ? new Date(date) : undefined}
+      onChange={(value) => onChangeDate(value)}
+      minDate={new Date()}
+      dateFormat="yy/MM/dd"
+      // placeholderText="Deadline"
+      customInput={undefined}
+      readOnly
+      // disabledKeyboardNavigation={true}
+    />
+  );
+};
+//readOnly

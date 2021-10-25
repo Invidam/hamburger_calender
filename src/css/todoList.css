@@ -1,23 +1,160 @@
-.todo-item {
+.todo-list {
+  border: 3px solid red;
+  border-radius: 6px;
+  padding: 3px;
+  background-color: rgba(205, 97, 51, 1);
+  /* color: white; */
+}
+.todo__content {
   /* border: 1px solid black; */
+  padding: 2px;
 }
 
-.todo-input__content {
+.todo-input__content:not(.todo-input__checkbox) {
+  color: white;
   -webkit-appearance: none;
   outline: none;
   background-color: inherit;
-  border: 1px solid green;
-}
-
-.todo-input__text {
-  width: 60%;
-}
-
-.todo-input__date {
+  border: none;
+  margin-right: 5px;
   font-size: 5px;
+  border-bottom: 2px solid rgba(255, 193, 146, 0.898);
+}
+.todo-input__content:hover {
+  border: none;
+  border-bottom: 2px solid rgba(253, 162, 91, 0.953);
+}
+.todo-input__content:focus {
+  border: none;
+  border-bottom: 2px solid rgb(255, 111, 0);
+}
+.todo-display__content:not(.todo-display__checkbox) {
+  color: white;
+  -webkit-appearance: none;
+  outline: none;
+  background-color: inherit;
+  border: none;
+  margin-right: 5px;
+  font-size: 5px;
+  border-bottom: 2px solid rgba(140, 86, 0, 0.611);
+}
+.todo-display__content:hover {
+  border: none;
+  border-bottom: 2px solid rgba(131, 86, 12, 0.782);
+}
+
+.todo-explain__content:not(.todo-explain__checkbox) {
+  color: white;
+  -webkit-appearance: none;
+  outline: none;
+  background-color: inherit;
+  /* border: none; */
+  /* margin-right: 0px; */
+  text-align: center;
+  padding-left: 2px;
+  font-size: 5px;
+  border-right: 2px solid rgba(39, 36, 36, 0.837);
+}
+.todo-explain__text {
+  border-left: 2px solid rgba(39, 36, 36, 0.837);
+  /* border */
+}
+.todo__checkbox {
+  width: 5%;
+  display: none;
+}
+.todo__label {
+  cursor: pointer;
+  border-radius: 2px;
+  position: relative;
+  font-size: 5px;
+}
+.todo__checkbox + label {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid black;
+  background-color: white;
+}
+/* .todo__checkbox:checked + label {
+  border: 1px solid black;
+  background-color: white;
+} */
+.todo__label-icon {
+  position: absolute;
+  top: -3px;
+  right: 1px;
+}
+.todo-icon__check {
+  font-size: 9px;
+}
+.todo__text {
+  display: inline-block;
+  margin-left: 5px;
+  width: 45%;
+}
+
+.todo__date {
+  cursor: pointer;
+  display: inline;
+  width: 100%;
+}
+.todo-explain__date {
+  display: inline-block;
+  width: 12%;
+}
+.todo__priority {
   width: 20%;
 }
+.todo-explain__priority {
+  display: inline-block;
+  width: 13%;
+}
+.todo__btn-box {
+  display: inline;
+  /* background-color: red;
+  border: 1px solid green;
+  color: blue; */
+  width: 10%;
+}
+/* .todo__btn {
+  background-color: black;
+} */
 
-.todo-input__priority {
-  width: 15%;
+.todo__btn {
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-right: 2px;
+  /* width: 100%; */
+  font-weight: bold;
+  color: var(--main-bg-color);
+  background-color: var(--main-sub-color);
+}
+
+.todo__btn:hover {
+  background-color: var(--main-sub-color__hover);
+}
+
+.todo__btn:active {
+  background-color: var(--main-sub-color__active);
+}
+
+.react-datepicker__triangle {
+  /* display: none; */
+}
+
+.react-datepicker-wrapper {
+  /* display: block; */
+  width: 48px;
+  margin-right: 5px;
+}
+
+.react-datepicker__tab-loop {
+  position: fixed;
+}
+
+.todo__star-rating {
+  width: 60px;
+  display: inline;
 }

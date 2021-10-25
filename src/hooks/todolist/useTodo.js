@@ -1,18 +1,21 @@
 import { useState } from "react";
 import randomToken from "rand-token";
-export const useTodo = (setTodo, todoItem) => {
-  const [isCheck, setCheck] = useState(todoItem?.check);
+import { changeFormatYYYYMMDD } from "../../tools/time";
+export const useTodo = (setTodo, todoItem, _isEditMode, id) => {
+  const [isEditMode, setEditMode] = useState(_isEditMode);
+  const [isCheck, setCheck] = useState(todoItem?.isCheck);
   const [text, setText] = useState(todoItem?.text);
-  const [date, setDate] = useState(todoItem?.date);
+  const [date, setDate] = useState(todoItem?.date ? todoItem?.date : undefined);
   const [priority, setPriority] = useState(todoItem?.priority);
-
+  const [isStopPriority, setStopPriortiy] = useState(false);
+  const changeEditMode = () => setEditMode(id === 0 ? true : !isEditMode);
   const onClickCheck = () => setCheck(!isCheck);
-  const onChangeText = (text) => {
-    console.log("TEXT: ", text);
-    setText(text);
+  const onChangeText = (text) => setText(text);
+  const onChangeDate = (date) => setDate(changeFormatYYYYMMDD(date, false));
+  const onChangePriority = (rating) => {
+    console.log("RAT: ", rating);
+    setPriority(rating);
   };
-  const onChangeDate = (date) => setDate(date);
-  const onChangePriority = (value) => setPriority(value);
   //   const onCheck = (event) => {
   //     try {
   //       event.preventDefault();
@@ -20,6 +23,7 @@ export const useTodo = (setTodo, todoItem) => {
   //       alert(error);
   //     }
   //   };
+  const onChangeStopPriority = () => setStopPriortiy(!isStopPriority);
   const validator = (todoItem) => {
     return todoItem.text && todoItem.date && todoItem.priority;
   };
@@ -33,6 +37,7 @@ export const useTodo = (setTodo, todoItem) => {
   };
   const onSubmitTodo = (event) => {
     try {
+      // console.log("EDIT EDIT EDIT");
       event.preventDefault();
       const id = Date.now().toString(16) + randomToken.generate(5);
       const todoItem = { isCheck, text, date, priority, id };
@@ -47,6 +52,9 @@ export const useTodo = (setTodo, todoItem) => {
       alert(error);
     }
   };
+  const onClickEditBtn = () => {
+    changeEditMode();
+  };
   const onEditTodo = (event) => {
     try {
       event.preventDefault();
@@ -55,6 +63,7 @@ export const useTodo = (setTodo, todoItem) => {
       const _todoItem = { isCheck, text, date, priority, id };
       if (typeof validator === "function") willUpdate = validator(_todoItem);
       if (willUpdate) {
+        changeEditMode();
         setTodo(_todoItem).edit();
       } else {
         throw new Error(getErrText());
@@ -78,6 +87,10 @@ export const useTodo = (setTodo, todoItem) => {
     }
   };
   return [
+    isEditMode,
+    isCheck,
+    date,
+    priority,
     onClickCheck,
     onChangeText,
     onChangeDate,
@@ -85,5 +98,8 @@ export const useTodo = (setTodo, todoItem) => {
     onSubmitTodo,
     onEditTodo,
     onDeleteTodo,
+    isStopPriority,
+    onChangeStopPriority,
+    onClickEditBtn,
   ];
 };
