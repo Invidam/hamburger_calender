@@ -65,7 +65,7 @@
   position: relative;
   flex-direction: row;
   width: 45vw;
-  margin-left: 1vw;
+  /* margin-left: 1vw; */
   justify-content: space-between;
 }
 

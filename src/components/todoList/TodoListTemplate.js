@@ -7,11 +7,11 @@ import { TodoList } from "./TodoList";
 
 export const TodoListTemplate = ({ user, date }) => {
   return (
-    <div className="todoList">
-      <header className="todoList-header">
-        <h1>Make Hamburger</h1>
-        <TodoList user={user} date={date} />
+    <div className="todo-list__template">
+      <header className="todo-list__header">
+        <h1>Make TodoList</h1>
       </header>
+      <TodoList user={user} date={date} />
     </div>
   );
 };
