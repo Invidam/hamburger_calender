@@ -7,7 +7,6 @@ export const useTodo = (setTodo, todoItem, _isEditMode, id) => {
   const [text, setText] = useState(todoItem?.text);
   const [date, setDate] = useState(todoItem?.date ? todoItem?.date : undefined);
   const [priority, setPriority] = useState(todoItem?.priority);
-  const [isStopPriority, setStopPriortiy] = useState(false);
   const changeEditMode = () => setEditMode(id === 0 ? true : !isEditMode);
   const onClickCheck = () => setCheck(!isCheck);
   const onChangeText = (text) => setText(text);
@@ -23,7 +22,6 @@ export const useTodo = (setTodo, todoItem, _isEditMode, id) => {
   //       alert(error);
   //     }
   //   };
-  const onChangeStopPriority = () => setStopPriortiy(!isStopPriority);
   const validator = (todoItem) => {
     return todoItem.text && todoItem.date && todoItem.priority;
   };
@@ -35,6 +33,12 @@ export const useTodo = (setTodo, todoItem, _isEditMode, id) => {
     } ${!text + !date + !priority > 1 ? "are" : "is"} not entered.`;
     return errText;
   };
+  const clearTodo = () => {
+    setText("");
+    setDate();
+    setPriority();
+    console.log("CLEAR TODO", text, date, priority);
+  };
   const onSubmitTodo = (event) => {
     try {
       // console.log("EDIT EDIT EDIT");
@@ -45,6 +49,7 @@ export const useTodo = (setTodo, todoItem, _isEditMode, id) => {
       if (typeof validator === "function") willUpdate = validator(todoItem);
       if (willUpdate) {
         setTodo(todoItem).create();
+        clearTodo();
       } else {
         throw new Error(getErrText());
       }
@@ -86,9 +91,11 @@ export const useTodo = (setTodo, todoItem, _isEditMode, id) => {
       alert(error);
     }
   };
+  const onClearTodo = () => clearTodo();
   return [
     isEditMode,
     isCheck,
+    text,
     date,
     priority,
     onClickCheck,
@@ -98,8 +105,7 @@ export const useTodo = (setTodo, todoItem, _isEditMode, id) => {
     onSubmitTodo,
     onEditTodo,
     onDeleteTodo,
-    isStopPriority,
-    onChangeStopPriority,
     onClickEditBtn,
+    onClearTodo,
   ];
 };

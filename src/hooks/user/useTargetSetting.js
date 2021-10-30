@@ -40,6 +40,7 @@ export const useTargetSetting = (user, isLoginLoading) => {
         // setTargetWakeMinute(settingObj?.targetWakeTime.minute);
         // setTargetBedMinute(settingObj?.targetBedTime.minute);
       } else {
+        if (!isLoginLoading) setLoad(false);
         //
       }
     } catch (error) {

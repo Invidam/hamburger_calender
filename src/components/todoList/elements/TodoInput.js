@@ -4,7 +4,13 @@ import DatePicker from "react-datepicker";
 import { useTodo } from "../../../hooks/todolist/useTodo";
 import { DatePick } from "./DatePick";
 
-import { faCheck, faSave, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faSave,
+  faPlus,
+  faTrashAlt,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const checkElement = (
   <FontAwesomeIcon
@@ -27,11 +33,26 @@ const plusElement = (
     size="1x"
   />
 );
-export const TodoInput = ({ todoHook, todoItem, id }) => {
+const trashElement = (
+  <FontAwesomeIcon
+    className="todo-icon todo-icon__trash"
+    icon={faTrashAlt}
+    size="1x"
+  />
+);
+const clearElement = (
+  <FontAwesomeIcon
+    className="todo-icon todo-icon__times"
+    icon={faTimes}
+    size="1x"
+  />
+);
+export const TodoInput = ({ todoHook, id }) => {
   const isSubmitMode = id === 0;
   const [
     isEditMode,
     isCheck,
+    text,
     date,
     priority,
     onClickCheck,
@@ -40,18 +61,39 @@ export const TodoInput = ({ todoHook, todoItem, id }) => {
     onChangePriority,
     onSubmitTodo,
     onEditTodo,
+    onDeleteTodo,
+    ,
+    onClearTodo,
   ] = todoHook;
+  const submitContent = (
+    <button className="todo__btn todo__btn-add" onClick={onSubmitTodo}>
+      {plusElement}
+    </button>
+  );
+  const editContent = (
+    <button className="todo__btn todo__btn-edit" onClick={onEditTodo}>
+      {saveElement}
+    </button>
+  );
+  const clearContent = (
+    <button className="todo__btn todo__btn-clear" onClick={onClearTodo}>
+      {clearElement}
+    </button>
+  );
+  const deleteContent = (
+    <button className="todo__btn todo__btn-delete" onClick={onDeleteTodo}>
+      {trashElement}
+    </button>
+  );
   const inputBtn = (
     <div className="todo__btn-box">
-      <button
-        className="todo__btn-content todo__btn todo__btn-add"
-        onClick={isSubmitMode ? onSubmitTodo : onEditTodo}
-      >
-        {isSubmitMode ? plusElement : saveElement}
-      </button>
+      <div className="todo__btn-content">
+        {isSubmitMode ? submitContent : editContent}
+        {isSubmitMode ? clearContent : deleteContent}
+      </div>
     </div>
   );
-  console.log("PRI: ", priority);
+  console.log("PRI: ", text);
   const inputElement = (
     <div className={`todo ${isSubmitMode ? "todo-add" : ""}`}>
       <input
@@ -61,7 +103,7 @@ export const TodoInput = ({ todoHook, todoItem, id }) => {
         }`}
         type="checkbox"
         name="todoCheck"
-        defaultValue={isCheck}
+        value={isCheck || false}
         onChange={({ target: { value } }) => onClickCheck(value)}
       ></input>
       <label
@@ -80,7 +122,9 @@ export const TodoInput = ({ todoHook, todoItem, id }) => {
         type="text"
         autoComplete="off"
         name="todoText"
-        defaultValue={todoItem?.text}
+        // defaultValue={text}
+        // value="TEST"
+        value={text || ""}
         onChange={({ target: { value } }) => onChangeText(value)}
       ></input>
       {/* <input

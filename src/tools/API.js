@@ -83,7 +83,7 @@ export class APIv2 {
   }
   static recordTime(user, date, key) {
     try {
-      const url = `/api/${user}/${date}/worklist/record-time/${key}`;
+      const url = `/api/${user}/worklist/${date}/record-time/${key}`;
       return {
         get: async () => {
           return await API.get(url);
@@ -104,7 +104,7 @@ export class APIv2 {
   }
   static workList(user, date) {
     try {
-      const url = `/api/${user}/${date}/worklist`;
+      const url = `/api/${user}/worklist/${date}`;
       return {
         grade: async () => {
           return await API.get(url + "/grade");
@@ -125,7 +125,7 @@ export class APIv2 {
   }
   static work(user, date) {
     try {
-      const url = `/api/${user}/${date}/worklist/work`;
+      const url = `/api/${user}/worklist/${date}/work`;
       return {
         create: async (data) => {
           return await API.put(url, { value: data });
@@ -165,9 +165,9 @@ export class APIv2 {
       throw new Error(error);
     }
   }
-  static todoList(user, date) {
+  static todoList(user) {
     try {
-      const url = `/api/${user}/${date}/todolist`;
+      const url = `/api/${user}/todolist`;
       return {
         get: async () => {
           return await API.get(url);
@@ -180,9 +180,9 @@ export class APIv2 {
       throw new Error(error);
     }
   }
-  static todo(user, date) {
+  static todo(user) {
     try {
-      const url = `/api/${user}/${date}/todolist/todo`;
+      const url = `/api/${user}/todolist/todo`;
       return {
         create: async (data) => {
           return await API.put(url, { value: data });

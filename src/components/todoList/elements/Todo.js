@@ -137,9 +137,9 @@ export const Todo = ({ setTodo, _isEditMode, todoItem, id }) => {
   return (
     <li className="todo" key={"_" + todoItem?.id}>
       {isEditMode ? (
-        <TodoInput todoHook={todoHook} todoItem={todoItem} key={id} id={id} />
+        <TodoInput todoHook={todoHook} key={id} id={id} />
       ) : (
-        <TodoDisplay todoHook={todoHook} todoItem={todoItem} key={id} id={id} />
+        <TodoDisplay todoHook={todoHook} key={id} id={id} />
       )}
     </li>
   );

@@ -16,7 +16,8 @@ export const useTodoList = (user, date) => {
         if (!data) throw new Error("TodoList can't found");
         setTodoList(resTodoList);
       } else {
-        const resTodoList = LocalStroage.todoList.get(sortType);
+        const resTodoList = LocalStroage.todoList().get();
+        console.log("USEWORKLIST DATA NO CATCH [][] AFT");
         setTodoList(resTodoList);
       }
     } catch (error) {

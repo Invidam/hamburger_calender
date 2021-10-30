@@ -20,8 +20,8 @@ app.use(
 );
 app.use(express.json());
 // app.use("/api", apiRouter);
-app.use("/api/:user/:date/worklist", workListRouter);
-app.use("/api/:user/:date/todolist", todoListRouter);
+app.use("/api/:user/worklist/:date", workListRouter);
+app.use("/api/:user/todolist", todoListRouter);
 // app.use("/api", apiRouter);
 app.use("/auth", authRouter);
 app.use("/api/:user/listview", listViewRouter);

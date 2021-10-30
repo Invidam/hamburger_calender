@@ -39,8 +39,9 @@ export const useLogin = () => {
           "RESULT: ",
           isTokenLoading || isLoginLoading
         );
+        setLoadInToken(false);
       } else {
-        setLoadInToken(true);
+        // setLoadInToken(true);
         const { username } = await verifyToken();
         console.log("user find! ", username);
         setLoadInToken(false);
@@ -55,9 +56,10 @@ export const useLogin = () => {
   useEffect(() => {
     console.log("USE EFFECT APPROACH");
     setUserInToken();
-  }, []);
+  }, [user]);
   const setDataInLocal = (user) => {
     try {
+      console.log("TOKEN START");
       const date = getToday();
       updateAPIHeader();
       if (!LocalStroage.recordTime("wakeTime").isEmpty()) {
@@ -72,8 +74,13 @@ export const useLogin = () => {
       }
       if (!LocalStroage.workList().isEmpty()) {
         const workList = LocalStroage.workList("workList").get();
-        APIv2.workList(user, date, "workList").edit(workList);
-        LocalStroage.workList("workList").remove();
+        APIv2.workList(user, date).edit(workList);
+        LocalStroage.workList().remove();
+      }
+      if (!LocalStroage.todoList().isEmpty()) {
+        const todoList = LocalStroage.todoList("todoList").get();
+        APIv2.todoList(user).edit(todoList);
+        LocalStroage.todoList().remove();
       }
     } catch (error) {
       alert(error);
@@ -91,6 +98,7 @@ export const useLogin = () => {
       const { access_token, username } = response.data;
       LocalStroage.accessToken().set(access_token);
       setUser(username);
+      console.log("login success ~~~~~~~~~~~");
       if (!LocalStroage.accessToken().isEmpty()) {
         setDataInLocal(username);
         setLoadInLoading(false);

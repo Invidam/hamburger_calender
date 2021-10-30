@@ -28,10 +28,11 @@ const trashElement = (
     size="1x"
   />
 );
-export const TodoDisplay = ({ todoHook, todoItem, id }) => {
+export const TodoDisplay = ({ todoHook, id }) => {
   const [
     isEditMode,
     isCheck,
+    text,
     date,
     priority,
     onClickCheck,
@@ -41,8 +42,6 @@ export const TodoDisplay = ({ todoHook, todoItem, id }) => {
     ,
     ,
     onDeleteTodo,
-    ,
-    ,
     onClickEditBtn,
   ] = todoHook;
   const displayBtn = (
@@ -57,18 +56,20 @@ export const TodoDisplay = ({ todoHook, todoItem, id }) => {
       </div>
     </div>
   );
-  console.log("CHECK CHECK: ", todoItem, todoItem.isCheck, isCheck);
   const displayElement = (
     <div className="todo">
       <input
         id={`todo__checkbox_${id}`}
-        className="todo__checkbox todo__checkbox todo__content todo-display__content"
+        className="todo__checkbox todo-display__checkbox todo__content todo-display__content"
         type="checkbox"
         name="todoCheck"
         value={`${isCheck}`}
-        onChange={({ target: { value } }) => onClickCheck(value)}
+        // onChange={({ target: { value } }) => onClickCheck(value)}
       ></input>
-      <label className="todo__label" htmlFor={`todo__checkbox_${id}`}>
+      <label
+        className="todo__label todo-display__label"
+        htmlFor={`todo__checkbox_${id}`}
+      >
         <span className="todo__label-icon">{isCheck ? checkElement : ""}</span>
       </label>
       <span
@@ -76,7 +77,7 @@ export const TodoDisplay = ({ todoHook, todoItem, id }) => {
           isCheck ? "todo__text-checked" : ""
         }`}
       >
-        {todoItem?.text}
+        {text}
       </span>
       <DatePick date={date} isEditMode={isEditMode} />
       <div className={`todo__star-rating todo-display__star}`}>
