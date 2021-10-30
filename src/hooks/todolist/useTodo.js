@@ -1,13 +1,13 @@
 import { useState } from "react";
 import randomToken from "rand-token";
 import { changeFormatYYYYMMDD } from "../../tools/time";
-export const useTodo = (setTodo, todoItem, _isEditMode, id) => {
+export const useTodo = (setTodo, todoItem, _isEditMode, idx) => {
   const [isEditMode, setEditMode] = useState(_isEditMode);
   const [isCheck, setCheck] = useState(todoItem?.isCheck);
   const [text, setText] = useState(todoItem?.text);
   const [date, setDate] = useState(todoItem?.date ? todoItem?.date : undefined);
   const [priority, setPriority] = useState(todoItem?.priority);
-  const changeEditMode = () => setEditMode(id === 0 ? true : !isEditMode);
+  const changeEditMode = () => setEditMode(idx === -1 ? true : !isEditMode);
   const onClickCheck = () => setCheck(!isCheck);
   const onChangeText = (text) => setText(text);
   const onChangeDate = (date) => setDate(changeFormatYYYYMMDD(date, false));
@@ -48,7 +48,7 @@ export const useTodo = (setTodo, todoItem, _isEditMode, id) => {
       let willUpdate = true;
       if (typeof validator === "function") willUpdate = validator(todoItem);
       if (willUpdate) {
-        setTodo(todoItem).create();
+        setTodo(todoItem, idx).create();
         clearTodo();
       } else {
         throw new Error(getErrText());
@@ -69,7 +69,7 @@ export const useTodo = (setTodo, todoItem, _isEditMode, id) => {
       if (typeof validator === "function") willUpdate = validator(_todoItem);
       if (willUpdate) {
         changeEditMode();
-        setTodo(_todoItem).edit();
+        setTodo(_todoItem, idx).edit();
       } else {
         throw new Error(getErrText());
       }
@@ -80,7 +80,7 @@ export const useTodo = (setTodo, todoItem, _isEditMode, id) => {
   const onDeleteTodo = (event) => {
     try {
       event.preventDefault();
-      const deleteAction = () => setTodo(todoItem).delete();
+      const deleteAction = () => setTodo(todoItem, idx).delete();
       const cancelAction = () => console.log("CANCEL DELETE WORK");
       if (window.confirm("Are you sure you want to delete this item?")) {
         deleteAction();

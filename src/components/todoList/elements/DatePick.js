@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-// import "../../css/todoList.css";
+// import "../../../css/todoList.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 // CSS Modules, react-datepicker-cssmodules.css
@@ -18,6 +18,8 @@ export const DatePick = ({ date, onChangeDate, isSubmitMode, isEditMode }) => {
       dateFormat="yy/MM/dd"
       // placeholderText="Deadline"
       customInput={undefined}
+      popperClassName="todo__date-popper"
+      popperPlacement="bottom-start"
 
       // disabledKeyboardNavigation={true}
     />
@@ -31,6 +33,8 @@ export const DatePick = ({ date, onChangeDate, isSubmitMode, isEditMode }) => {
       // placeholderText="Deadline"
       customInput={undefined}
       readOnly
+      popperClassName="todo__date-popper"
+      popperPlacement="bottom-start"
       // disabledKeyboardNavigation={true}
     />
   );

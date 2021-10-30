@@ -48,7 +48,7 @@ const clearElement = (
   />
 );
 export const TodoInput = ({ todoHook, id }) => {
-  const isSubmitMode = id === 0;
+  const isSubmitMode = id === -1;
   const [
     isEditMode,
     isCheck,

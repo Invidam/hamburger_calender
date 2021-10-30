@@ -169,8 +169,11 @@ export class APIv2 {
     try {
       const url = `/api/${user}/todolist`;
       return {
-        get: async () => {
-          return await API.get(url);
+        get: async (sortTypeStr) => {
+          const queryObj = sortTypeStr;
+          const queryString = qs.stringify(queryObj);
+          console.log("QS: ", queryString);
+          return await API.get(url + `?${queryString}`);
         },
         edit: async (data) => {
           return await API.post(url, { value: data });

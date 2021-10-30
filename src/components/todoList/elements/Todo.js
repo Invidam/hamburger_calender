@@ -15,10 +15,11 @@ import { TodoDisplay } from "./TodoDisplay";
 const checkElement = (
   <FontAwesomeIcon className="todo-icon__check" icon={faCheck} size="1x" />
 );
-export const Todo = ({ setTodo, _isEditMode, todoItem, id }) => {
-  const todoHook = useTodo(setTodo, todoItem, _isEditMode, id);
+export const Todo = ({ setTodo, _isEditMode, todoItem, id, idx }) => {
+  const todoHook = useTodo(setTodo, todoItem, _isEditMode, idx);
   // console.log("ID: ", id, "EDIT? ", todoHook.isEditMode, _isEditMode);
   const isEditMode = todoHook[0];
+  console.log("TODO ITEM", id, todoItem);
   // const inputBtn = (
   //   <div className="todo__btn-box todo__btn-box">
   //     <button
@@ -136,6 +137,7 @@ export const Todo = ({ setTodo, _isEditMode, todoItem, id }) => {
   // );
   return (
     <li className="todo" key={"_" + todoItem?.id}>
+      {id}
       {isEditMode ? (
         <TodoInput todoHook={todoHook} key={id} id={id} />
       ) : (
