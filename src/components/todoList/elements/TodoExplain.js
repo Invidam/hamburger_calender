@@ -51,7 +51,15 @@ export const TodoExplain = ({ onClickByTabIdx, sortTypeIdx }) => {
   const iconArr = getIconArrByIdx(sortTypeIdx);
   const iconBtn = (colIdx) => {
     const icon = iconArr[colIdx];
-    return <button onClick={() => onClickByTabIdx(colIdx)}> {icon}</button>;
+    return (
+      <button
+        className="todo__explain-btn"
+        onClick={() => onClickByTabIdx(colIdx)}
+      >
+        {" "}
+        {icon}
+      </button>
+    );
   };
   return (
     <div className="todo">

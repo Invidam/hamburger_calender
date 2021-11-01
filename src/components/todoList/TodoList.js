@@ -28,7 +28,7 @@ export const TodoList = ({ user, date }) => {
       />
       <Todo setTodo={setTodo} _isEditMode={true} id={-1} idx={-1} />
       {todoList
-        ? Object.values(todoList).map((todoItem, idx) => {
+        ? Object.entries(todoList).map(([idx, todoItem]) => {
             return (
               <Todo
                 setTodo={setTodo}

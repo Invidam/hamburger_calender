@@ -137,7 +137,7 @@ export const Todo = ({ setTodo, _isEditMode, todoItem, id, idx }) => {
   // );
   return (
     <li className="todo" key={"_" + todoItem?.id}>
-      {id}
+      {id} {idx}
       {isEditMode ? (
         <TodoInput todoHook={todoHook} key={id} id={id} />
       ) : (

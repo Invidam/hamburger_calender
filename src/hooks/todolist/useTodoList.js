@@ -3,7 +3,6 @@ import { SORT_TYPE_CNT } from "../../components/todoList/TodoList";
 // import { SORT_TYPE_CNT } from "../../components/todoList/TodoListTemplate";
 import { APIv2 } from "../../tools/API";
 import { LocalStroage } from "../../tools/LocalStorage";
-
 const makeSortTypeStr = (idx) => {
   let ret = {};
   ret["type"] = Math.floor(idx / SORT_TYPE_CNT) === 0 ? "date" : "priority";
@@ -14,6 +13,10 @@ export const useTodoList = (user, initSortTypeIdx, sortTypeCnt, sortTypes) => {
   const [todoList, setTodoList] = useState();
   const [isTodoListLoading, setLoad] = useState(true);
   const [sortTypeIdx, setSortTypeIdx] = useState(initSortTypeIdx);
+  const getTodoListLength = () =>
+    user
+      ? Object.keys(todoList).length
+      : parseInt(Object.keys(todoList)[Object.keys(todoList).length - 1]) + 1;
   const getNextSortType = (idx) =>
     (idx + 1) % sortTypes === 0 ? idx - sortTypes + 1 : idx + 1;
   const onClickByTabIdx = (tabIdx) => {
@@ -26,6 +29,7 @@ export const useTodoList = (user, initSortTypeIdx, sortTypeCnt, sortTypes) => {
   const getTodoList = async (user, sortTypeIdx) => {
     try {
       if (user) {
+        if (!isTodoListLoading) setLoad(true);
         console.log("TODO SORT", sortTypeIdx);
         const data = await APIv2.todoList(user).get(
           makeSortTypeStr(sortTypeIdx)
@@ -39,6 +43,7 @@ export const useTodoList = (user, initSortTypeIdx, sortTypeCnt, sortTypes) => {
         const resTodoList = LocalStroage.todoList().get();
         console.log("USEWORKLIST DATA NO CATCH [][] AFT");
         setTodoList(resTodoList);
+        setLoad(false);
       }
     } catch (error) {
       alert(error);
@@ -49,31 +54,51 @@ export const useTodoList = (user, initSortTypeIdx, sortTypeCnt, sortTypes) => {
   }, [user, sortTypeIdx]);
   const setTodo = (todoObj, idx) => {
     // const id = todoObj.id;
-    //const _todoList = { ...todoList };
-    let _todoList = todoList.concat();
+    // let _todoList = todoList.concat();
+    //getTodoListLength
     return {
       create: async () => {
-        //_todoList[id] = todoObj;
         // _todoList.push([id, todoObj]);
-        _todoList.push(todoObj);
-        setTodoList(_todoList);
-        if (user) await APIv2.todo(user).create(todoObj);
-        else LocalStroage.todoList().set(_todoList);
+        // _todoList.push(todoObj);
+        if (user) {
+          await APIv2.todo(user).create(todoObj);
+          await getTodoList(user, sortTypeIdx);
+        } else {
+          const _todoList = { ...todoList };
+          const idx = getTodoListLength();
+          _todoList[idx] = todoObj;
+          console.log("CREATE TODO: ", _todoList);
+          LocalStroage.todoList().set(_todoList);
+          setTodoList(_todoList);
+        }
       },
       edit: async () => {
         // _todoList[idx] = [id, todoObj];
 
-        _todoList[idx] = todoObj;
-        setTodoList(_todoList);
-        if (user) await APIv2.todo(user).edit(todoObj);
-        else LocalStroage.todoList().set(_todoList);
+        // _todoList[idx] = todoObj;
+        // setTodoList(_todoList);
+        if (user) {
+          await APIv2.todo(user).edit(todoObj);
+          await getTodoList(user, sortTypeIdx);
+        } else {
+          const _todoList = { ...todoList };
+          _todoList[idx] = todoObj;
+          LocalStroage.todoList().set(_todoList);
+          setTodoList(_todoList);
+        }
       },
       delete: async () => {
-        // if (!delete _todoList[id]) throw new Error("Cannot Delete TodoItem");
-        _todoList = _todoList.filter((el, elemIdx) => elemIdx !== idx);
-        setTodoList(_todoList);
-        if (user) await APIv2.todo(user).delete(todoObj);
-        else LocalStroage.todoList().set(_todoList);
+        // _todoList = _todoList.filter((el, elemIdx) => elemIdx !== idx);
+        // setTodoList(_todoList);
+        if (user) {
+          await APIv2.todo(user).delete(todoObj);
+          await getTodoList(user, sortTypeIdx);
+        } else {
+          const _todoList = { ...todoList };
+          if (!delete _todoList[idx]) throw new Error("Cannot Delete TodoItem");
+          LocalStroage.todoList().set(_todoList);
+          setTodoList(_todoList);
+        }
       },
     };
   };

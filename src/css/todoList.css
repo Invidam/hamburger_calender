@@ -108,6 +108,11 @@
   border-left: 2px solid rgba(39, 36, 36, 0.837);
   /* border */
 }
+.todo__explain-btn {
+  border: none;
+  background-color: inherit;
+  color: rgba(149, 36, 0, 0.7);
+}
 .todo__checkbox {
   width: 5%;
   display: none;
