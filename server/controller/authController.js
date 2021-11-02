@@ -15,7 +15,7 @@ const TOKEN_EXPIRED = -3;
 const TOKEN_INVALID = -2;
 export const verifyToken = async (req, res) => {
   const { token } = req.body;
-  // console.log("BODY: ", req.body, token);
+  console.log("BODY: ", req.body, token);
   if (!token) return res.status(401).send(`Token missed`);
   const decode = await jwt.verify(token);
   // console.log("DEOCDE: ", decode);

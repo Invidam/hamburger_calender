@@ -12,6 +12,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TodoInput } from "./TodoInput";
 import { TodoDisplay } from "./TodoDisplay";
+import { TodoExpired } from "./TodoExpired";
 const checkElement = (
   <FontAwesomeIcon className="todo-icon__check" icon={faCheck} size="1x" />
 );
@@ -19,7 +20,9 @@ export const Todo = ({ setTodo, _isEditMode, todoItem, id, idx }) => {
   const todoHook = useTodo(setTodo, todoItem, _isEditMode, idx);
   // console.log("ID: ", id, "EDIT? ", todoHook.isEditMode, _isEditMode);
   const isEditMode = todoHook[0];
-  console.log("TODO ITEM", id, todoItem);
+  const today = "2021-11-05"; //getToday()
+  const isExpired = todoItem?.date < today;
+  console.log("TODO ITEM", id, todoItem, todoItem?.date < "2021-11-05");
   // const inputBtn = (
   //   <div className="todo__btn-box todo__btn-box">
   //     <button
@@ -137,9 +140,11 @@ export const Todo = ({ setTodo, _isEditMode, todoItem, id, idx }) => {
   // );
   return (
     <li className="todo" key={"_" + todoItem?.id}>
-      {id} {idx}
+      {getToday()} {todoItem?.date} {}
       {isEditMode ? (
         <TodoInput todoHook={todoHook} key={id} id={id} />
+      ) : isExpired ? (
+        <TodoExpired todoHook={todoHook} key={id} id={id} />
       ) : (
         <TodoDisplay todoHook={todoHook} key={id} id={id} />
       )}

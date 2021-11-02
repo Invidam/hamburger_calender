@@ -6,7 +6,13 @@ import "react-datepicker/dist/react-datepicker.css";
 // CSS Modules, react-datepicker-cssmodules.css
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
-export const DatePick = ({ date, onChangeDate, isSubmitMode, isEditMode }) => {
+export const DatePick = ({
+  date,
+  onChangeDate,
+  isSubmitMode,
+  isEditMode,
+  isExpired,
+}) => {
   return isEditMode ? (
     <DatePicker
       className={`todo__content todo__date ${
@@ -25,7 +31,9 @@ export const DatePick = ({ date, onChangeDate, isSubmitMode, isEditMode }) => {
     />
   ) : (
     <DatePicker
-      className={`todo__content todo__date todo-display__content`}
+      className={`todo__content todo__date todo-display__content ${
+        isExpired ? "todo-expired__content" : ""
+      }`}
       selected={date ? new Date(date) : undefined}
       onChange={(value) => onChangeDate(value)}
       minDate={new Date()}

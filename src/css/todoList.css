@@ -46,12 +46,9 @@
   /* border-bottom: 2px dotted rgba(226, 156, 63, 0.864); */
 }
 .todo__content {
-  /* border: 1px solid black; */
-  padding: 2px;
-}
-.todo__content {
   /* color: white; */
   color: var(--main-bg-color);
+  padding: 2px;
   -webkit-appearance: none;
   outline: none;
   background-color: inherit;
@@ -254,4 +251,31 @@
 .todo__star-rating {
   width: 60px;
   display: inline;
+}
+.todo-expired {
+  /* color: var(--main-color); */
+  color: green;
+}
+
+.todo__btn-expired {
+  background-color: var(--main-color);
+  opacity: 1;
+}
+
+.todo__btn-expired:hover {
+  transition: all 0.5s;
+  background-color: var(--main-color);
+  opacity: 0.9;
+}
+
+.todo__btn-expired:active {
+  transition: all 0.5s;
+  background-color: var(--main-color);
+  opacity: 0.8;
+}
+
+.todo-expired__content {
+  color: rgb(54, 0, 0);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
 }

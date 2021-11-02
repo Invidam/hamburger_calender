@@ -12,7 +12,7 @@ import { protectorMiddleWare, publicOnlyMiddleware } from "../middlewares.js";
 export const authRouter = express.Router();
 
 authRouter.post("/jwt/verify", protectorMiddleWare, verifyToken);
-
+authRouter.get("/test", (req, res) => res.send("TEST COMPLETE"));
 authRouter.post(
   "/signup",
   publicOnlyMiddleware,
