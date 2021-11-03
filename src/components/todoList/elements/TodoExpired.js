@@ -55,14 +55,15 @@ export const TodoExpired = ({ todoHook, id }) => {
     onDeleteTodo,
     onClickEditBtn,
   ] = todoHook;
+  // setInterval(() => console.log("TEST"), 1000);
   const displayBtn = (
     <div className="todo__btn-box">
       <div className="todo__btn-content">
-        <button className="todo__btn todo__btn-edit todo__btn-expired">
+        <button className="todo__btn todo__btn-expire todo__btn-expired">
           {expiredElement}
         </button>
         <button
-          className="todo__btn todo__btn-delete todo__btn-expired"
+          className={`todo__btn todo__btn-delete todo__btn-delete__expired todo__btn-expired `}
           onClick={onDeleteTodo}
         >
           {trashElement}

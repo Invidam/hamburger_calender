@@ -14,6 +14,7 @@ import {
 } from "../../hooks/workList/work/useWorkList";
 import { LoadingElement } from "../Loading";
 import { APIv2 } from "../../tools/API";
+import { WorkListGrade } from "./element/grade/WorkListGrade";
 export const WorkList = ({ user, date, targetSetting, workListHook }) => {
   const { targetWakeTime, targetBedTime, targetWorkTime } = targetSetting;
   const [wakeTime, onClickWakeTime, setWakeTime, isWakeTimeLoading] =
@@ -90,15 +91,7 @@ export const WorkList = ({ user, date, targetSetting, workListHook }) => {
         {emptyWork}
         {bedTimeElemnt}
       </ol>
-      <button
-        onClick={async () => {
-          const res = await APIv2.workList(user, date).grade();
-          console.log(res.data);
-        }}
-      >
-        {" "}
-        CLICK
-      </button>
+      <WorkListGrade user={user} date={date} />
     </div>
   );
   // </div>

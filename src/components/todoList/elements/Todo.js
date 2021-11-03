@@ -20,124 +20,9 @@ export const Todo = ({ setTodo, _isEditMode, todoItem, id, idx }) => {
   const todoHook = useTodo(setTodo, todoItem, _isEditMode, idx);
   // console.log("ID: ", id, "EDIT? ", todoHook.isEditMode, _isEditMode);
   const isEditMode = todoHook[0];
-  const today = "2021-11-05"; //getToday()
+  const today = getToday();
   const isExpired = todoItem?.date < today;
   console.log("TODO ITEM", id, todoItem, todoItem?.date < "2021-11-05");
-  // const inputBtn = (
-  //   <div className="todo__btn-box todo__btn-box">
-  //     <button
-  //       className="todo__btn todo__btn-add"
-  //       onClick={isSubmitMode ? onSubmitTodo : onEditTodo}
-  //     >
-  //       {isSubmitMode ? "+" : "Save"}
-  //     </button>
-  //   </div>
-  // );
-  // const displayBtn = (
-  //   <div className="todo__btn-box todo__btn-box">
-  //     <button className="todo__btn todo__btn-edit" onClick={onClickEditBtn}>
-  //       E
-  //     </button>
-  //     <button className="todo__btn todo__btn-delete" onClick={onDeleteTodo}>
-  //       X
-  //     </button>
-  //   </div>
-  // );
-  // const inputElement = (
-  //   <div className="todo">
-  //     <input
-  //       id={`todo__checkbox_${id}`}
-  //       className="todo__checkbox todo__checkbox todo__content todo-input__content"
-  //       type="checkbox"
-  //       name="todoCheck"
-  //       defaultValue={todoItem?.isCheck}
-  //       onChange={({ target: { value } }) => onClickCheck(value)}
-  //     ></input>
-  //     <label className="todo__label" htmlFor={`todo__checkbox_${id}`}>
-  //       <span className="todo__label-icon">{isCheck ? checkElement : ""}</span>
-  //     </label>
-  //     {/* <input type="checkbox" name="TEST"></input> */}
-  //     <input
-  //       className="todo__text todo-input__text todo__content todo-input__content"
-  //       type="text"
-  //       autoComplete="off"
-  //       name="todoText"
-  //       defaultValue={todoItem?.text}
-  //       onChange={({ target: { value } }) => onChangeText(value)}
-  //     ></input>
-  //     {/* <input
-  //       className="todo-input__date todo-input__content"
-  //       type="date"
-  //       name="todoDate"
-  //       lang="en-us"
-  //       required
-  //       pattern="\d{4}-\d{2}-\d{2}"
-  //       defaultValue={isEditMode ? todoItem?.date : undefined}
-  //       min={getToday()}
-  //       onChange={({ target: { value } }) => onChangeDate(value)}
-  //     ></input> */}
-  //     <DatePick
-  //       isEditMode={isEditMode}
-  //       date={date}
-  //       onChangeDate={onChangeDate}
-  //     />
-  //     {/* <input
-  //       className="todo-input__priority todo-input__content"
-  //       type="text"
-  //       name="todoPriority"
-  //       defaultValue={todoItem?.priority}
-  //       onChange={({ target: { value } }) => onChangePriority(value)}
-  //     ></input> */}
-  //     <div className={`todo__star-rating todo-input__star `}>
-  //       <StarRatings
-  //         // rating={todoItem?.priority}
-  //         starRatedColor="rgba(241, 196, 15,0.8)"
-  //         starEmptyColor="rgba(151, 151, 151, 0.707)"
-  //         starHoverColor="rgba(241, 196, 15,0.9)"
-  //         starSelectingHoverColor="red"
-  //         changeRating={onChangePriority}
-  //         numberOfStars={5}
-  //         name="rating"
-  //         starDimension="12px"
-  //         starSpacing="0px"
-  //       />{" "}
-  //     </div>
-  //     {inputBtn}
-  //   </div>
-  // );
-
-  // const displayElement = (
-  //   <div className="todo">
-  //     <input
-  //       id={`todo__checkbox_${id}`}
-  //       className="todo__checkbox todo__checkbox todo__content todo-display__content"
-  //       type="checkbox"
-  //       name="todoCheck"
-  //       defaultValue={todoItem?.isCheck}
-  //       onChange={({ target: { value } }) => onClickCheck(value)}
-  //     ></input>
-  //     <label className="todo__label" htmlFor={`todo__checkbox_${id}`}>
-  //       <span className="todo__label-icon">{isCheck ? checkElement : ""}</span>
-  //     </label>
-  //     <span className="todo__text todo-display__text todo__content todo-display__content">
-  //       {todoItem?.text}
-  //     </span>
-  //     <DatePick date={date} isEditMode={isEditMode} />
-  //     <div className={`todo__star-rating todo-display__star}`}>
-  //       <StarRatings
-  //         starRatedColor="rgba(241, 196, 15,1.0)"
-  //         starEmptyColor="rgba(151, 151, 151, 0.707)"
-  //         starHoverColor="rgba(241, 196, 15,0.9)"
-  //         starSelectingHoverColor="red"
-  //         numberOfStars={5}
-  //         name="rating"
-  //         starDimension="12px"
-  //         starSpacing="0px"
-  //       />{" "}
-  //     </div>
-  //     {displayBtn}
-  //   </div>
-  // );
   return (
     <li className="todo" key={"_" + todoItem?.id}>
       {getToday()} {todoItem?.date} {}
@@ -151,3 +36,119 @@ export const Todo = ({ setTodo, _isEditMode, todoItem, id, idx }) => {
     </li>
   );
 };
+
+// const inputBtn = (
+//   <div className="todo__btn-box todo__btn-box">
+//     <button
+//       className="todo__btn todo__btn-add"
+//       onClick={isSubmitMode ? onSubmitTodo : onEditTodo}
+//     >
+//       {isSubmitMode ? "+" : "Save"}
+//     </button>
+//   </div>
+// );
+// const displayBtn = (
+//   <div className="todo__btn-box todo__btn-box">
+//     <button className="todo__btn todo__btn-edit" onClick={onClickEditBtn}>
+//       E
+//     </button>
+//     <button className="todo__btn todo__btn-delete" onClick={onDeleteTodo}>
+//       X
+//     </button>
+//   </div>
+// );
+// const inputElement = (
+//   <div className="todo">
+//     <input
+//       id={`todo__checkbox_${id}`}
+//       className="todo__checkbox todo__checkbox todo__content todo-input__content"
+//       type="checkbox"
+//       name="todoCheck"
+//       defaultValue={todoItem?.isCheck}
+//       onChange={({ target: { value } }) => onClickCheck(value)}
+//     ></input>
+//     <label className="todo__label" htmlFor={`todo__checkbox_${id}`}>
+//       <span className="todo__label-icon">{isCheck ? checkElement : ""}</span>
+//     </label>
+//     {/* <input type="checkbox" name="TEST"></input> */}
+//     <input
+//       className="todo__text todo-input__text todo__content todo-input__content"
+//       type="text"
+//       autoComplete="off"
+//       name="todoText"
+//       defaultValue={todoItem?.text}
+//       onChange={({ target: { value } }) => onChangeText(value)}
+//     ></input>
+//     {/* <input
+//       className="todo-input__date todo-input__content"
+//       type="date"
+//       name="todoDate"
+//       lang="en-us"
+//       required
+//       pattern="\d{4}-\d{2}-\d{2}"
+//       defaultValue={isEditMode ? todoItem?.date : undefined}
+//       min={getToday()}
+//       onChange={({ target: { value } }) => onChangeDate(value)}
+//     ></input> */}
+//     <DatePick
+//       isEditMode={isEditMode}
+//       date={date}
+//       onChangeDate={onChangeDate}
+//     />
+//     {/* <input
+//       className="todo-input__priority todo-input__content"
+//       type="text"
+//       name="todoPriority"
+//       defaultValue={todoItem?.priority}
+//       onChange={({ target: { value } }) => onChangePriority(value)}
+//     ></input> */}
+//     <div className={`todo__star-rating todo-input__star `}>
+//       <StarRatings
+//         // rating={todoItem?.priority}
+//         starRatedColor="rgba(241, 196, 15,0.8)"
+//         starEmptyColor="rgba(151, 151, 151, 0.707)"
+//         starHoverColor="rgba(241, 196, 15,0.9)"
+//         starSelectingHoverColor="red"
+//         changeRating={onChangePriority}
+//         numberOfStars={5}
+//         name="rating"
+//         starDimension="12px"
+//         starSpacing="0px"
+//       />{" "}
+//     </div>
+//     {inputBtn}
+//   </div>
+// );
+
+// const displayElement = (
+//   <div className="todo">
+//     <input
+//       id={`todo__checkbox_${id}`}
+//       className="todo__checkbox todo__checkbox todo__content todo-display__content"
+//       type="checkbox"
+//       name="todoCheck"
+//       defaultValue={todoItem?.isCheck}
+//       onChange={({ target: { value } }) => onClickCheck(value)}
+//     ></input>
+//     <label className="todo__label" htmlFor={`todo__checkbox_${id}`}>
+//       <span className="todo__label-icon">{isCheck ? checkElement : ""}</span>
+//     </label>
+//     <span className="todo__text todo-display__text todo__content todo-display__content">
+//       {todoItem?.text}
+//     </span>
+//     <DatePick date={date} isEditMode={isEditMode} />
+//     <div className={`todo__star-rating todo-display__star}`}>
+//       <StarRatings
+//         starRatedColor="rgba(241, 196, 15,1.0)"
+//         starEmptyColor="rgba(151, 151, 151, 0.707)"
+//         starHoverColor="rgba(241, 196, 15,0.9)"
+//         starSelectingHoverColor="red"
+//         numberOfStars={5}
+//         name="rating"
+//         starDimension="12px"
+//         starSpacing="0px"
+//       />{" "}
+//     </div>
+//     {displayBtn}
+//   </div>
+// );

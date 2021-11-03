@@ -81,3 +81,10 @@
   /* rgba(157, 149, 138, 0.3); */
   height: 22px;
 }
+
+.workList-star__list {
+  display: flex;
+  list-style: none;
+  height: 100%;
+  margin-bottom: 0;
+}

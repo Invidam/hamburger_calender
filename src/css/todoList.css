@@ -243,11 +243,11 @@
 }
 
 .todo-icon:not(.todo-icon__check) {
-  cursor: pointer;
   font-size: 18px;
   height: 16px;
   width: 16px;
 }
+
 .todo__star-rating {
   width: 60px;
   display: inline;
@@ -278,4 +278,24 @@
   color: rgb(54, 0, 0);
   text-decoration: line-through;
   text-decoration-thickness: 1px;
+}
+.todo__btn-expire {
+  cursor: default;
+}
+.todo__btn-expired__highlight {
+  background-color: red;
+}
+.todo__btn-delete__expired {
+  animation: backgroundColorLoop 2s infinite;
+}
+@keyframes backgroundColorLoop {
+  0% {
+    color: var(--main-bg-color);
+  }
+  50% {
+    color: rgb(255 167 125);
+  }
+  100% {
+    color: var(--main-bg-color);
+  }
 }

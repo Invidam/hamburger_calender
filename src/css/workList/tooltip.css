@@ -4,6 +4,7 @@
 
 .tooltip .tooltip-content {
   display: none;
+  border-radius: 8px;
 
   /* width: 300px; */
 
@@ -73,4 +74,57 @@
   /* align-items: center; */
   justify-content: space-between;
   /* background-color: red; */
+}
+.tooltip .grade-tooltip-content {
+  display: none;
+  border-radius: 8px;
+
+  /* width: 300px; */
+
+  /* background-color: orange; */
+  background-color: rgb(44, 44, 44);
+
+  padding: 5px;
+
+  margin-top: 10px;
+
+  color: white;
+
+  text-align: center;
+  width: 100%;
+  /* height: 16vh; */
+  position: absolute;
+  /* bottom: -25px;
+  left: -23vw; */
+  z-index: 1;
+}
+.tooltip:hover .grade-tooltip-content {
+  display: block;
+  position: absolute;
+  background: #120611;
+  border: 1px solid #3b444a;
+}
+.tooltip:hover .grade-tooltip-content:after,
+.tooltip:hover .grade-tooltip-content:before {
+  bottom: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: "";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.tooltip:hover .grade-tooltip-content:after {
+  border-color: rgba(8, 11, 13, 0);
+  border-bottom-color: #080b0d;
+  border-width: 30px;
+  margin-left: -30px;
+}
+.tooltip:hover .grade-tooltip-content:before {
+  border-color: rgba(0, 0, 0, 0);
+  border-bottom-color: #000000;
+  border-width: 36px;
+  margin-left: -36px;
 }

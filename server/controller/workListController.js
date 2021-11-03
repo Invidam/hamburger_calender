@@ -380,31 +380,28 @@ const makeGrade = (workListObj, settingObj) => {
       !settingObj?.targetWorkTime
     )
       throw new Error("can't find Target time Object");
-    const [wakeTimeGrade, wakeTimeDiff] = getGradeInRecordTime(
-      settingObj.targetWakeTime,
-      workListObj.wakeTime
-    );
-    const [bedTimeGrade, bedTimeDiff] = getGradeInRecordTime(
-      settingObj.targetBedTime,
-      workListObj.bedTime
-    );
-    const [workListGrade, workimeDiff] = getGradeInWorkList(
-      settingObj.targetWorkTime,
-      workListObj.workTimeSum
-    );
-    const difference = {
-      wakeTimeDiff,
-      bedTimeDiff,
-      workimeDiff,
-    };
-    return [
-      {
+    const emptyGrade = [0, -1];
+    const [wakeTimeGrade, wakeTimeDiff] = workListObj?.wakeTime
+      ? getGradeInRecordTime(settingObj.targetWakeTime, workListObj.wakeTime)
+      : emptyGrade;
+    const [bedTimeGrade, bedTimeDiff] = workListObj?.bedTime
+      ? getGradeInRecordTime(settingObj.targetBedTime, workListObj.bedTime)
+      : emptyGrade;
+    const [workListGrade, workimeDiff] = workListObj?.workTimeSum
+      ? getGradeInWorkList(settingObj.targetWorkTime, workListObj.workTimeSum)
+      : emptyGrade;
+    return {
+      grade: {
         wakeTimeGrade,
         bedTimeGrade,
         workListGrade,
       },
-      difference,
-    ];
+      difference: {
+        wakeTimeDiff,
+        bedTimeDiff,
+        workimeDiff,
+      },
+    };
   } catch (error) {
     throw new Error(error);
   }
@@ -431,7 +428,7 @@ export const getGrade = async (req, res) => {
     const workListObj = await getWorkListTimeSum(user, date);
     const settingObj = await getSetting(user);
     console.log(workListObj, settingObj);
-    const [grade, difference] = makeGrade(workListObj, settingObj);
+    const { grade, difference } = makeGrade(workListObj, settingObj);
     return res.json({
       grade,
       value: workListObj,
@@ -439,6 +436,7 @@ export const getGrade = async (req, res) => {
       difference,
     });
   } catch (error) {
+    console.log("ERR", error);
     return res.status(400).json({
       status: "error",
       error: error,
