@@ -63,3 +63,9 @@ export const getAddedDateObj = (date, value) => {
   tomorrow.setDate(date.getDate() + value);
   return tomorrow;
 };
+
+export const timeObjToStr = (timeObj, emptyStr = "Not Entered") => {
+  return timeObj && timeObj.hour !== null
+    ? `${makeDisplayTime(timeObj.hour)}:${makeDisplayTime(timeObj.minute)}`
+    : emptyStr;
+};

@@ -8,10 +8,17 @@ const starElement = (
     size="1x"
   />
 );
-const starHalfElement = (
+const starHalfAltElement = (
   <FontAwesomeIcon
     className="work-icon__star-half"
     icon={iconSolid.faStarHalfAlt}
+    size="1x"
+  />
+);
+const starHalfElement = (
+  <FontAwesomeIcon
+    className="work-icon__star-half"
+    icon={iconSolid.faStarHalf}
     size="1x"
   />
 );
@@ -23,13 +30,17 @@ const starEmptyElement = (
   />
 );
 
-const makeStar = (gradeSum) =>
+export const makeStar = (gradeSum, isAlt = true) =>
   new Array(5).fill().map((elem, idx) => {
     return 2 * (idx + 1) <= gradeSum
       ? starElement
       : 2 * (idx + 1) - gradeSum === 1
-      ? starHalfElement
-      : starEmptyElement;
+      ? isAlt
+        ? starHalfAltElement
+        : starHalfElement
+      : isAlt
+      ? starEmptyElement
+      : "";
   });
 
 export const GradeStarList = ({ gradeSum }) => {

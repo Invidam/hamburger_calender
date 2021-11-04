@@ -3,7 +3,11 @@ import Modal from "react-modal";
 import { useDeleteTime } from "../../../../hooks/workList/time/useDeleteTime";
 // import { useDeleteWork } from "../../../../hooks/workList/work/useDeleteWork";
 import { useEditTime } from "../../../../hooks/workList/time/useEditTime";
-import { getDifference, makeDisplayTime } from "../../../../tools/time";
+import {
+  getDifference,
+  makeDisplayTime,
+  timeObjToStr,
+} from "../../../../tools/time";
 import { EditTimeWindow } from "../../window/time/EditTimeWindow";
 // import {EditTimeWindow} from "."
 
@@ -74,9 +78,7 @@ export const TimeRecordDisplay = ({
   const targetElement = (
     <div className="tooltip-box__target">
       <span className="tooltip-box__key">TargetTime:</span>
-      <span className="tooltip-box__value">
-        {makeDisplayTime(targetTime.hour)}:{makeDisplayTime(targetTime.minute)}
-      </span>
+      <span className="tooltip-box__value">{timeObjToStr(targetTime)}</span>
     </div>
   );
   const valueElement = (
@@ -84,18 +86,14 @@ export const TimeRecordDisplay = ({
       <span className="tooltip-box__key">
         {isWake ? "WakeTime: " : "BedTime: "}
       </span>
-      <span className="tooltip-box__value">
-        {makeDisplayTime(recordTime.hour)}: {makeDisplayTime(recordTime.minute)}
-      </span>
+      <span className="tooltip-box__value">{timeObjToStr(recordTime)}</span>
     </div>
   );
   const diffTime = getDifference(targetTime, recordTime);
   const diffElement = (
     <div className="tooltip-box__target">
       <span className="tooltip-box__key">Difference:</span>
-      <span className="tooltip-box__value">
-        {makeDisplayTime(diffTime.hour)}: {makeDisplayTime(diffTime.minute)}
-      </span>
+      <span className="tooltip-box__value">{timeObjToStr(diffTime)}</span>
     </div>
   );
   // <span className="tooltip_box__value">{`${isWake ? "Wake" : "Bed"}Time: ${

@@ -7,7 +7,7 @@ import {
 } from "../tools/time.js";
 // import { divideDate } from "../";
 import { db } from "../routes/firebase/config.js";
-
+const emptyTimeObj = { hour: null, minute: null };
 export const postTime = (req, res) => {
   // res.end
   const { key, user, date } = req.params;
@@ -298,14 +298,15 @@ const getWorkListTimeSum = async (user, date) => {
       throw new Error(errorObject);
     }
   );
-  if (workListRes.workList) {
+  if (workListRes?.workList) {
     Object.values(workListRes.workList).forEach((workItem, idx) => {
       workTimeSum += workItem.workTime;
     });
   }
+
   const workListObj = {
-    wakeTime: workListRes?.wakeTime,
-    bedTime: workListRes?.bedTime,
+    wakeTime: workListRes?.wakeTime || emptyTimeObj,
+    bedTime: workListRes?.bedTime || emptyTimeObj,
     workTimeSum,
   };
   return workListObj;
@@ -324,12 +325,20 @@ const getSetting = async (user) => {
       throw new Error(errorObject);
     }
   );
-  return ret;
+  const retObj = {
+    wakeTimeTarget: ret?.targetWakeTime || undefined,
+    bedTimeTarget: ret?.targetBedTime || undefined,
+    workTimeTarget: ret?.targetWorkTime,
+  };
+  console.log("RET target: ", ret, retObj);
+  return retObj;
 };
-
+const isEmptyTimeObj = (timeObj) =>
+  !timeObj || timeObj?.hour === null || timeObj?.minute === null;
 const getGradeInRecordTime = (time1, time2) => {
   const maxTime = { hour: 24, minute: 0 };
   const minTime = { hour: 0, minute: 0 };
+  // if (isEmptyTimeObj(time1) || isEmptyTimeObj(time2)) return [];
   const cand1 = getDifference(time1, time2);
   const cand2 = getAddedHHMM(
     getDifference(maxTime, time1),
@@ -375,20 +384,22 @@ const getGradeInWorkList = (hour1, hour2) => {
 const makeGrade = (workListObj, settingObj) => {
   try {
     if (
-      !settingObj?.targetWakeTime ||
-      !settingObj?.targetBedTime ||
-      !settingObj?.targetWorkTime
+      !settingObj?.wakeTimeTarget ||
+      !settingObj?.bedTimeTarget ||
+      !settingObj?.workTimeTarget
     )
       throw new Error("can't find Target time Object");
     const emptyGrade = [0, -1];
-    const [wakeTimeGrade, wakeTimeDiff] = workListObj?.wakeTime
-      ? getGradeInRecordTime(settingObj.targetWakeTime, workListObj.wakeTime)
-      : emptyGrade;
-    const [bedTimeGrade, bedTimeDiff] = workListObj?.bedTime
-      ? getGradeInRecordTime(settingObj.targetBedTime, workListObj.bedTime)
-      : emptyGrade;
-    const [workListGrade, workimeDiff] = workListObj?.workTimeSum
-      ? getGradeInWorkList(settingObj.targetWorkTime, workListObj.workTimeSum)
+    const [wakeTimeGrade, wakeTimeDiff] =
+      workListObj?.wakeTime && !isEmptyTimeObj(workListObj?.wakeTime)
+        ? getGradeInRecordTime(settingObj.wakeTimeTarget, workListObj.wakeTime)
+        : emptyGrade;
+    const [bedTimeGrade, bedTimeDiff] =
+      workListObj?.bedTime && !isEmptyTimeObj(workListObj?.bedTime)
+        ? getGradeInRecordTime(settingObj.bedTimeTarget, workListObj.bedTime)
+        : emptyGrade;
+    const [workListGrade, workTimeDiff] = workListObj?.workTimeSum
+      ? getGradeInWorkList(settingObj.workTimeTarget, workListObj.workTimeSum)
       : emptyGrade;
     return {
       grade: {
@@ -399,7 +410,7 @@ const makeGrade = (workListObj, settingObj) => {
       difference: {
         wakeTimeDiff,
         bedTimeDiff,
-        workimeDiff,
+        workTimeDiff,
       },
     };
   } catch (error) {
@@ -430,7 +441,7 @@ export const getGrade = async (req, res) => {
     console.log(workListObj, settingObj);
     const { grade, difference } = makeGrade(workListObj, settingObj);
     return res.json({
-      grade,
+      point: grade,
       value: workListObj,
       target: settingObj,
       difference,

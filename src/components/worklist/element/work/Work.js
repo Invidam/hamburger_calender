@@ -59,6 +59,7 @@ export const Work = ({ workItem, setWork, targetTime, workTimeSum }) => {
       </button>
     </Modal>
   );
+
   const targetElement = (
     <div className="tooltip-box__target">
       <span className="tooltip-box__key">TargetTime:</span>
