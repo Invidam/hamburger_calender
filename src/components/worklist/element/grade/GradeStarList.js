@@ -9,11 +9,18 @@ const starElement = (
   />
 );
 const starHalfAltElement = (
-  <FontAwesomeIcon
-    className="work-icon__star-half"
-    icon={iconSolid.faStarHalfAlt}
-    size="1x"
-  />
+  <div className="work-icon__star-half__box">
+    <FontAwesomeIcon
+      className="work-icon__star-half__full"
+      icon={iconSolid.faStar}
+      size="1x"
+    />
+    <FontAwesomeIcon
+      className="work-icon__star-half__half"
+      icon={iconSolid.faStarHalf}
+      size="1x"
+    />
+  </div>
 );
 const starHalfElement = (
   <FontAwesomeIcon
@@ -24,8 +31,8 @@ const starHalfElement = (
 );
 const starEmptyElement = (
   <FontAwesomeIcon
-    className="work-icon__star"
-    icon={iconRegular.faStar}
+    className="work-icon__star-empty"
+    icon={iconSolid.faStar}
     size="1x"
   />
 );

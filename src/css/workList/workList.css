@@ -81,10 +81,62 @@
   /* rgba(157, 149, 138, 0.3); */
   height: 22px;
 }
-
+.workList-grade__btn {
+  display: block;
+  cursor: pointer;
+  color: var(--main-bg-color);
+  background-color: var(--main-sub-color__hover);
+  border: none;
+  border-radius: 8px;
+  font-size: 24px;
+  margin-top: 16px;
+  margin-left: 16px;
+  /* width: 10%; */
+  /* height: 50%; */
+}
+.workList-grade__btn:hover {
+  transition: background-color 0.5s;
+  background-color: var(--main-sub-color);
+}
+.workList-grade__btn:active {
+  transition: background-color 0.5s;
+  background-color: var(--main-sub-color__active);
+}
 .workList-star__list {
   display: flex;
+  justify-content: center;
+  align-items: center;
   list-style: none;
-  height: 100%;
+  width: 100%;
   margin-bottom: 0;
+  border-radius: 16px;
+}
+.workList-star__item {
+  font-size: 64px;
+  color: var(--main-star-color);
+}
+.workList-grade__display {
+  border-radius: 16px;
+  background-color: rgba(0, 0, 0, 0.81);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.work-icon__star-empty {
+  color: var(--main-star-color__empty);
+}
+.work-icon__star-half__half,
+.work-icon__star-half__full {
+  position: absolute;
+  top: 14px;
+}
+.work-icon__star-half__full {
+  color: var(--main-star-color__empty);
+  position: absolute;
+}
+.work-icon__star-half__box {
+  display: block;
+  height: 87px;
+  width: 72px;
+  position: relative;
 }

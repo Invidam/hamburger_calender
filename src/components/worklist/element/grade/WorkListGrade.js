@@ -36,15 +36,15 @@ export const WorkListGrade = ({ user, date }) => {
   //   );
   // });
 
-  const numToStr = (num, emptyStr) => (num === -1 ? emptyStr : num);
+  const numToStr = (num, emptyStr) => (num === -1 ? emptyStr + "h" : num + "h");
   const tableElement = (
     <table border={1}>
       <thead>
         <tr>
-          <th>\</th>
-          <th>WakeTime</th>
-          <th>BedTime</th>
-          <th>WorkTimeSum</th>
+          <th></th>
+          <th className="workList-grade__tooltip__row">WakeTime</th>
+          <th className="workList-grade__tooltip__row">BedTime</th>
+          <th className="workList-grade__tooltip__row">WorkTimeSum</th>
         </tr>
       </thead>
       <tbody>
@@ -61,7 +61,12 @@ export const WorkListGrade = ({ user, date }) => {
                       <td>
                         {key === "point"
                           ? makeStar(elem, false).map((star) => {
-                              return <span> {star}</span>;
+                              return (
+                                <span className="workList-grade__tooltip-star">
+                                  {" "}
+                                  {star}
+                                </span>
+                              );
                             })
                           : typeof elem === "number"
                           ? numToStr(elem, " ")
@@ -75,53 +80,30 @@ export const WorkListGrade = ({ user, date }) => {
       </tbody>
     </table>
   );
-  const targetElement = (
-    <tr>
-      <td>TargetTime</td>
-      <td>{gradeInfo}</td>
-      <td>{gradeInfo}</td>
-      <td>{gradeInfo}</td>
-    </tr>
-  );
-  const valueElement = (
-    <tr>
-      <td>Target</td>
-      <td>{gradeInfo}</td>
-      <td>{gradeInfo}</td>
-      <td>{gradeInfo}</td>
-    </tr>
-  );
-  const differenceElement = (
-    <tr>
-      <td>Target</td>
-      <td>{gradeInfo}</td>
-      <td>{gradeInfo}</td>
-      <td>{gradeInfo}</td>
-    </tr>
-  );
-  const gradeElement = (
-    <tr>
-      <td>Target</td>
-      <td>{gradeInfo}</td>
-      <td>{gradeInfo}</td>
-      <td>{gradeInfo}</td>
-    </tr>
-  );
-
   const tooltipElement = (
     <div className="grade-tooltip-content">
-      <div className="grade-tooltip-box">{tableElement}</div>
+      <div className="grade-tooltip-box">{tableElement} </div>
     </div>
   );
 
   const getGradeElement = <button onClick={updateInfo}> Get Grade~!! </button>;
-  const updateGradeBtn = <button onClick={updateInfo}> {redoElement} </button>;
-  const displayGrade = (
-    <div className="tooltip">
+  const updateGradeBtn = (
+    <button
+      className="workList-grade__btn workList-grade__update-btn"
+      onClick={updateInfo}
+    >
       {" "}
-      <GradeStarList gradeSum={gradeSum} />
+      {redoElement}{" "}
+    </button>
+  );
+  const displayGrade = (
+    <div className="workList-grade__display">
+      {" "}
+      <div className="tooltip">
+        <GradeStarList gradeSum={gradeSum} />
+        {tooltipElement}
+      </div>
       {updateGradeBtn}
-      {tooltipElement}
     </div>
   );
   return gradeInfo ? displayGrade : getGradeElement;
