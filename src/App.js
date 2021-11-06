@@ -1,7 +1,6 @@
 // import logo from './logo.svg';
 import "./css/App.css";
 import "./css/calendar.css";
-import { changeFormatYYYYMMDD } from "./tools/time";
 
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { NotFoundPage } from "./components/pages/NotFoundPage";
@@ -15,12 +14,12 @@ import { SignupPage } from "./components/pages/SignupPage";
 import { SettingPage } from "./components/pages/SettingPage";
 import { useTargetSetting } from "./hooks/user/useTargetSetting";
 import { LoadingElement } from "./components/Loading";
+import { Footer } from "./components/Footer";
 
 function App() {
   // useSetAxios();
   console.log("[App] START-----------------------------------------");
   const updateDateHook = useSetDate();
-  const date = updateDateHook[0];
   const customLoginHook = useLogin();
   const [user, , isLoggedIn, , , isLoginHookLoading] = customLoginHook;
   const updateSettingHook = useTargetSetting(user, isLoginHookLoading);
@@ -46,7 +45,6 @@ function App() {
         customLoginHook={customLoginHook}
       />
       <main>
-        {JSON.stringify(targetSetting)}
         <Switch>
           <Route
             exact
@@ -124,7 +122,7 @@ function App() {
           <Route component={NotFoundPage} />
         </Switch>
       </main>
-      <footer>footer</footer>
+      <Footer />
     </Router>
   );
 }

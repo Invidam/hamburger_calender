@@ -18,8 +18,8 @@ export const CalendarTemplate = ({ user, updateDateHook }) => {
   //   </article>
   // ) :
   return (
-    <article>
-      {`mark: ${mark}`}
+    <div className="calendar-template">
+      <h1 className="calendar-header">Check your calendar</h1>
       <Calendar
         className="caldendar"
         onChange={(value) => {
@@ -49,6 +49,6 @@ export const CalendarTemplate = ({ user, updateDateHook }) => {
         }}
         //DB에 있는 날짜는 체크표시 해야함.
       />
-    </article>
+    </div>
   );
 };

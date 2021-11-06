@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import "../css/header/header.css";
-import { changeFormatYYYYMMDD } from "../tools/time";
+import "../css/header.css";
 import { CalendarTemplate } from "./calendar/CalendarTemplate";
 
 export const Header = ({ updateDateHook, customLoginHook }) => {
@@ -54,11 +53,6 @@ export const Header = ({ updateDateHook, customLoginHook }) => {
           </Link>
         </div>
         {!authenticated ? loginColumn : logoutColumn}
-      </div>
-      <div className="header__calendar">
-        {date}
-
-        <CalendarTemplate user={user} updateDateHook={updateDateHook} />
       </div>
       <span className="">{authenticated ? `Hello ${user}` : ""}</span>
     </header>

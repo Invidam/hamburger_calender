@@ -81,27 +81,7 @@
   /* rgba(157, 149, 138, 0.3); */
   height: 22px;
 }
-.workList-grade__btn {
-  display: block;
-  cursor: pointer;
-  color: var(--main-bg-color);
-  background-color: var(--main-sub-color__hover);
-  border: none;
-  border-radius: 8px;
-  font-size: 24px;
-  margin-top: 16px;
-  margin-left: 16px;
-  /* width: 10%; */
-  /* height: 50%; */
-}
-.workList-grade__btn:hover {
-  transition: background-color 0.5s;
-  background-color: var(--main-sub-color);
-}
-.workList-grade__btn:active {
-  transition: background-color 0.5s;
-  background-color: var(--main-sub-color__active);
-}
+
 .workList-star__list {
   display: flex;
   justify-content: center;
@@ -139,4 +119,33 @@
   height: 87px;
   width: 72px;
   position: relative;
+}
+.workList-grade__btn {
+  display: block;
+  cursor: pointer;
+  color: var(--main-bg-color);
+  background-color: var(--main-sub-color__hover);
+  border: none;
+  border-radius: 8px;
+  font-size: 24px;
+  /* width: 10%; */
+  /* height: 50%; */
+}
+.workList-grade__point {
+  margin-left: 16px;
+}
+.workList-grade__btn:hover {
+  transition: background-color 0.5s;
+  background-color: var(--main-sub-color);
+}
+.workList-grade__btn:active {
+  transition: background-color 0.5s;
+  background-color: var(--main-sub-color__active);
+}
+.workList-grade__btn-update {
+  margin-top: 16px;
+  margin-left: 16px;
+}
+.workList-grade__btn-init {
+  width: 100%;
 }

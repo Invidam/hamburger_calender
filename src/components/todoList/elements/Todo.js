@@ -25,7 +25,6 @@ export const Todo = ({ setTodo, _isEditMode, todoItem, id, idx }) => {
   console.log("TODO ITEM", id, todoItem, todoItem?.date < "2021-11-05");
   return (
     <li className="todo" key={"_" + todoItem?.id}>
-      {getToday()} {todoItem?.date} {}
       {isEditMode ? (
         <TodoInput todoHook={todoHook} key={id} id={id} />
       ) : isExpired ? (

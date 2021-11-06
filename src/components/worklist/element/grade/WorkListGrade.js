@@ -36,7 +36,24 @@ export const WorkListGrade = ({ user, date }) => {
   //   );
   // });
 
-  const numToStr = (num, emptyStr) => (num === -1 ? emptyStr + "h" : num + "h");
+  const numToStr = (num, emptyStr) => (num === -1 ? emptyStr : num + "h");
+  const getValue = (type, elem) => {
+    const getValueInPoint = () =>
+      makeStar(elem, false).map((star, idx) => {
+        return (
+          <span key={"star" + idx} className="workList-grade__tooltip-star">
+            {star}
+          </span>
+        );
+      });
+    if (type === "point") return getValueInPoint();
+    else if (type === "target" || type === "value")
+      return timeObjToStr(elem, "X");
+    else {
+      // diff
+      numToStr(elem, "X");
+    }
+  };
   const tableElement = (
     <table border={1}>
       <thead>
@@ -56,21 +73,14 @@ export const WorkListGrade = ({ user, date }) => {
                 <td>{strToFirstLEtterUpper(key)}</td>
                 {console.log(value)}
                 {value &&
-                  Object.values(value).map((elem) => {
+                  Object.values(value).map((elem, idx) => {
                     return (
-                      <td>
+                      <td key={key + idx}>
                         {key === "point"
-                          ? makeStar(elem, false).map((star) => {
-                              return (
-                                <span className="workList-grade__tooltip-star">
-                                  {" "}
-                                  {star}
-                                </span>
-                              );
-                            })
+                          ? getValue(key, elem)
                           : typeof elem === "number"
-                          ? numToStr(elem, " ")
-                          : timeObjToStr(elem, " ")}
+                          ? numToStr(elem, "X")
+                          : timeObjToStr(elem, "X")}
                       </td>
                     );
                   })}
@@ -86,20 +96,25 @@ export const WorkListGrade = ({ user, date }) => {
     </div>
   );
 
-  const getGradeElement = <button onClick={updateInfo}> Get Grade~!! </button>;
-  const updateGradeBtn = (
+  const getGradeElement = (
     <button
-      className="workList-grade__btn workList-grade__update-btn"
+      className="workList-grade__btn workList-grade__btn-init"
       onClick={updateInfo}
     >
-      {" "}
-      {redoElement}{" "}
+      Get Grade ⭐
+    </button>
+  );
+  const updateGradeBtn = (
+    <button
+      className="workList-grade__btn workList-grade__btn-update"
+      onClick={updateInfo}
+    >
+      {redoElement}
     </button>
   );
   const displayGrade = (
     <div className="workList-grade__display">
-      {" "}
-      <div className="tooltip">
+      <div className="tooltip workList-grade__point">
         <GradeStarList gradeSum={gradeSum} />
         {tooltipElement}
       </div>

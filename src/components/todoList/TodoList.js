@@ -21,26 +21,30 @@ export const TodoList = ({ user, date }) => {
   return isTodoListLoading ? (
     <LoadingElement text={"todoList is Loading"} />
   ) : (
-    <ol className="todo-list">
-      <TodoExplain
-        sortTypeIdx={sortTypeIdx}
-        onClickByTabIdx={onClickByTabIdx}
-      />
-      <Todo setTodo={setTodo} _isEditMode={true} id={-1} idx={-1} />
-      {todoList
-        ? Object.entries(todoList).map(([idx, todoItem]) => {
-            return (
-              <Todo
-                setTodo={setTodo}
-                _isEditMode={false}
-                todoItem={todoItem}
-                key={idx}
-                id={idx}
-                idx={idx}
-              />
-            );
-          })
-        : ""}
-    </ol>
+    <div className="todo-box">
+      <ol className="todo-list todo-list__non-item">
+        <TodoExplain
+          sortTypeIdx={sortTypeIdx}
+          onClickByTabIdx={onClickByTabIdx}
+        />
+        <Todo setTodo={setTodo} _isEditMode={true} id={-1} idx={-1} />
+      </ol>
+      <ol className="todo-list todo-list__item">
+        {todoList
+          ? Object.entries(todoList).map(([idx, todoItem]) => {
+              return (
+                <Todo
+                  setTodo={setTodo}
+                  _isEditMode={false}
+                  todoItem={todoItem}
+                  key={idx}
+                  id={idx}
+                  idx={idx}
+                />
+              );
+            })
+          : ""}
+      </ol>
+    </div>
   );
 };

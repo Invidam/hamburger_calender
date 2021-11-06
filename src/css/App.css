@@ -2,7 +2,7 @@
 main {
   font-family: "Bree Serif", serif;
   /* font-family: "Yanone Kaffeesatz", sans-serif; */
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,6 +13,7 @@ section {
   display: flex;
   height: auto;
   width: 100%;
+  margin-bottom: 64px;
 }
 /* aside {
   width: 20vw;
@@ -22,8 +23,8 @@ section {
 article {
   /* width: 48vw; */
   width: 50%;
-  height: 80vh;
-  border: 1px solid blue;
+  /* height: 80vh; */
+  /* border: 1px solid blue; */
   /* padding: 50px; */
   display: flex;
   flex-direction: column;
@@ -57,7 +58,7 @@ footer,
 :root {
   --main-bg-color: rgb(245, 235, 220);
   --main-color: rgb(80, 35, 20);
-
+  --main-footer-color: rgb(187, 163, 122);
   --main-sub-color: rgb(214, 35, 0);
   --main-sub-color__hover: rgba(167, 27, 0, 1);
   --main-sub-color__active: rgba(80, 35, 20, 1);

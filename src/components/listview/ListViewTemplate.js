@@ -4,7 +4,7 @@ import { ListView } from "./ListView";
 export const ListViewTemplate = ({ targetSetting, user, date, setDate }) => {
   return (
     <div className="listView">
-      <h1>List View Template</h1>
+      <h1>Check your Week Calendar</h1>
       <ListView
         user={user}
         date={date}

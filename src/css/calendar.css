@@ -124,3 +124,15 @@
 
   /* background-color: rgba(231, 76, 60, 0.5); */
 }
+
+.calendar-template {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 45vw;
+}
+
+.calendar-header {
+  width: 100%;
+}
