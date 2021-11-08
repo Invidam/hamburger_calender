@@ -21,24 +21,32 @@ export const HomePage = ({ user, updateDateHook, targetSetting }) => {
   const setDate = updateDateHook[1];
 
   return (
-    <section>
-      <article>
-        <CalendarTemplate user={user} updateDateHook={updateDateHook} />
-        <ListViewTemplate
-          user={user}
-          date={date}
-          setDate={setDate}
-          targetSetting={targetSetting}
-        />
-      </article>
-      <article>
-        <WorkListTemplate
-          user={user}
-          date={date}
-          targetSetting={targetSetting}
-        />
-        <TodoListTemplate user={user} date={date} />
-      </article>
-    </section>
+    <div className="main-box">
+      <section>
+        <article>
+          <CalendarTemplate user={user} updateDateHook={updateDateHook} />
+        </article>
+        <article>
+          <ListViewTemplate
+            user={user}
+            date={date}
+            setDate={setDate}
+            targetSetting={targetSetting}
+          />
+        </article>
+      </section>
+      <section>
+        <article>
+          <WorkListTemplate
+            user={user}
+            date={date}
+            targetSetting={targetSetting}
+          />
+        </article>
+        <article>
+          <TodoListTemplate user={user} date={date} />
+        </article>
+      </section>
+    </div>
   );
 };

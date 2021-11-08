@@ -1,14 +1,16 @@
+import { LocalStroage } from "../../tools/LocalStorage";
+
 export const EmptyView = ({ isLoad, viewObj, setDate, viewDate }) => {
   const viewContent = (
     <div
-      className="listView__item-box"
+      className={`listView__item-box`}
       onClick={() =>
         !isLoad
           ? setDate(new Date(viewDate))
           : console.log("[deq] status: ", isLoad)
       }
     >
-      <span className="listView__item-date"> {viewDate.substr(5)}</span>
+      <span className="listView__item-text__box"> {viewDate.substr(5)}</span>
     </div>
   );
   return viewContent;

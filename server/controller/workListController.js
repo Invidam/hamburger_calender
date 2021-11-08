@@ -311,7 +311,7 @@ const getWorkListTimeSum = async (user, date) => {
   };
   return workListObj;
 };
-const getSetting = async (user) => {
+export const getSetting = async (user) => {
   const ref = db.ref(`users/${user}/setting`);
   let ret;
   await ref.once(
@@ -381,7 +381,7 @@ const getGradeInWorkList = (hour1, hour2) => {
     diff,
   ];
 };
-const makeGrade = (workListObj, settingObj) => {
+export const makeGrade = (workListObj, settingObj) => {
   try {
     if (
       !settingObj?.wakeTimeTarget ||

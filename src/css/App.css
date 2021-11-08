@@ -6,21 +6,18 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 128px;
   /* width: 100%; */
   /* height: 100vh; */
 }
-section {
+.main-box {
   display: flex;
   height: auto;
   width: 100%;
   margin-bottom: 64px;
+  /* padding: 20px 0px; */
 }
-/* aside {
-  width: 20vw;
-  height: 80vh;
-  border: 1px solid green;
-} */
-article {
+section {
   /* width: 48vw; */
   width: 50%;
   /* height: 80vh; */
@@ -29,6 +26,14 @@ article {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+article {
+  width: 48vw;
+  height: 60vh;
+  /* border: 3px solid blue; */
+  border-radius: 16px;
+  margin: 20px 0px;
+  background-color: rgb(239, 225, 204);
 }
 /* li:not(.ingredient__item) */
 .workList__work,

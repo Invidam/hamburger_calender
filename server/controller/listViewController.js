@@ -7,13 +7,27 @@ import {
 } from "../tools/time.js";
 // import { divideDate } from "../";
 import { db } from "../routes/firebase/config.js";
+import { getSetting, makeGrade } from "./workListController.js";
 const YEAR = 2;
 const MONTH = 1;
 const DAY = 0;
+
+const makeGradePoint = (workListObj, settingObj) => {
+  const { grade } = makeGrade(workListObj, settingObj);
+  let gradePointSum = 0;
+  Object.values(grade).forEach((point) => (gradePointSum += point));
+  return gradePointSum;
+};
 const getIdxByDayDiff = (date1, date2Month, date2Day) =>
   getDiffDayInStr(date1, date2Month.replace("/", "-") + "-" + date2Day);
 
-const getListViewInOtherMonth = async (user, arrLength, startDate, endDate) => {
+const getListViewInOtherMonth = async (
+  user,
+  settingObj,
+  arrLength,
+  startDate,
+  endDate
+) => {
   const listView = new Array(arrLength).fill(undefined);
   const dividedStartMonth = divideDate(startDate).dividedAddressYYYYMM;
   const dividedEndMonth = divideDate(endDate).dividedAddressYYYYMM;
@@ -32,6 +46,9 @@ const getListViewInOtherMonth = async (user, arrLength, startDate, endDate) => {
           // listView.push(value);
           const idx = getIdxByDayDiff(startDate, dividedStartMonth, key);
           listView[idx] = value?.workList;
+
+          const gradePointSum = makeGradePoint(listView[idx], settingObj);
+          listView[idx]["point"] = gradePointSum;
           // console.log(`[${idx}]`, dividedEndMonth, key);
         }
     }
@@ -48,6 +65,8 @@ const getListViewInOtherMonth = async (user, arrLength, startDate, endDate) => {
           // listView.push(value);
           const idx = getIdxByDayDiff(startDate, dividedEndMonth, key);
           listView[idx] = value?.workList;
+          const gradePointSum = makeGradePoint(listView[idx], settingObj);
+          listView[idx]["point"] = gradePointSum;
           // console.log(`[${idx}]`, dividedEndMonth, key);
         }
     }
@@ -55,7 +74,13 @@ const getListViewInOtherMonth = async (user, arrLength, startDate, endDate) => {
   );
   return listView;
 };
-const getListViewInSameMonth = async (user, arrLength, startDate, endDate) => {
+const getListViewInSameMonth = async (
+  user,
+  settingObj,
+  arrLength,
+  startDate,
+  endDate
+) => {
   const listView = new Array(arrLength).fill(undefined);
   const { dividedAddressYYYYMM } = divideDate(startDate);
   const dividedStartDay = divideDate(startDate).day;
@@ -73,6 +98,8 @@ const getListViewInSameMonth = async (user, arrLength, startDate, endDate) => {
 
           const idx = getIdxByDayDiff(startDate, dividedAddressYYYYMM, key);
           listView[idx] = value?.workList;
+          const gradePointSum = makeGradePoint(listView[idx], settingObj);
+          listView[idx]["point"] = gradePointSum;
           // console.log(`[${idx}]`, dividedAddressYYYYMM, key);
         }
     }
@@ -84,6 +111,7 @@ const getListViewInSameMonth = async (user, arrLength, startDate, endDate) => {
 export const getListView = async (req, res) => {
   const { user } = req.params;
   const { startDate, endDate } = req.query;
+  const settingObj = await getSetting(user);
   // console.log("LV", startDate, endDate);
   const arrLength = getDiffDayInStr(startDate, endDate) + 1;
   const diffCode = getTimeStrDiffCode(startDate, endDate);
@@ -92,6 +120,7 @@ export const getListView = async (req, res) => {
   if (diffCode === YEAR || diffCode === MONTH) {
     listView = await getListViewInOtherMonth(
       user,
+      settingObj,
       arrLength,
       startDate,
       endDate
@@ -99,6 +128,7 @@ export const getListView = async (req, res) => {
   } else {
     listView = await getListViewInSameMonth(
       user,
+      settingObj,
       arrLength,
       startDate,
       endDate

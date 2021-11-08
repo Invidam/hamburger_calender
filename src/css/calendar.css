@@ -1,10 +1,12 @@
 .react-calendar {
-  width: 350px;
+  /* width: 350px; */
   max-width: 100%;
+  /* height: 100%; */
   background: white;
-  border: 1px solid #a0a096;
+  /* border: 1px solid #a0a096; */
+  border-radius: 12px;
   font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.125em;
+  /* line-height: 1.125em; */
 }
 .react-calendar--doubleView {
   width: 700px;
@@ -130,9 +132,10 @@
   flex-direction: column;
   align-items: center;
   height: 100%;
-  width: 45vw;
+  /* width: 45vw; */
 }
 
 .calendar-header {
-  width: 100%;
+  width: 45vw;
+  margin-left: 10px;
 }

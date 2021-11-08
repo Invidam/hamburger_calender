@@ -75,6 +75,7 @@ export class LocalStroage {
         dateObj = JSON.stringify(dateObj);
         localStorage.setItem("date", dateObj);
       },
+
       remove: () => localStorage.setItem("date", "undefined"),
     };
   }

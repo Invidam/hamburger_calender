@@ -1,10 +1,10 @@
 import ReactLoading from "react-loading";
 import "../css/element/loading.css";
 export const LoadingElement = ({ text }) => (
-  <section className="loading">
+  <div className="loading">
     <div className="loading-bar">{LoadingContent}</div>
     <h1 className="loading__text"> {text}</h1>
-  </section>
+  </div>
 );
 
 const LoadingContent = (

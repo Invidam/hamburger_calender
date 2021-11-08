@@ -54,7 +54,10 @@ export const Header = ({ updateDateHook, customLoginHook }) => {
         </div>
         {!authenticated ? loginColumn : logoutColumn}
       </div>
-      <span className="">{authenticated ? `Hello ${user}` : ""}</span>
+      <span className="header__text">
+        {authenticated ? `Hello ${user}` : ""}
+      </span>
+      <span className="header__text"> {date}</span>
     </header>
   );
 };

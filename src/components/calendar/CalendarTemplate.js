@@ -22,12 +22,13 @@ export const CalendarTemplate = ({ user, updateDateHook }) => {
       <h1 className="calendar-header">Check your calendar</h1>
       <Calendar
         className="caldendar"
-        onChange={(value) => {
-          console.log("CHANGE EVENT", value);
-          onUpdateDate(value);
-          console.log("value:", value);
-          // onUpdateDate(value);
-        }}
+        onChange={onUpdateDate}
+        // onChange={(value) => {
+        //   console.log("CHANGE EVENT", value);
+        //   onUpdateDate(value);
+        //   console.log("value:", value);
+        //   // onUpdateDate(value);
+        // }}
         value={new Date(date)}
         locale={"en"}
         calendarType={"US"}
@@ -35,8 +36,6 @@ export const CalendarTemplate = ({ user, updateDateHook }) => {
         //   console.log("CLICK EVENT", date);
         // }}
         onActiveStartDateChange={({ activeStartDate, value, view }) => {
-          console.log("Changed view to: ", activeStartDate, value, view);
-
           // setActiveDate(changeFormatYYYYMMDD(activeStartDate));
           getUserInfo(changeFormatYYYYMMDD(activeStartDate));
         }}

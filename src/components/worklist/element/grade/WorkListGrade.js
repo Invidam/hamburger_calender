@@ -39,7 +39,7 @@ export const WorkListGrade = ({ user, date }) => {
   const numToStr = (num, emptyStr) => (num === -1 ? emptyStr : num + "h");
   const getValue = (type, elem) => {
     const getValueInPoint = () =>
-      makeStar(elem, false).map((star, idx) => {
+      makeStar(elem, false, "work-icon").map((star, idx) => {
         return (
           <span key={"star" + idx} className="workList-grade__tooltip-star">
             {star}

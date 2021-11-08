@@ -70,7 +70,7 @@ const getDeqNeedDate = (startDate, dateDiff) => {
 export const useListView = (user, date, setDate) => {
   const [startDate, setStratDate] = useState(getStartDate(date));
   const [listView, setListView] = useState();
-  const [isListViewLoading, setLoad] = useState(false);
+  const [isListViewLoading, setLoad] = useState(true);
 
   const updateStartDate = (nextDate) => {
     LocalStroage.startDate().set(nextDate);
@@ -103,14 +103,19 @@ export const useListView = (user, date, setDate) => {
     }
   };
   const updateListView = async () => {
+    if (!isListViewLoading) setLoad(true);
+    console.log("MK LV");
     if (user && startDate) {
       const response = await getListView(startDate, getEndDate(startDate));
       listDeque = new Deque(response, DISPLAY_LENGTH);
-      listDeque.print("listview");
-      setListView(listDeque.get());
+      listDeque.print("MK LV?");
+      const _listView = [...listDeque.get()];
+      setListView(_listView);
     }
+    setLoad(false);
   };
   const moveListView = async (startDate, dateDiff) => {
+    if (!isListViewLoading) setLoad(true);
     if (user && startDate) {
       const isLeft = dateDiff > 0;
       turnDeque(listDeque, Math.abs(dateDiff), isLeft);
@@ -120,9 +125,9 @@ export const useListView = (user, date, setDate) => {
       const response = await getListView(needStartDate, needEndDate);
       setDeque(listDeque, response, Math.abs(dateDiff), isLeft);
     }
+    setLoad(false);
   };
   const MakeListView = async () => {
-    setLoad(true);
     //setListView를 좀 더 스마트하게 바꾸어야 한다.
 
     //   "[listview]Set list view start",
@@ -137,11 +142,13 @@ export const useListView = (user, date, setDate) => {
     // updateListView(startDate);
     befStartDate = startDate;
     // return () => setLoad(false);
-    setLoad(false);
   };
   useEffect(() => {
     updateStartDate(makeStartDate(date));
   }, [date]);
+  useEffect(() => {
+    console.log("LV LOAD : ", isListViewLoading);
+  }, [isListViewLoading]);
   useEffect(() => {
     MakeListView();
     return () => setLoad(false);
@@ -152,6 +159,7 @@ export const useListView = (user, date, setDate) => {
     listView,
     onClickLeftBtn,
     onClickRightBtn,
+    updateListView,
   };
 };
 

@@ -1,58 +1,58 @@
 import * as iconSolid from "@fortawesome/free-solid-svg-icons";
 import * as iconRegular from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const starElement = (
+const starElement = (classType) => (
   <FontAwesomeIcon
-    className="work-icon__star"
+    className={`${classType}__star`}
     icon={iconSolid.faStar}
     size="1x"
   />
 );
-const starHalfAltElement = (
-  <div className="work-icon__star-half__box">
+const starHalfAltElement = (classType) => (
+  <div className={`${classType}__star-half__box`}>
     <FontAwesomeIcon
-      className="work-icon__star-half__full"
+      className={`${classType}__star-half__full`}
       icon={iconSolid.faStar}
       size="1x"
     />
     <FontAwesomeIcon
-      className="work-icon__star-half__half"
+      className={`${classType}__star-half__half`}
       icon={iconSolid.faStarHalf}
       size="1x"
     />
   </div>
 );
-const starHalfElement = (
+const starHalfElement = (classType) => (
   <FontAwesomeIcon
-    className="work-icon__star-half"
+    className={`${classType}__star-half`}
     icon={iconSolid.faStarHalf}
     size="1x"
   />
 );
-const starEmptyElement = (
+const starEmptyElement = (classType) => (
   <FontAwesomeIcon
-    className="work-icon__star-empty"
+    className={`${classType}__star-empty`}
     icon={iconSolid.faStar}
     size="1x"
   />
 );
 
-export const makeStar = (gradeSum, isAlt = true) =>
+export const makeStar = (gradeSum, isAlt = true, classType) =>
   new Array(5).fill().map((elem, idx) => {
     return 2 * (idx + 1) <= gradeSum
-      ? starElement
+      ? starElement(classType)
       : 2 * (idx + 1) - gradeSum === 1
       ? isAlt
-        ? starHalfAltElement
-        : starHalfElement
+        ? starHalfAltElement(classType)
+        : starHalfElement(classType)
       : isAlt
-      ? starEmptyElement
+      ? starEmptyElement(classType)
       : "";
   });
 
 export const GradeStarList = ({ gradeSum }) => {
   console.log("SYM : ", gradeSum);
-  const starArr = makeStar(gradeSum);
+  const starArr = makeStar(gradeSum, true, "work-icon");
   return (
     <ol className="workList-star__list">
       {starArr.map((elem, idx) => {

@@ -1,4 +1,5 @@
 import { isEmptyWork } from "../../hooks/workList/work/useWorkList";
+import { makeStar } from "../worklist/element/grade/GradeStarList";
 import { TimeRecordBtn } from "../worklist/element/timeBtn/TimeRecordBtn";
 const wakeItem = (
   <li className="workList__wakeTime-display workList__time-display workList__time workList__wakeTime listView__item"></li>
@@ -34,6 +35,18 @@ export const View = ({ isLoad, viewObj, setDate, viewDate }) => {
         return isEmptyWork(workItem) ? "" : workItemContent(workItem, idx);
       })
     : emptyWorkItem;
+  const { point } = viewObj || 0;
+  const starPointText = (
+    <div className="list-starIcon__box">
+      {makeStar(point, true, "list-icon").map((star, idx) => {
+        return (
+          <span key={"star" + idx} className="listView-grade__star">
+            {star}
+          </span>
+        );
+      })}
+    </div>
+  );
   const viewContent = (
     <div
       className="listView__item-box"
@@ -43,7 +56,12 @@ export const View = ({ isLoad, viewObj, setDate, viewDate }) => {
           : console.log("[deq] status: ", isLoad)
       }
     >
-      <span className="listView__item-date"> {viewDate.substr(5)}</span>
+      <div className="listView__item-text__box">
+        <span className="listView__item-text__column">
+          {viewDate.substr(5)}
+        </span>
+        <span className="listView__item-text__column">{starPointText}</span>
+      </div>
       <ol>
         {viewObj?.wakeTime ? wakeItem : emptyWakeItem} {workListItem}{" "}
         {viewObj?.bedTime ? bedItem : emptyBedItem}
