@@ -75,15 +75,15 @@ export const TodoExplain = ({ onClickByTabIdx, sortTypeIdx }) => {
       <label className="todo__label" htmlFor={`todo__checkbox_ex`}>
         <span className="todo__label-icon">{isCheck ? checkElement : ""}</span>
       </label>
-      <span className="todo__text todo-explain__text todo__content todo-explain__content">
-        Text
-      </span>
-      <span className="todo__date todo-explain__date todo__content todo-explain__content">
-        Deadline {iconBtn(0)}
-      </span>
-      <span className="todo__content todo-explain__priority todo-explain__content">
-        Prioirty {iconBtn(1)}
-      </span>
+      <div className="todo__text todo-explain__text todo__content todo-explain__content">
+        <span className="todo-explain__text-box">Text</span>
+      </div>
+      <div className="todo__date todo-explain__date todo__content todo-explain__content">
+        <span className="todo-explain__text-box">Deadline {iconBtn(0)}</span>
+      </div>
+      <div className="todo__content todo-explain__priority todo-explain__content">
+        <span className="todo-explain__text-box">Prioirty {iconBtn(1)}</span>
+      </div>
       {/* {displayBtn} */}
     </div>
   );

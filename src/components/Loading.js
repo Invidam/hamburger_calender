@@ -15,3 +15,18 @@ const LoadingContent = (
     color={"#663333"}
   ></ReactLoading>
 );
+export const LoadingElementSmall = ({ text }) => (
+  <div className="loading-small">
+    <div className="loading-bar-small">{LoadingContentSmall}</div>
+    <h1 className="loading__text-small"> {text}</h1>
+  </div>
+);
+
+const LoadingContentSmall = (
+  <ReactLoading
+    type={"spinningBubbles"}
+    height={"2em"}
+    width={"2em"}
+    color={"#663333"}
+  ></ReactLoading>
+);

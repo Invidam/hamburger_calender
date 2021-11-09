@@ -1,21 +1,15 @@
-import StarRatings from "react-star-ratings";
-import DatePicker from "react-datepicker";
-
-import { registerLocale, setDefaultLocale } from "react-datepicker";
 // import es from "da"
 import { useTodo } from "../../../hooks/todolist/useTodo";
 import { getToday } from "../../../tools/time";
-import { DatePick } from "./DatePick";
-import { useState } from "react";
 
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TodoInput } from "./TodoInput";
 import { TodoDisplay } from "./TodoDisplay";
 import { TodoExpired } from "./TodoExpired";
-const checkElement = (
-  <FontAwesomeIcon className="todo-icon__check" icon={faCheck} size="1x" />
-);
+// const checkElement = (
+//   <FontAwesomeIcon className="todo-icon__check" icon={faCheck} size="1x" />
+// );
 export const Todo = ({ setTodo, _isEditMode, todoItem, id, idx }) => {
   const todoHook = useTodo(setTodo, todoItem, _isEditMode, idx);
   // console.log("ID: ", id, "EDIT? ", todoHook.isEditMode, _isEditMode);

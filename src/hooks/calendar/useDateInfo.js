@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { API, APIv2 } from "../../tools/API";
-import { isEqualYYYYMMDateStr } from "../../tools/time";
+import { APIv2 } from "../../tools/API";
 let cancel = false;
 export const useDateInfo = (user, date) => {
   const [dateInfo, setDateInfo] = useState();

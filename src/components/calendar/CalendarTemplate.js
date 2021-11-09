@@ -1,10 +1,8 @@
 import Calendar from "react-calendar";
-import { changeFormatYYYYMMDD, getToday, UTCtoKTC } from "../../tools/time";
+import { changeFormatYYYYMMDD } from "../../tools/time";
 import "../../css/calendar.css";
-import axios from "axios";
 import { useDateInfo } from "../../hooks/calendar/useDateInfo";
-import { LoadingElement } from "../Loading";
-import { LocalStroage } from "../../tools/LocalStorage";
+import { NotLoggedInPage } from "../pages/NotLoggedInPage";
 export const CalendarTemplate = ({ user, updateDateHook }) => {
   const [date, onUpdateDate] = updateDateHook;
   const [mark, getUserInfo] = useDateInfo(user, date);
@@ -17,7 +15,9 @@ export const CalendarTemplate = ({ user, updateDateHook }) => {
   //     <LoadingElement text={"Calendar Loading"} />
   //   </article>
   // ) :
-  return (
+  return !user ? (
+    <NotLoggedInPage elementName={"Week Calendar"} />
+  ) : (
     <div className="calendar-template">
       <h1 className="calendar-header">Check your calendar</h1>
       <Calendar

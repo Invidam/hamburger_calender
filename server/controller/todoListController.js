@@ -1,4 +1,3 @@
-import { divideDate } from "../tools/time.js";
 import { db } from "../routes/firebase/config.js";
 export const putTodo = (req, res) => {
   const { user } = req.params;
@@ -10,7 +9,7 @@ export const putTodo = (req, res) => {
       error: "cannot find db",
     });
   else {
-    db.ref(`users/${user}/todoList/todoList/${value.id}`).set(value);
+    db.ref(`users/${user}/todoList/${value.id}`).set(value);
     return res.status(200).json({ status: "push todo success" });
   }
 };
@@ -25,7 +24,7 @@ export const editTodo = (req, res) => {
       error: "cannot find db",
     });
   else {
-    db.ref(`users/${user}/todoList/todoList/${value.id}`).set(value);
+    db.ref(`users/${user}/todoList/${value.id}`).set(value);
     return res.status(200).json({ status: "edit todo success" });
   }
 };
@@ -40,7 +39,8 @@ export const deleteTodo = (req, res) => {
       error: "cannot find db",
     });
   else {
-    const ref = db.ref(`users/${user}/todoList/todoList/`);
+    const ref = db.ref(`users/${user}/todoList`);
+    console.log("DELETE", user, value);
     ref.child(value.id).remove();
     return res.status(200).json({ status: "delete todo success" });
   }
@@ -54,7 +54,7 @@ export const editTodoList = (req, res) => {
       error: "cannot find db",
     });
   else {
-    db.ref(`users/${user}/todoList/todoList`).set(value);
+    db.ref(`users/${user}/todoList`).set(value);
     return res.status(200).json({ status: "success" });
   }
 };
@@ -65,7 +65,7 @@ export const getTodoList = async (req, res) => {
   const sortType = { type, direction };
   console.log("[TYPE]: ", type, direction);
   // const {}
-  const ref = db.ref(`users/${user}/todoList/todoList`);
+  const ref = db.ref(`users/${user}/todoList`);
   let response;
   await ref.once(
     "value",

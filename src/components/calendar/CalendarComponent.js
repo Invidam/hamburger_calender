@@ -1,12 +1,10 @@
 import Calendar from "react-calendar";
-import { changeFormatYYYYMMDD, UTCtoKTC } from "../../tools/time";
+import { changeFormatYYYYMMDD } from "../../tools/time";
 import "../../css/calendar.css";
 import { useState } from "react";
-import { useRecordTime } from "../../hooks/workList/time/useRecordTime";
 import { LocalStroage } from "../../tools/LocalStorage";
 export const CalendarTemplate = () => {
   const [value, onChange] = useState(new Date());
-  const clickDay = (event, value) => alert("Clicked day: ", value);
 
   const mark = ["2021-09-12", "2021-09-13", "2021-09-14"];
   return (

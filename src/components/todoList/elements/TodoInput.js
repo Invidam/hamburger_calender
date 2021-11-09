@@ -1,7 +1,4 @@
 import StarRatings from "react-star-ratings";
-import DatePicker from "react-datepicker";
-
-import { useTodo } from "../../../hooks/todolist/useTodo";
 import { DatePick } from "./DatePick";
 
 import {

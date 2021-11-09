@@ -78,6 +78,7 @@ export const useLogin = () => {
         LocalStroage.workList().remove();
       }
       if (!LocalStroage.todoList().isEmpty()) {
+        console.log("IS EMPTY TODO ");
         const todoList = LocalStroage.todoList("todoList").get();
         APIv2.todoList(user).edit(todoList);
         LocalStroage.todoList().remove();

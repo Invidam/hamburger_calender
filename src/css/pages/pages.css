@@ -8,12 +8,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   background-color: rgb(255 159 92);
   padding: 20px;
   border-radius: 15px;
-  width: 32vw;
+  width: 24vw;
   height: 50vh;
   /* width: 100%; */
+  margin-bottom: 32px;
 }
 .page-input-box__input {
   font-size: 16px;
@@ -62,21 +64,24 @@
   width: 50%;
 }
 .setting__input-box {
-  width: 20%;
+  display: flex;
+
+  width: 40%;
 }
 .setting-column {
   display: flex;
   justify-content: space-around;
 }
 .setting__input {
-  width: 65%;
+  width: auto;
   display: inline;
   font-size: 16px;
   border: none;
   background: none;
   border-bottom: 2px solid rgba(100, 69, 19, 0.3);
   background-color: inherit;
-  margin-bottom: 15px;
+  margin: 0px 16px;
+  /* margin-bottom: 15px; */
 }
 
 .setting__input::placeholder {

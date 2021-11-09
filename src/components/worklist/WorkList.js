@@ -13,7 +13,6 @@ import {
   useWorkList,
 } from "../../hooks/workList/work/useWorkList";
 import { LoadingElement } from "../Loading";
-import { APIv2 } from "../../tools/API";
 import { WorkListGrade } from "./element/grade/WorkListGrade";
 export const WorkList = ({ user, date, targetSetting, workListHook }) => {
   const { targetWakeTime, targetBedTime, targetWorkTime } = targetSetting;

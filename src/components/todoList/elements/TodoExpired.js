@@ -1,12 +1,5 @@
 import StarRatings from "react-star-ratings";
-import DatePicker from "react-datepicker";
-
-import { registerLocale, setDefaultLocale } from "react-datepicker";
-// import es from "da"
-import { useTodo } from "../../../hooks/todolist/useTodo";
-import { getToday } from "../../../tools/time";
 import { DatePick } from "./DatePick";
-import { useState } from "react";
 
 import {
   faCheck,
@@ -25,13 +18,13 @@ const expiredElement = (
     size="1x"
   />
 );
-const editElement = (
-  <FontAwesomeIcon
-    className="todo-icon todo-icon__save"
-    icon={faEdit}
-    size="1x"
-  />
-);
+// const editElement = (
+//   <FontAwesomeIcon
+//     className="todo-icon todo-icon__save"
+//     icon={faEdit}
+//     size="1x"
+//   />
+// );
 const trashElement = (
   <FontAwesomeIcon
     className="todo-icon todo-icon__plus"
@@ -53,7 +46,7 @@ export const TodoExpired = ({ todoHook, id }) => {
     ,
     ,
     onDeleteTodo,
-    onClickEditBtn,
+    ,
   ] = todoHook;
   // setInterval(() => console.log("TEST"), 1000);
   const displayBtn = (

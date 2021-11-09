@@ -13,6 +13,12 @@ const EXISTGITHUB = 1;
 const EXISTNOTGITHUB = 2;
 const TOKEN_EXPIRED = -3;
 const TOKEN_INVALID = -2;
+
+const DEFAULT_SETTING_OBJECT = {
+  targetWorkTime: 8,
+  targetWakeTime: { hour: 8, minute: 0 },
+  targetBedTime: { hour: 0, minute: 0 },
+};
 export const verifyToken = async (req, res) => {
   const { token } = req.body;
   console.log("BODY: ", req.body, token);
@@ -42,11 +48,16 @@ const getUserList = async () => {
   );
   return userList;
 };
+const setDefaultSetting = (username) => {
+  const settingRef = db.ref(`users/${username}/setting`);
+  settingRef.set(DEFAULT_SETTING_OBJECT);
+};
 const signup = (userInfo) => {
   const { username } = userInfo;
   if (!username) throw new Error("Cannot make user.");
-  const ref = db.ref(`users/${username}/info`);
-  ref.set(userInfo);
+  const infoRef = db.ref(`users/${username}/info`);
+  infoRef.set(userInfo);
+  setDefaultSetting(username);
 };
 
 export const checkExistUser = async (req, res, next) => {

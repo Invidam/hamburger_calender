@@ -1,5 +1,4 @@
 import * as iconSolid from "@fortawesome/free-solid-svg-icons";
-import * as iconRegular from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const starElement = (classType) => (
   <FontAwesomeIcon

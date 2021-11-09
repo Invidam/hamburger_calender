@@ -103,16 +103,16 @@ export class LocalStroage {
     return {
       isEmpty: () =>
         localStorage.getItem("todoList")
-          ? !JSON.parse(localStorage.getItem("todoList")).length
+          ? !Object.values(JSON.parse(localStorage.getItem("todoList"))).length
           : true,
       get: () => {
         if (!localStorage.getItem("todoList"))
-          localStorage.setItem("todoList", "[]");
+          localStorage.setItem("todoList", "{}");
         return JSON.parse(localStorage.getItem("todoList"));
       },
       set: (todoList) =>
         localStorage.setItem("todoList", JSON.stringify(todoList)),
-      remove: () => localStorage.setItem("todoList", "[]"),
+      remove: () => localStorage.setItem("todoList", "{}"),
     };
   }
 }

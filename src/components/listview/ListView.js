@@ -1,11 +1,7 @@
-import {
-  ARRAY_LENGTH,
-  DISPLAY_LENGTH,
-  useListView,
-} from "../../hooks/listView/useListView";
+import { ARRAY_LENGTH, DISPLAY_LENGTH } from "../../hooks/listView/useListView";
 import "../../css/listView/listView.css";
 import { View } from "./View";
-import { getAddedDateObj, getAddedDateStr, getToday } from "../../tools/time";
+import { getAddedDateStr, getToday } from "../../tools/time";
 import { LoadingElement } from "../Loading";
 import { EmptyView } from "./EmptyView";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,7 +19,7 @@ export const ListView = ({ user, date, setDate, listViewHook }) => {
     onClickLeftBtn,
   } = listViewHook;
   return isListViewLoading ? (
-    <LoadingElement text={"WorkList Loading. . ."} />
+    <LoadingElement text={"Week List Loading. . ."} />
   ) : (
     <ol
       className={
@@ -87,8 +83,4 @@ export const ListView = ({ user, date, setDate, listViewHook }) => {
       </li>
     </ol>
   );
-  return <h2> List View </h2>;
-  // startDate 바꾸기
-  // date 바꾸기 (setDate 상위 state의)
-  // refresh 하기
 };

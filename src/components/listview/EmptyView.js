@@ -1,5 +1,3 @@
-import { LocalStroage } from "../../tools/LocalStorage";
-
 export const EmptyView = ({ isLoad, viewObj, setDate, viewDate }) => {
   const viewContent = (
     <div

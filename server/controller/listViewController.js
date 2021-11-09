@@ -1,7 +1,5 @@
 import {
-  changeFormatYYYYMMDD,
   divideDate,
-  getAddedDateStr,
   getDiffDayInStr,
   getTimeStrDiffCode,
 } from "../tools/time.js";
@@ -11,9 +9,25 @@ import { getSetting, makeGrade } from "./workListController.js";
 const YEAR = 2;
 const MONTH = 1;
 const DAY = 0;
-
+const emptyTimeObj = { hour: null, minute: null };
+const makeWorkListSumObj = (workListObj) => {
+  let workTimeSum = 0;
+  console.log("MAKE SUM, OBJ: ", workListObj?.workList);
+  workListObj?.workList &&
+    Object.values(workListObj?.workList).forEach((work) => {
+      workTimeSum += work?.workTime;
+    });
+  const workListSumObj = {
+    wakeTime: workListObj?.wakeTime || emptyTimeObj,
+    bedTime: workListObj?.bedTime || emptyTimeObj,
+    workTimeSum,
+  };
+  return workListSumObj;
+};
 const makeGradePoint = (workListObj, settingObj) => {
-  const { grade } = makeGrade(workListObj, settingObj);
+  console.log("LISTVIEW POINT: ", workListObj);
+  const workListSumObj = makeWorkListSumObj(workListObj);
+  const { grade } = makeGrade(workListSumObj, settingObj);
   let gradePointSum = 0;
   Object.values(grade).forEach((point) => (gradePointSum += point));
   return gradePointSum;

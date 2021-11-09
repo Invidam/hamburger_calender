@@ -124,9 +124,17 @@
   /* border */
 }
 .todo__explain-btn {
+  cursor: pointer;
   border: none;
   background-color: inherit;
   color: rgba(149, 36, 0, 0.7);
+  font-size: 20px;
+}
+.todo__explain-btn:hover {
+  color: rgba(87, 31, 13, 0.9);
+}
+.todo__explain-btn:focus {
+  color: rgba(48, 18, 8, 0.9);
 }
 .todo__checkbox {
   width: 5%;
@@ -198,6 +206,12 @@
   display: inline-block;
   width: 20%;
 }
+.todo-explain__text-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 32px;
+}
 .react-datepicker__triangle {
   /* display: none; */
 }
@@ -225,7 +239,7 @@
   /* background-color: red;
   border: 1px solid green; */
 
-  width: 8%;
+  width: 10%;
 }
 .todo__btn-content {
   width: 100%;

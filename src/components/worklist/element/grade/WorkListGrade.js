@@ -3,6 +3,8 @@ import { GradeStarList, makeStar } from "./GradeStarList";
 import { faRedo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { timeObjToStr } from "../../../../tools/time";
+import Loading from "react-loading";
+import { LoadingElementSmall } from "../../../Loading";
 const keyOrderArr = ["target", "value", "difference", "point"];
 const redoElement = (
   <FontAwesomeIcon className="work-icon__redo" icon={faRedo} size="1x" />
@@ -121,5 +123,11 @@ export const WorkListGrade = ({ user, date }) => {
       {updateGradeBtn}
     </div>
   );
-  return gradeInfo ? displayGrade : getGradeElement;
+  return isGradeLoading ? (
+    <LoadingElementSmall text={"Calculationg Grade..."} />
+  ) : gradeInfo ? (
+    displayGrade
+  ) : (
+    getGradeElement
+  );
 };

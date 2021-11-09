@@ -130,15 +130,27 @@ export const useListView = (user, date, setDate) => {
   const MakeListView = async () => {
     //setListView를 좀 더 스마트하게 바꾸어야 한다.
 
-    //   "[listview]Set list view start",
-    //   listDeque,
-    //   befStartDate,
-    //   startDate
-    // );
     const dateDiff = subtractDayInStr(befStartDate, startDate);
-    if (!listDeque || !befStartDate || dateDiff > 2 || dateDiff < -2)
+    console.log(
+      "[listview]Set list view start",
+      "LISTQUE",
+      listDeque,
+      "BEF START DATE: ",
+      befStartDate,
+      "STARDIFF: ",
+      startDate,
+      "DDATE DIFF: ",
+      dateDiff
+    );
+    if (
+      !listDeque ||
+      !befStartDate ||
+      dateDiff > 2 ||
+      dateDiff < -2 ||
+      dateDiff === 0
+    )
       await updateListView();
-    else if (dateDiff !== 0) await moveListView(startDate, dateDiff);
+    else await moveListView(startDate, dateDiff);
     // updateListView(startDate);
     befStartDate = startDate;
     // return () => setLoad(false);
@@ -150,9 +162,10 @@ export const useListView = (user, date, setDate) => {
     console.log("LV LOAD : ", isListViewLoading);
   }, [isListViewLoading]);
   useEffect(() => {
+    console.log("LIST VIEW USE EFFECT REACH");
     MakeListView();
     return () => setLoad(false);
-  }, [startDate]);
+  }, [user, startDate]);
   return {
     isListViewLoading,
     startDate,

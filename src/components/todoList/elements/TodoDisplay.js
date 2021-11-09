@@ -1,13 +1,8 @@
 import StarRatings from "react-star-ratings";
-import DatePicker from "react-datepicker";
 
-import { registerLocale, setDefaultLocale } from "react-datepicker";
 // import es from "da"
-import { useTodo } from "../../../hooks/todolist/useTodo";
-import { getToday } from "../../../tools/time";
-import { DatePick } from "./DatePick";
-import { useState } from "react";
 
+import { DatePick } from "./DatePick";
 import { faCheck, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const checkElement = (
@@ -35,7 +30,7 @@ export const TodoDisplay = ({ todoHook, id }) => {
     text,
     date,
     priority,
-    onClickCheck,
+    ,
     ,
     ,
     ,
