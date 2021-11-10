@@ -4,6 +4,7 @@
   flex-direction: column;
   z-index: 1;
   background-color: var(--main-bg-color);
+  margin-top: 16px;
 }
 
 .header__row {

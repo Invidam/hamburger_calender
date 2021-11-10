@@ -18,6 +18,44 @@ export const ListView = ({ user, date, setDate, listViewHook }) => {
     onClickRightBtn,
     onClickLeftBtn,
   } = listViewHook;
+  const listViewContent = listView
+    ? listView.map((view, idx) => {
+        console.log("LV TEST", listView, view);
+        const viewDate = getAddedDateStr(
+          startDate,
+          idx + Math.floor((ARRAY_LENGTH - DISPLAY_LENGTH) / 2)
+        );
+        console.log("LIST VIEW VALUE: ", viewDate, getToday());
+        return (
+          <li
+            className={`listView-element ${
+              isListViewLoading ? "listView-loading" : ""
+            }${
+              LocalStroage.date().get().clickedDate === viewDate
+                ? "listView-element__clickedDate "
+                : ""
+            }${getToday() === viewDate ? "listView-element__today" : ""}`}
+            key={idx}
+          >
+            {view ? (
+              <View
+                viewObj={view}
+                setDate={setDate}
+                isLoad={isListViewLoading}
+                viewDate={viewDate}
+              />
+            ) : (
+              <EmptyView
+                viewObj={view}
+                setDate={setDate}
+                isLoad={isListViewLoading}
+                viewDate={viewDate}
+              />
+            )}
+          </li>
+        );
+      })
+    : "NO";
   return isListViewLoading ? (
     <LoadingElement text={"Week List Loading. . ."} />
   ) : (
@@ -35,43 +73,7 @@ export const ListView = ({ user, date, setDate, listViewHook }) => {
       >
         <span className={`listView-element__btn-text`}>{leftCaret} </span>
       </li>
-      {listView
-        ? listView.map((view, idx) => {
-            console.log("LV TEST", listView, view);
-            const viewDate = getAddedDateStr(
-              startDate,
-              idx + Math.floor((ARRAY_LENGTH - DISPLAY_LENGTH) / 2)
-            );
-            return (
-              <li
-                className={`listView-element ${
-                  isListViewLoading ? "listView-loading" : ""
-                }${
-                  LocalStroage.date().get().clickedDate === viewDate
-                    ? "listView-element__clickedDate"
-                    : ""
-                }${getToday() === viewDate ? "listView-element__today" : ""}`}
-                key={idx}
-              >
-                {view ? (
-                  <View
-                    viewObj={view}
-                    setDate={setDate}
-                    isLoad={isListViewLoading}
-                    viewDate={viewDate}
-                  />
-                ) : (
-                  <EmptyView
-                    viewObj={view}
-                    setDate={setDate}
-                    isLoad={isListViewLoading}
-                    viewDate={viewDate}
-                  />
-                )}
-              </li>
-            );
-          })
-        : "NO"}
+      {listViewContent}
       <li
         className={`listView-element listView-element__btn ${
           isListViewLoading ? "listView-loading" : ""

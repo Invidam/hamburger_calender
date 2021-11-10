@@ -15,7 +15,7 @@ export const useSetDate = () => {
   // console.log(initVal, typeof initVal, new Date());
   const [date, setDate] = useState(initVal);
   const onUpdateDate = (dateObj) => {
-    // console.log()
+    console.log(dateObj, date);
     const localDateObj = {
       today: getToday(),
       clickedDate: changeFormatYYYYMMDD(dateObj),

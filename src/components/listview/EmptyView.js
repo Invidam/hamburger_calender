@@ -2,11 +2,12 @@ export const EmptyView = ({ isLoad, viewObj, setDate, viewDate }) => {
   const viewContent = (
     <div
       className={`listView__item-box`}
-      onClick={() =>
+      onClick={() => {
+        console.log("CL");
         !isLoad
           ? setDate(new Date(viewDate))
-          : console.log("[deq] status: ", isLoad)
-      }
+          : console.log("[deq] status: ", isLoad);
+      }}
     >
       <span className="listView__item-text__box"> {viewDate.substr(5)}</span>
     </div>

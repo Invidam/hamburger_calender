@@ -30,7 +30,7 @@ export const ListViewTemplate = ({ targetSetting, user, date, setDate }) => {
         <span className="listView-header__row listView-header__color-explain">
           <div className="listView-header__color-row">
             <div className="listView-header__color-box listView-header__color-box__clickedDate"></div>{" "}
-            <span className="listView-header__color-text"> : Clicked Date</span>
+            <span className="listView-header__color-text"> : Display Date</span>
           </div>
           <div className="listView-header__color-row">
             <div className="listView-header__color-box listView-header__color-box__today"></div>{" "}

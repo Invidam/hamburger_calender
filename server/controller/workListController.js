@@ -184,28 +184,27 @@ const getDateRange = (date) => {
       : new Date(date).getFullYear() - 1;
     let lastDay = 0;
     let prevDate = getDate(prevDateYear, prevDateMonth, lastDay);
-    do {
+    while (!isSunday(prevDate)) {
       // prevMonthDayList.push(changeFormatYYYYMMDD(prevDate, false));
       lastDay--;
       prevDate = getDate(prevDateYear, prevDateMonth, lastDay);
-    } while (!isSunday(prevDate));
+    }
     return changeFormatYYYYMMDD(prevDate, false);
     // return prevMonthDayList;
   };
   const getLastDay = (date) => {
     // const nextMonthDayList = [];
-    const nextDateMonth = (new Date(date).getMonth() + 2) % 12;
-    const nextDateYear =
-      new Date(date).getMonth() !== 11
-        ? new Date(date).getFullYear()
-        : new Date(date).getFullYear() + 1;
+    const nextDateMonth = (new Date(date).getMonth() + 1) % 12;
+    const nextDateYear = new Date(date).getMonth()
+      ? new Date(date).getFullYear()
+      : new Date(date).getFullYear() + 1;
     let firstDay = 1;
-    let nextDate = getDate(nextDateYear, nextDateMonth - 1, firstDay);
-    do {
+    let nextDate = getDate(nextDateYear, nextDateMonth, firstDay);
+    while (!isSaturday(nextDate)) {
       // nextMonthDayList.push(changeFormatYYYYMMDD(nextDate, false));
       firstDay++;
       nextDate = getDate(nextDateYear, nextDateMonth - 1, firstDay);
-    } while (!isSaturday(nextDate));
+    }
     return changeFormatYYYYMMDD(nextDate, false);
     // return nextMonthDayList;
   };
@@ -255,10 +254,19 @@ export const getDateInfo = async (req, res) => {
     "value",
     (workList) => {
       const enteredWorkList = workList.val();
+      console.log("CURR MONTH: ", enteredWorkList);
       if (enteredWorkList)
         Object.keys(enteredWorkList).forEach((keys) => {
           const dateStr = `${dividedAddress.replace("/", "-")}-${keys}`;
           if (firstDay <= dateStr && dateStr <= lastDay) dateInfo.push(dateStr);
+          console.log(
+            "CURR day clac: ",
+            firstDay,
+            dateStr,
+            lastDay,
+            firstDay <= dateStr,
+            dateStr <= lastDay
+          );
         });
     },
     (errorObject) => console.log("ERR OBJ: ", errorObject)
