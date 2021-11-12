@@ -8,6 +8,7 @@ import { authRouter } from "./routes/authRouter.js";
 import { workListRouter } from "./routes/workListRouter.js";
 import { listViewRouter } from "./routes/listViewRouter.js";
 import { todoListRouter } from "./routes/todoListRouter.js";
+import { swaggerUi, specs } from "../modules/swagger.js";
 const port = 3002;
 const app = express();
 const logger = morgan("dev");
@@ -19,6 +20,9 @@ app.use(
   })
 );
 app.use(express.json());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+// app.use(routes.swagger, swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
+
 // app.use("/api", apiRouter);
 app.use("/api/:user/worklist/:date", workListRouter);
 app.use("/api/:user/todolist", todoListRouter);

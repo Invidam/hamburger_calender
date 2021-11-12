@@ -42,7 +42,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev-server": "nodemon server/server.js"
+    "dev-server": "nodemon server/server.js",
+    "dev-server2": "pm2 start server/server.js"
   },
   "eslintConfig": {
     "extends": [
@@ -63,5 +64,9 @@
       "last 1 safari version"
     ]
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.1.6"
+  }
 }

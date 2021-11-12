@@ -1,0 +1,5 @@
+components:
+  scchmeas:
+    Work:
+      type: object
+      properties:

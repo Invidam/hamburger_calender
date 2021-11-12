@@ -31,6 +31,7 @@ export const verifyToken = async (req, res) => {
       .send(
         `${decode === TOKEN_EXPIRED ? "Token expired." : "Token Invalid."}`
       );
+  console.log("DECODE: ", { decode });
   return res.send({ decode });
 };
 

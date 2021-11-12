@@ -107,7 +107,7 @@ export const putWork = (req, res) => {
 export const editWork = (req, res) => {
   const { user, date } = req.params;
   const { value } = req.body;
-
+  console.log("EDIT BODY: ", req.body, typeof req.body);
   const { dividedAddress } = divideDate(date);
   if (!db)
     return res.status(400).json({
