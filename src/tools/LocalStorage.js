@@ -1,4 +1,4 @@
-import { APIv2 } from "./API";
+import { API } from "./API";
 
 export class LocalStroage {
   static workList() {
@@ -50,11 +50,11 @@ export class LocalStroage {
       set: (token) => {
         token = JSON.stringify(token);
         localStorage.setItem("access_token", token);
-        APIv2.updateHeader();
+        API.updateHeader();
       },
       remove: () => {
         localStorage.setItem("access_token", "undefined");
-        APIv2.updateHeader();
+        API.updateHeader();
       },
     };
   }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { API, APIv2 } from "../../tools/API";
+import { API } from "../../tools/API";
 const makeTargetSetting = (
   targetWorkTime,
   targetWakeHour,
@@ -29,7 +29,7 @@ export const useTargetSetting = (user, isLoginLoading) => {
       if (user && !isLoginLoading) {
         console.log("SETTIN-G", user);
         // setLoad(true);
-        const data = await APIv2.userSetting(user).get(); //API.get(`/auth/setting/${user}`);
+        const data = await API.userSetting(user).get(); //API.get(`/auth/setting/${user}`);
         const settingObj = data?.data;
         if (!data) throw new Error("Cannot find data");
         setTargetSetting(settingObj);
@@ -70,7 +70,11 @@ export const useTargetSetting = (user, isLoginLoading) => {
         willUpdate = validator(targetSetting);
       if (willUpdate) {
         console.log("API START~~");
-        APIv2.userSetting(user).edit(targetSetting);
+        API.userSetting(user).edit(
+          targetSetting?.targetWorkTime,
+          targetSetting?.targetWakeTime,
+          targetSetting?.targetBedTime
+        );
         setTargetSetting(targetSetting);
         // setTargetWorkTime(targetSetting?.targetWorkTime);
         // setTargetWakeHour(targetSetting?.targetWakeTime.hour);

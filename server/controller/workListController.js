@@ -194,7 +194,7 @@ const getDateRange = (date) => {
   };
   const getLastDay = (date) => {
     // const nextMonthDayList = [];
-    const nextDateMonth = (new Date(date).getMonth() + 1) % 12;
+    const nextDateMonth = ((new Date(date).getMonth() + 1) % 12) + 1;
     const nextDateYear = new Date(date).getMonth()
       ? new Date(date).getFullYear()
       : new Date(date).getFullYear() + 1;

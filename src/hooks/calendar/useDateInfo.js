@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { APIv2 } from "../../tools/API";
+import { API } from "../../tools/API";
 let cancel = false;
 export const useDateInfo = (user, date) => {
   const [dateInfo, setDateInfo] = useState();
@@ -15,7 +15,7 @@ export const useDateInfo = (user, date) => {
       // console.log("info, NOT CANCEL");
       if (user) {
         // setLoad(true);
-        const data = await APIv2.workList(user, nextDate).dataInfo();
+        const data = await API.workList(user, nextDate).dataInfo();
         // setLoad(false);
         if (!data?.data) throw new Error("Cannot found Your Work List");
         const response = data.data;

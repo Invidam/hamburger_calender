@@ -3,17 +3,21 @@ import { LocalStroage } from "./LocalStorage";
 import qs from "qs";
 
 export const getCustomConfig = () => {
-  const token = LocalStroage.accessToken().get();
+  const token = LocalStroage.accessToken().get()?.token;
   const date = LocalStroage.date().get();
+  console.log("REQ HEADER2: ", token, date);
   const config = {
-    headers: { "x-access-token": token, "x-access-date": date },
+    headers: {
+      "x-access-token": token,
+      "x-access-date": date,
+    },
   };
   return config;
 };
 
-export let API = axios.create(getCustomConfig());
+export let customAxios = axios.create(getCustomConfig());
 
-API.interceptors.response.use(
+customAxios.interceptors.response.use(
   (res) => {
     return res;
   },
@@ -37,21 +41,25 @@ API.interceptors.response.use(
 // 유저세팅 입력 겟 parms: 유저명
 
 export const updateAPIHeader = () => {
-  API = axios.create(getCustomConfig());
+  customAxios = axios.create(getCustomConfig());
 };
-export class APIv2 {
+export class API {
   static updateHeader() {
-    API = axios.create(getCustomConfig());
+    customAxios = axios.create(getCustomConfig());
   }
   static userSetting(user) {
     try {
       const url = `/auth/setting/${user}`;
       return {
         get: async () => {
-          return await API.get(url);
+          return await customAxios.get(url);
         },
-        edit: async (data) => {
-          return await API.post(url, { value: data });
+        edit: async (targetWorkTime, targetWakeTime, targetBedTime) => {
+          return await customAxios.post(url, {
+            targetWorkTime,
+            targetWakeTime,
+            targetBedTime,
+          });
         },
       };
     } catch (error) {
@@ -62,18 +70,18 @@ export class APIv2 {
     try {
       return {
         // githubLogin: async (userInfo) => {
-        //   return await API.post("/auth/login/github", { value: userInfo });
+        //   return await customAxios.post("/auth/login/github", { value: userInfo });
         // },
         login: async (socialType, userInfo) => {
-          return await API.post(`/auth/login/${socialType}`, {
+          return await customAxios.post(`/auth/login/${socialType}`, {
             value: userInfo,
           });
         },
         signup: async (userInfo) => {
-          return await API.post("/auth/signup", { value: userInfo });
+          return await customAxios.post("/auth/signup", { value: userInfo });
         },
         verifyToken: async (token) => {
-          return await API.post("/auth/jwt/verify", { token });
+          return await customAxios.post("/auth/jwt/verify", { token });
         },
       };
       // eslint-disable-next-line no-unreachable
@@ -86,16 +94,16 @@ export class APIv2 {
       const url = `/api/${user}/worklist/${date}/record-time/${key}`;
       return {
         get: async () => {
-          return await API.get(url);
+          return await customAxios.get(url);
         },
         create: async (data) => {
-          return await API.put(url, { value: data });
+          return await customAxios.put(url, { value: data });
         },
         edit: async (data) => {
-          return await API.post(url, { value: data });
+          return await customAxios.post(url, { value: data });
         },
         delete: async () => {
-          return await API.delete(url);
+          return await customAxios.delete(url);
         },
       };
     } catch (error) {
@@ -107,16 +115,16 @@ export class APIv2 {
       const url = `/api/${user}/worklist/${date}`;
       return {
         grade: async () => {
-          return await API.get(url + "/grade");
+          return await customAxios.get(url + "/grade");
         },
         get: async () => {
-          return await API.get(url);
+          return await customAxios.get(url);
         },
         dataInfo: async () => {
-          return await API.get(url + "/date-info");
+          return await customAxios.get(url + "/date-info");
         },
         edit: async (data) => {
-          return await API.post(url, { value: data });
+          return await customAxios.post(url, { value: data });
         },
       };
     } catch (error) {
@@ -128,13 +136,13 @@ export class APIv2 {
       const url = `/api/${user}/worklist/${date}/work`;
       return {
         create: async (data) => {
-          return await API.put(url, { value: data });
+          return await customAxios.put(url, { value: data });
         },
         edit: async (data) => {
-          return await API.post(url, { value: data });
+          return await customAxios.post(url, { value: data });
         },
         delete: async (data) => {
-          return await API.delete(url, { data: { value: data } });
+          return await customAxios.delete(url, { data: { value: data } });
         },
       };
     } catch (error) {
@@ -149,16 +157,16 @@ export class APIv2 {
       console.log("QS: ", queryObj, queryString);
       return {
         get: async () => {
-          return await API.get(url + `?${queryString}`);
+          return await customAxios.get(url + `?${queryString}`);
         },
         // create: async (data) => {
-        //   return await API.put(url, { value: data });
+        //   return await customAxios.put(url, { value: data });
         // },
         // edit: async (data) => {
-        //   return await API.post(url, { value: data });
+        //   return await customAxios.post(url, { value: data });
         // },
         // delete: async () => {
-        //   return await API.delete(url);
+        //   return await customAxios.delete(url);
         // },
       };
     } catch (error) {
@@ -173,10 +181,10 @@ export class APIv2 {
           const queryObj = sortTypeStr;
           const queryString = qs.stringify(queryObj);
           console.log("QS: ", queryString);
-          return await API.get(url + `?${queryString}`);
+          return await customAxios.get(url + `?${queryString}`);
         },
         edit: async (data) => {
-          return await API.post(url, { value: data });
+          return await customAxios.post(url, { value: data });
         },
       };
     } catch (error) {
@@ -188,13 +196,13 @@ export class APIv2 {
       const url = `/api/${user}/todolist/todo`;
       return {
         create: async (data) => {
-          return await API.put(url, { value: data });
+          return await customAxios.put(url, { value: data });
         },
         edit: async (data) => {
-          return await API.post(url, { value: data });
+          return await customAxios.post(url, { value: data });
         },
         delete: async (data) => {
-          return await API.delete(url, { data: { value: data } });
+          return await customAxios.delete(url, { data: { value: data } });
         },
       };
     } catch (error) {
@@ -203,6 +211,6 @@ export class APIv2 {
   }
 }
 
-//API.workList("SR","1212-12-12").create({ab:"c"});
+//api.workList("SR","1212-12-12").create({ab:"c"});
 //SetWork({123:213}).delete();
 //Work().delte();

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { SORT_TYPE_CNT } from "../../components/todoList/TodoList";
 // import { SORT_TYPE_CNT } from "../../components/todoList/TodoListTemplate";
-import { APIv2 } from "../../tools/API";
+import { API } from "../../tools/API";
 import { LocalStroage } from "../../tools/LocalStorage";
 const makeSortTypeStr = (idx) => {
   let ret = {};
@@ -31,9 +31,7 @@ export const useTodoList = (user, initSortTypeIdx, sortTypeCnt, sortTypes) => {
       if (user) {
         if (!isTodoListLoading) setLoad(true);
         console.log("TODO SORT", sortTypeIdx);
-        const data = await APIv2.todoList(user).get(
-          makeSortTypeStr(sortTypeIdx)
-        );
+        const data = await API.todoList(user).get(makeSortTypeStr(sortTypeIdx));
         const resTodoList = data?.data;
         console.log("INDI, RES TODO LIST: ", resTodoList);
         if (!data) throw new Error("TodoList can't found");
@@ -61,7 +59,7 @@ export const useTodoList = (user, initSortTypeIdx, sortTypeCnt, sortTypes) => {
         // _todoList.push([id, todoObj]);
         // _todoList.push(todoObj);
         if (user) {
-          await APIv2.todo(user).create(todoObj);
+          await API.todo(user).create(todoObj);
           await getTodoList(user, sortTypeIdx);
         } else {
           const _todoList = { ...todoList };
@@ -78,7 +76,7 @@ export const useTodoList = (user, initSortTypeIdx, sortTypeCnt, sortTypes) => {
         // _todoList[idx] = todoObj;
         // setTodoList(_todoList);
         if (user) {
-          await APIv2.todo(user).edit(todoObj);
+          await API.todo(user).edit(todoObj);
           await getTodoList(user, sortTypeIdx);
         } else {
           const _todoList = { ...todoList };
@@ -91,7 +89,7 @@ export const useTodoList = (user, initSortTypeIdx, sortTypeCnt, sortTypes) => {
         // _todoList = _todoList.filter((el, elemIdx) => elemIdx !== idx);
         // setTodoList(_todoList);
         if (user) {
-          await APIv2.todo(user).delete(todoObj);
+          await API.todo(user).delete(todoObj);
           await getTodoList(user, sortTypeIdx);
         } else {
           const _todoList = { ...todoList };

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Deque } from "../../classes/Deque";
 import { Node } from "../../classes/Node";
-import { APIv2 } from "../../tools/API";
+import { API } from "../../tools/API";
 import { LocalStroage } from "../../tools/LocalStorage";
 import {
   getAddedDateStr,
@@ -89,7 +89,7 @@ export const useListView = (user, date, setDate) => {
 
   const getListView = async (startDate, endDate) => {
     try {
-      const data = await APIv2.listView(
+      const data = await API.listView(
         user,
         startDate,
         endDate,

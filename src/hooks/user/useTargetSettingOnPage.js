@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { API, APIv2 } from "../../tools/API";
+import { API } from "../../tools/API";
 
 const maketargetSetting = (
   targetWorkTime,

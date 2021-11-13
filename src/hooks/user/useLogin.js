@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { APIv2, updateAPIHeader } from "../../tools/API";
+import { API, updateAPIHeader } from "../../tools/API";
 import { LocalStroage } from "../../tools/LocalStorage";
 import { getToday } from "../../tools/time";
 
 const verifyToken = async () => {
   const { token } = LocalStroage.accessToken().get();
-  const response = await APIv2.auth().verifyToken(token); //await API.post("/api/jwt/verify", { token });
+  const response = await API.auth().verifyToken(token); //await API.post("/api/jwt/verify", { token });
   return response.data.decode;
 };
 
@@ -51,6 +51,7 @@ export const useLogin = () => {
       alert(error);
       setLoadInToken(false);
       setUser(undefined);
+      LocalStroage.accessToken().remove();
     }
   };
   useEffect(() => {
@@ -64,23 +65,23 @@ export const useLogin = () => {
       updateAPIHeader();
       if (!LocalStroage.recordTime("wakeTime").isEmpty()) {
         const wakeTime = LocalStroage.recordTime("wakeTime").get();
-        APIv2.recordTime(user, date, "wakeTime").edit(wakeTime);
+        API.recordTime(user, date, "wakeTime").edit(wakeTime);
         LocalStroage.recordTime("wakeTime").remove();
       }
       if (!LocalStroage.recordTime("bedTime").isEmpty()) {
         const bedTime = LocalStroage.recordTime("bedTime").get();
-        APIv2.recordTime(user, date, "bedTime").edit(bedTime);
+        API.recordTime(user, date, "bedTime").edit(bedTime);
         LocalStroage.recordTime("bedTime").remove();
       }
       if (!LocalStroage.workList().isEmpty()) {
         const workList = LocalStroage.workList("workList").get();
-        APIv2.workList(user, date).edit(workList);
+        API.workList(user, date).edit(workList);
         LocalStroage.workList().remove();
       }
       if (!LocalStroage.todoList().isEmpty()) {
         console.log("IS EMPTY TODO ");
         const todoList = LocalStroage.todoList("todoList").get();
-        APIv2.todoList(user).edit(todoList);
+        API.todoList(user).edit(todoList);
         LocalStroage.todoList().remove();
       }
     } catch (error) {
@@ -95,7 +96,7 @@ export const useLogin = () => {
       // const response = await API.post(`/auth/login/${socialType}`, {
       //   userInfo,
       // });
-      const response = await APIv2.auth().login(socialType, userInfo);
+      const response = await API.auth().login(socialType, userInfo);
       const { access_token, username } = response.data;
       LocalStroage.accessToken().set(access_token);
       setUser(username);

@@ -19,18 +19,19 @@ const DEFAULT_SETTING_OBJECT = {
   targetWakeTime: { hour: 8, minute: 0 },
   targetBedTime: { hour: 0, minute: 0 },
 };
+export const catchErrorToken = (decode) =>
+  decode === TOKEN_EXPIRED || decode === TOKEN_INVALID;
+export const getErrorTokenText = (decode) =>
+  `${decode === TOKEN_EXPIRED ? "Token expired." : "Token Invalid."}`;
 export const verifyToken = async (req, res) => {
   const { token } = req.body;
-  console.log("BODY: ", req.body, token);
+  console.log("BODY: ", req.body, token, typeof token);
   if (!token) return res.status(401).send(`Token missed`);
   const decode = await jwt.verify(token);
-  // console.log("DEOCDE: ", decode);
-  if (decode === TOKEN_EXPIRED || decode === TOKEN_INVALID)
-    return res
-      .status(401)
-      .send(
-        `${decode === TOKEN_EXPIRED ? "Token expired." : "Token Invalid."}`
-      );
+
+  console.log("DEOCDE: ", decode);
+  if (catchErrorToken(decode))
+    return res.status(401).send(getErrorTokenText(decode));
   console.log("DECODE: ", { decode });
   return res.send({ decode });
 };
@@ -204,11 +205,11 @@ export const loginGithub = async (req, res) => {
 };
 
 export const postSetting = (req, res) => {
-  console.log("REACH");
   const { user } = req.params;
-  const { value } = req.body;
+  const { targetWorkTime, targetWakeTime, targetBedTime } = req.body;
+  console.log(`${user} Post Setting`, req.body);
   const ref = db.ref(`users/${user}/setting`);
-  ref.set(value);
+  ref.set({ targetWorkTime, targetWakeTime, targetBedTime });
   return res.status(200).json({ status: "edit setting success" });
 };
 
@@ -219,9 +220,10 @@ export const getSetting = (req, res) => {
     "value",
     (settingObj) => {
       const setting = settingObj.val();
+      console.log("GET SETTING, ", user, setting);
       if (!setting) return res.end();
       else return res.json(setting);
     },
-    (errorObject) => res.send(errorObject)
+    (errorObject) => res.status(401).send(errorObject)
   );
 };

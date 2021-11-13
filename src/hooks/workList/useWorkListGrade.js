@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { APIv2 } from "../../tools/API";
+import { API } from "../../tools/API";
 
 export const useWorkListGrade = (user, date) => {
   const [gradeInfo, setGradeInfo] = useState();
@@ -10,7 +10,7 @@ export const useWorkListGrade = (user, date) => {
   const updateInfo = async () => {
     try {
       setLoad(true);
-      const res = await APIv2.workList(user, date).grade();
+      const res = await API.workList(user, date).grade();
       console.log(res.data);
       if (!res?.data) throw new Error("[Error] WorkList Grade cannot load");
       const resGradeInfo = res.data;

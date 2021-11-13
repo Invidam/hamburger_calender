@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { APIv2 } from "../../../tools/API";
+import { API } from "../../../tools/API";
 import { LocalStroage } from "../../../tools/LocalStorage";
 // import { getToday } from "../../../tools/time";
 
@@ -34,7 +34,7 @@ export const useRecordTime = (key, user, date) => {
       let resTimeObj;
       if (user) {
         setLoad(true);
-        const data = await APIv2.recordTime(user, date, key).get();
+        const data = await API.recordTime(user, date, key).get();
         setLoad(false);
         resTimeObj = checkTimeObj(data?.data);
         console.log("USERECORDTIME, data catch");
@@ -61,17 +61,17 @@ export const useRecordTime = (key, user, date) => {
     return {
       create: async () => {
         setRecordTime(timeObj);
-        if (user) await APIv2.recordTime(user, date, key).create(timeObj);
+        if (user) await API.recordTime(user, date, key).create(timeObj);
         else LocalStroage.recordTime(key).set(timeObj);
       },
       edit: async () => {
         setRecordTime(timeObj);
-        if (user) await APIv2.recordTime(user, date, key).edit(timeObj);
+        if (user) await API.recordTime(user, date, key).edit(timeObj);
         else LocalStroage.recordTime(key).set(timeObj);
       },
       delete: async () => {
         setRecordTime({});
-        if (user) await APIv2.recordTime(user, date, key).delete();
+        if (user) await API.recordTime(user, date, key).delete();
         else LocalStroage.recordTime(key).set({});
       },
     };
