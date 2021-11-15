@@ -1,17 +1,189 @@
 components:
   schemas:
+    RecordTime:
+      type: object
+      properties:
+        hour:
+          type: integer
+          description: Hour
+        minute:
+          type: integer
+          description: Minute
     Work:
       type: object
       properties:
         id:
           type: integer
-          description: 제품 고유 번호
-        title:
+          description: Work's id.
+        workColor:
           type: string
-          description: 제품 이름
-        main_image:
+          description: Work's color to display
+        workName:
           type: string
-          description: 제품 메인 이미지2
-        discount:
+          description: Work's name.
+        workTime:
           type: integer
-          description: 할인 내역
+          description: Work Time.
+    WorkListArray:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: Work's id.
+          workColor:
+            type: string
+            description: Work's color to display
+          workName:
+            type: string
+            description: Work's name.
+          workTime:
+            type: integer
+            description: Work Time.
+    WorkList:
+      type: array
+      items:
+        types: object
+        properties:
+          WakeTime:
+            type: object
+            properties:
+              hour:
+                type: integer
+                description: Hour
+              minute:
+                type: integer
+                description: Minute
+          BedTime:
+            type: object
+            properties:
+              hour:
+                type: integer
+                description: Hour
+              minute:
+                type: integer
+                description: Minute
+          WorkArray:
+            type: object
+            properties:
+              id:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Work's id.
+                  workColor:
+                    type: string
+                    description: Work's color to display
+                  workName:
+                    type: string
+                    description: Work's name.
+                  workTime:
+                    type: integer
+                    description: Work Time.
+    WorkArray:
+      type: object
+      properties:
+        id:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Work's id.
+            workColor:
+              type: string
+              description: Work's color to display
+            workName:
+              type: string
+              description: Work's name.
+            workTime:
+              type: integer
+              description: Work Time.
+    gradeInfo:
+      type: object
+      properties:
+        point:
+          type: object
+          properties:
+            wakeTimeGrade:
+              type: integer
+              description: to display wake timepoint.
+            bedTimeGrade:
+              type: integer
+              description: to display bed timepoint.
+            workListGrade:
+              type: integer
+              description: to display work timepoint.
+        value:
+          types: object
+          properties:
+            wakeTime:
+              type: object
+              properties:
+                hour:
+                  type: integer
+                  description: Hour
+                minute:
+                  type: integer
+                  description: Minute
+            bedTime:
+              type: object
+              properties:
+                hour:
+                  type: integer
+                  description: Hour
+                minute:
+                  type: integer
+                  description: Minute
+            workTimeSum:
+              type: integer
+              description: work time sum.
+        target:
+          types: object
+          properties:
+            wakeTimeTarget:
+              type: object
+              properties:
+                hour:
+                  type: integer
+                  description: Hour
+                minute:
+                  type: integer
+                  description: Minute
+            bedTimeTarget:
+              type: object
+              properties:
+                hour:
+                  type: integer
+                  description: Hour
+                minute:
+                  type: integer
+                  description: Minute
+            workTimeTarget:
+              type: integer
+              description: work time target.
+        difference:
+          types: object
+          properties:
+            wakeTimeDiff:
+              type: object
+              properties:
+                hour:
+                  type: integer
+                  description: Hour
+                minute:
+                  type: integer
+                  description: Minute
+            bedTimeDiff:
+              type: object
+              properties:
+                hour:
+                  type: integer
+                  description: Hour
+                minute:
+                  type: integer
+                  description: Minute
+            workTimeDiff:
+              type: integer
+              description: work time diff.

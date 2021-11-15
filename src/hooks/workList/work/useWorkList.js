@@ -70,6 +70,7 @@ export const useWorkList = (user, date) => {
       delete: async () => {
         if (!delete _workList[id]) throw new Error("Cannot Delete WorkItem");
         setWorkList(_workList);
+        console.log("IN USE WK, OBJ: ", workObj);
         if (user) await API.work(user, date).delete(workObj);
         else LocalStroage.workList().set(_workList);
       },

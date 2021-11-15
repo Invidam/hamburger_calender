@@ -66,6 +66,7 @@ const getListViewInOtherMonth = async (
           // console.log(`[${idx}]`, dividedEndMonth, key);
         }
     }
+    // ,
     // (errorObject) => console.log("ERR OBJ: ", errorObject)
   );
   await endMonthRef.once(
@@ -84,6 +85,7 @@ const getListViewInOtherMonth = async (
           // console.log(`[${idx}]`, dividedEndMonth, key);
         }
     }
+    // ,
     // (errorObject) => console.log("ERR OBJ: ", errorObject)
   );
   return listView;
@@ -117,39 +119,46 @@ const getListViewInSameMonth = async (
           // console.log(`[${idx}]`, dividedAddressYYYYMM, key);
         }
     }
+    // ,
+
     // (errorObject) => console.log("ERR OBJ: ", errorObject)
   );
 
   return listView;
 };
 export const getListView = async (req, res) => {
-  const { user } = req.params;
-  const { startDate, endDate } = req.query;
-  const settingObj = await getSetting(user);
-  // console.log("LV", startDate, endDate);
-  const arrLength = getDiffDayInStr(startDate, endDate) + 1;
-  const diffCode = getTimeStrDiffCode(startDate, endDate);
-  // console.log(startDate, endDate, diffCode);
-  let listView;
-  if (diffCode === YEAR || diffCode === MONTH) {
-    listView = await getListViewInOtherMonth(
-      user,
-      settingObj,
-      arrLength,
-      startDate,
-      endDate
-    );
-  } else {
-    listView = await getListViewInSameMonth(
-      user,
-      settingObj,
-      arrLength,
-      startDate,
-      endDate
-    );
+  try {
+    const { user } = req.params;
+    const { startDate, endDate } = req.query;
+    const settingObj = await getSetting(user);
+    // console.log("LV", startDate, endDate);
+    const arrLength = getDiffDayInStr(startDate, endDate) + 1;
+    const diffCode = getTimeStrDiffCode(startDate, endDate);
+    // console.log(startDate, endDate, diffCode);
+    let listView;
+    if (diffCode === YEAR || diffCode === MONTH) {
+      listView = await getListViewInOtherMonth(
+        user,
+        settingObj,
+        arrLength,
+        startDate,
+        endDate
+      );
+    } else {
+      listView = await getListViewInSameMonth(
+        user,
+        settingObj,
+        arrLength,
+        startDate,
+        endDate
+      );
+    }
+    console.log("LV: ", listView?.length, listView);
+    return res.status(200).json(listView);
+  } catch (error) {
+    console.log("ERR: ", error);
+    return res.status(404).send("Cant find database.");
   }
-  console.log("LV: ", listView?.length, listView);
-  res.json(listView);
 };
 
 //년도 다를

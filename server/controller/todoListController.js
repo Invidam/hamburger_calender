@@ -1,48 +1,38 @@
 import { db } from "../routes/firebase/config.js";
 export const putTodo = (req, res) => {
   const { user } = req.params;
-  const { value } = req.body;
-
-  if (!db)
-    return res.status(400).json({
-      status: "error",
-      error: "cannot find db",
-    });
+  const { isCheck, text, date, priority, id } = req.body;
+  const todoItem = { isCheck, text, date, priority, id };
+  if (!todoItem.isCheck) todoItem.isCheck = false;
+  console.log("PUT TODO: ", todoItem);
+  if (!db) return res.status(400).send("can't find database.");
   else {
-    db.ref(`users/${user}/todoList/${value.id}`).set(value);
-    return res.status(200).json({ status: "push todo success" });
+    db.ref(`users/${user}/todoList/${id}`).set(todoItem);
+    return res.status(200).send("push todo success");
   }
 };
 
 export const editTodo = (req, res) => {
   const { user } = req.params;
-  const { value } = req.body;
-
-  if (!db)
-    return res.status(400).json({
-      status: "error",
-      error: "cannot find db",
-    });
+  const { isCheck, text, date, priority, id } = req.body;
+  const todoItem = { isCheck, text, date, priority, id };
+  if (!todoItem.isCheck) todoItem.isCheck = false;
+  if (!db) return res.status(400).send("can't find database.");
   else {
-    db.ref(`users/${user}/todoList/${value.id}`).set(value);
-    return res.status(200).json({ status: "edit todo success" });
+    db.ref(`users/${user}/todoList/${id}`).set(todoItem);
+    return res.status(200).send("edit todo success");
   }
 };
 
 export const deleteTodo = (req, res) => {
   const { user } = req.params;
-  const { value } = req.body;
-
-  if (!db)
-    return res.status(400).json({
-      status: "error",
-      error: "cannot find db",
-    });
+  const { id } = req.body;
+  if (!db) return res.status(400).send("cannot find db");
   else {
     const ref = db.ref(`users/${user}/todoList`);
-    console.log("DELETE", user, value);
-    ref.child(value.id).remove();
-    return res.status(200).json({ status: "delete todo success" });
+    console.log("DELETE", user, id);
+    ref.child(id).remove();
+    return res.status(200).send("delete todo success");
   }
 };
 export const editTodoList = (req, res) => {

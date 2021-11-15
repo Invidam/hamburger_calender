@@ -8,54 +8,6 @@ import {
 // import { divideDate } from "../";
 import { db } from "../routes/firebase/config.js";
 const emptyTimeObj = { hour: null, minute: null };
-export const postTime = (req, res) => {
-  // res.end
-  const { key, user, date } = req.params;
-  const { value } = req.body;
-
-  const { dividedAddress } = divideDate(date);
-  if (!db)
-    return res.status(400).json({
-      status: "error",
-      error: "cannot find db",
-    });
-  else {
-    db.ref(`users/${user}/date/${dividedAddress}/workList/${key}`).set(value);
-    return res.status(200).json({ status: "time edit success" });
-  }
-};
-export const putTime = (req, res) => {
-  // res.end
-  const { key, user, date } = req.params;
-  const { value } = req.body;
-
-  const { dividedAddress } = divideDate(date);
-  if (!db)
-    return res.status(400).json({
-      status: "error",
-      error: "cannot find db",
-    });
-  else {
-    db.ref(`users/${user}/date/${dividedAddress}/workList/${key}`).set(value);
-    return res.status(200).json({ status: "time put success" });
-  }
-};
-export const editTime = (req, res) => {
-  // res.end
-  const { key, user, date } = req.params;
-  const { value } = req.body;
-
-  const { dividedAddress } = divideDate(date);
-  if (!db)
-    return res.status(400).json({
-      status: "error",
-      error: "cannot find db",
-    });
-  else {
-    db.ref(`users/${user}/date/${dividedAddress}/workList/${key}`).set(value);
-    return res.status(200).json({ status: "time edit success" });
-  }
-};
 
 export const getTime = (req, res) => {
   const { key, user, date } = req.params;
@@ -66,92 +18,105 @@ export const getTime = (req, res) => {
     "value",
     (timeObj) => {
       const time = timeObj.val();
-      return res.json(time);
+      return res.status(200).json(time);
     },
-    (errorObject) => res.send(errorObject)
+    (errorObject) => res.status(400).send(errorObject)
   );
 };
+
+export const putTime = (req, res) => {
+  // res.end
+  const { key, user, date } = req.params;
+  const { hour, minute } = req.body;
+  const timeObj = { hour, minute };
+
+  const { dividedAddress } = divideDate(date);
+  if (!db) return res.status(400).send("can't find database.");
+  else {
+    db.ref(`users/${user}/date/${dividedAddress}/workList/${key}`).set(timeObj);
+    return res.status(200).send("time put success");
+  }
+};
+export const editTime = (req, res) => {
+  // res.end
+  const { key, user, date } = req.params;
+  const { hour, minute } = req.body;
+  const timeObj = { hour, minute };
+
+  const { dividedAddress } = divideDate(date);
+  if (!db) return res.status(400).send("can't find database.");
+  else {
+    db.ref(`users/${user}/date/${dividedAddress}/workList/${key}`).set(timeObj);
+    return res.status(200).send("time edit success");
+  }
+};
+// export const postTime = (req, res) => {
+//   // res.end
+//   const { key, user, date } = req.params;
+//   const { value } = req.body;
+
+//   const { dividedAddress } = divideDate(date);
+//   if (!db) return res.status(400).send("can't find database.");
+//   else {
+//     db.ref(`users/${user}/date/${dividedAddress}/workList/${key}`).set(value);
+//     return res.status(200).send("time edit success");
+//   }
+// };
 export const deleteTime = (req, res) => {
   const { key, user, date } = req.params;
 
   const { dividedAddress } = divideDate(date);
-  if (!db)
-    return res.status(400).json({
-      status: "error",
-      error: "cannot find db",
-    });
+  if (!db) return res.status(400).send("can't find database.");
   else {
     const ref = db.ref(`users/${user}/date/${dividedAddress}/workList`);
     ref.child(key).remove();
-    return res.status(200).json({ status: "delete time success" });
+    return res.status(200).send("delete time success");
   }
 };
 export const putWork = (req, res) => {
   const { user, date } = req.params;
-  const { value } = req.body;
+  const { workName, workTime, workColor, id } = req.body;
+  const workItem = { workName, workTime, workColor, id };
 
   const { dividedAddress } = divideDate(date);
-  if (!db)
-    return res.status(400).json({
-      status: "error",
-      error: "cannot find db",
-    });
+  if (!db) return res.status(400).send("can't find database.");
   else {
     db.ref(
-      `users/${user}/date/${dividedAddress}/workList/workList/${value.id}`
-    ).set(value);
-    return res.status(200).json({ status: "push work success" });
+      `users/${user}/date/${dividedAddress}/workList/workList/${workItem.id}`
+    ).set(workItem);
+    return res.status(200).send("push work success");
   }
 };
 
 export const editWork = (req, res) => {
   const { user, date } = req.params;
-  const { value } = req.body;
+
+  const { workName, workTime, workColor, id } = req.body;
+  const workItem = { workName, workTime, workColor, id };
   console.log("EDIT BODY: ", req.body, typeof req.body);
   const { dividedAddress } = divideDate(date);
-  if (!db)
-    return res.status(400).json({
-      status: "error",
-      error: "cannot find db",
-    });
+  if (!db) return res.status(400).send("can't find database.");
   else {
     db.ref(
-      `users/${user}/date/${dividedAddress}/workList/workList/${value.id}`
-    ).set(value);
-    return res.status(200).json({ status: "edit work success" });
+      `users/${user}/date/${dividedAddress}/workList/workList/${workItem.id}`
+    ).set(workItem);
+    return res.status(200).send("edit work success");
   }
 };
 
 export const deleteWork = (req, res) => {
   const { user, date } = req.params;
-  const { value } = req.body;
 
+  const { id } = req.body;
+  console.log("DELETE WORK: ", req.body, id);
   const { dividedAddress } = divideDate(date);
-  if (!db)
-    return res.status(400).json({
-      status: "error",
-      error: "cannot find db",
-    });
+  if (!db) return res.status(400).send("can't find database.");
   else {
     const ref = db.ref(
-      `users/${user}/date/${dividedAddress}/workList/workList/`
+      `users/${user}/date/${dividedAddress}/workList/workList`
     );
-    ref.child(value.id).remove();
-    return res.status(200).json({ status: "delete work success" });
-  }
-};
-export const editWorkList = (req, res) => {
-  const { user, date } = req.params;
-  const { value } = req.body;
-  const { dividedAddress } = divideDate(date);
-  if (!db)
-    return res.status(400).json({
-      status: "error",
-      error: "cannot find db",
-    });
-  else {
-    db.ref(`users/${user}/date/${dividedAddress}/workList/workList`).set(value);
-    return res.status(200).json({ status: "success" });
+    ref.child(id).remove();
+    return res.status(200).send("delete work success");
   }
 };
 
@@ -171,6 +136,19 @@ export const getWorkList = (req, res) => {
   );
 };
 
+export const editWorkList = (req, res) => {
+  const { user, date } = req.params;
+  const workList = req.body;
+  console.log("EDIT WK, WK: ", workList, req.body);
+  const { dividedAddress } = divideDate(date);
+  if (!db) return res.status(400).send("can't find database.");
+  else {
+    db.ref(`users/${user}/date/${dividedAddress}/workList/workList`).set(
+      workList
+    );
+    return res.status(200).json("success edit worklist");
+  }
+};
 const getDateRange = (date) => {
   const getDate = (year, month, day) => new Date(year, month, day);
   const getDateDay = (date) => date.getDay();
@@ -284,7 +262,7 @@ export const getDateInfo = async (req, res) => {
     (errorObject) => console.log("ERR OBJ: ", errorObject)
   );
   console.log("ENDD", dateInfo);
-  return res.json(dateInfo);
+  return res.status(200).json(dateInfo);
 };
 // };
 
@@ -448,7 +426,7 @@ export const getGrade = async (req, res) => {
     const settingObj = await getSetting(user);
     console.log(workListObj, settingObj);
     const { grade, difference } = makeGrade(workListObj, settingObj);
-    return res.json({
+    return res.status(200).json({
       point: grade,
       value: workListObj,
       target: settingObj,
@@ -456,9 +434,6 @@ export const getGrade = async (req, res) => {
     });
   } catch (error) {
     console.log("ERR", error);
-    return res.status(400).json({
-      status: "error",
-      error: error,
-    });
+    return res.status(400).send("Cant find database");
   }
 };

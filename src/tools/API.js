@@ -95,10 +95,10 @@ export class API {
           return await customAxios.get(url);
         },
         create: async (data) => {
-          return await customAxios.put(url, { value: data });
+          return await customAxios.put(url, data);
         },
         edit: async (data) => {
-          return await customAxios.post(url, { value: data });
+          return await customAxios.post(url, data);
         },
         delete: async () => {
           return await customAxios.delete(url);
@@ -122,7 +122,7 @@ export class API {
           return await customAxios.get(url + "/date-info");
         },
         edit: async (data) => {
-          return await customAxios.post(url, { value: data });
+          return await customAxios.post(url, data);
         },
       };
     } catch (error) {
@@ -134,13 +134,14 @@ export class API {
       const url = `/api/${user}/worklist/${date}/work`;
       return {
         create: async (data) => {
-          return await customAxios.put(url, { value: data });
+          return await customAxios.put(url, data);
         },
         edit: async (data) => {
-          return await customAxios.post(url, { value: data });
+          return await customAxios.post(url, data);
         },
         delete: async (data) => {
-          return await customAxios.delete(url, { data: { value: data } });
+          console.log("IN API, WK, OBJL ", data);
+          return await customAxios.delete(url, { data: { id: data.id } });
         },
       };
     } catch (error) {
@@ -194,13 +195,13 @@ export class API {
       const url = `/api/${user}/todolist/todo`;
       return {
         create: async (data) => {
-          return await customAxios.put(url, { value: data });
+          return await customAxios.put(url, data);
         },
         edit: async (data) => {
-          return await customAxios.post(url, { value: data });
+          return await customAxios.post(url, data);
         },
         delete: async (data) => {
-          return await customAxios.delete(url, { data: { value: data } });
+          return await customAxios.delete(url, { data: { id: data.id } });
         },
       };
     } catch (error) {

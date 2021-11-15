@@ -1,0 +1,40 @@
+components:
+  schemas:
+    Todo:
+      type: object
+      properties:
+        isChecked:
+          type: boolean
+          description: Todo Item's check.
+        id:
+          type: string
+          description: Todo Item's id.
+        date:
+          type: string
+          description: Todo Item's date.
+        text:
+          type: string
+          description: Todo Item's text.
+        priority:
+          type: integer
+          description: Todo Item's Priority.
+    TodoList:
+      type: array
+      items:
+        type: object
+        properties:
+          isChecked:
+            type: boolean
+            description: Todo Item's check.
+          id:
+            type: string
+            description: Todo Item's id.
+          date:
+            type: string
+            description: Todo Item's date.
+          text:
+            type: string
+            description: Todo Item's text.
+          priority:
+            type: integer
+            description: Todo Item's Priority.
