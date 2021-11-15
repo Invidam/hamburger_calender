@@ -1,0 +1,56 @@
+components:
+  schemas:
+    UserSetting:
+      type: object
+      properties:
+        targetWorkTime:
+          description: Target Work Time Sum.
+          type: integer
+        targetWakeTime:
+          type: object
+          properties:
+            hour:
+              type: integer
+              description: Target Wake Time Hour.
+            minute:
+              type: integer
+              description: Target Wake Time Minute.
+        targetBedTime:
+          type: object
+          properties:
+            hour:
+              type: integer
+              description: Target Wake Time Hour.
+            minute:
+              type: integer
+              description: Target Wake Time Minute.
+    UserInfo:
+      type: object
+      properties:
+        email:
+          description: User's email.
+          type: string
+        password:
+          type: string
+          description: User's password.
+    UserResponse:
+      type: object
+      properties:
+        access_token:
+          description: User's access token.
+          type: string
+        username:
+          type: string
+          description: User's name.
+    UserRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: User's name.
+        email:
+          type: string
+          description: User's email.
+        password:
+          type: string
+          description: User's password.

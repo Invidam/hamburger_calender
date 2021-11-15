@@ -73,15 +73,13 @@ export class API {
         //   return await customAxios.post("/auth/login/github", { value: userInfo });
         // },
         login: async (socialType, userInfo) => {
-          return await customAxios.post(`/auth/login/${socialType}`, {
-            value: userInfo,
-          });
+          return await customAxios.post(`/auth/login/${socialType}`, userInfo);
         },
         signup: async (userInfo) => {
-          return await customAxios.post("/auth/signup", { value: userInfo });
+          return await customAxios.post("/auth/signup", userInfo);
         },
-        verifyToken: async (token) => {
-          return await customAxios.post("/auth/jwt/verify", { token });
+        verifyToken: async () => {
+          return await customAxios.get("/auth/jwt/verify");
         },
       };
       // eslint-disable-next-line no-unreachable

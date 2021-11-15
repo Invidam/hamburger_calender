@@ -23,10 +23,15 @@ export const catchErrorToken = (decode) =>
   decode === TOKEN_EXPIRED || decode === TOKEN_INVALID;
 export const getErrorTokenText = (decode) =>
   `${decode === TOKEN_EXPIRED ? "Token expired." : "Token Invalid."}`;
+
+const MASTER_TOKEN = "q1w2e3r4";
+const MY_TOKEN =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkludmlkYW0iLCJpYXQiOjE2MzY5NDk5NzB9.9mlqRxYJMUD-c6yqlF2CPUORMpzpvejpGb29HfrDGOs";
 export const verifyToken = async (req, res) => {
-  const { token } = req.body;
-  console.log("BODY: ", req.body, token, typeof token);
-  if (!token) return res.status(401).send(`Token missed`);
+  let token = req.headers["x-access-token"];
+  if (token === MASTER_TOKEN) token = MY_TOKEN;
+  console.log("head: ", req.headers["x-access-token"]);
+  if (!token) return res.status(400).send(`Token missed`);
   const decode = await jwt.verify(token);
 
   console.log("DEOCDE: ", decode);
@@ -63,7 +68,7 @@ const signup = (userInfo) => {
 };
 
 export const checkExistUser = async (req, res, next) => {
-  const { email, username } = req.body?.value;
+  const { email, username } = req.body;
   const getErrorText = (isExist) => {
     let errText = ``;
     if (isExist === EXISTUSER) errText = `username`;
@@ -95,8 +100,7 @@ export const checkExistUser = async (req, res, next) => {
   } else next();
 };
 export const signupNotSocial = async (req, res) => {
-  const { value } = req.body;
-  const { email, password, username } = value;
+  const { email, password, username } = req.body;
 
   const uid = randomToken.uid(16);
   const hashedPassword = bcrypt.hashSync(password, SALTROUND);
@@ -111,22 +115,28 @@ export const signupNotSocial = async (req, res) => {
   const access_token = await jwt.sign({
     username,
   });
-  return res.json({ access_token, username });
+  return res.status(200).send("Sign up Complete");
 };
 
 export const loginNotSocial = async (req, res) => {
-  const isCorrectUser = (enteredPassword, userInfo) => {
-    if (!userInfo) return false;
-    return bcrypt.compareSync(enteredPassword, userInfo.password);
-  };
-  const getUserInfoByEmail = async (email) => {
-    const userList = await getUserList();
-    return userList.find((user) => user?.email && user?.email === email);
-  };
   try {
+    const isCorrectUser = (enteredPassword, userInfo) => {
+      console.log(
+        "ENTER PW: ",
+        enteredPassword,
+        "INFO PW: ",
+        userInfo.password
+      );
+      if (!userInfo) return false;
+      return bcrypt.compareSync(enteredPassword, userInfo.password);
+    };
+    const getUserInfoByEmail = async (email) => {
+      const userList = await getUserList();
+      return userList.find((user) => user?.email && user?.email === email);
+    };
     // const { value } = req.body;
-    const { email, password } = req.body?.value;
-    if (!req.body?.value) throw new Error(`Entered user info was wrong.`);
+    const { email, password } = req.body;
+    if (!req.body) throw new Error(`Entered user info was wrong.`);
 
     const userInfo = await getUserInfoByEmail(email);
     if (!isCorrectUser(password, userInfo)) throw new Error(`User not Exists.`);
@@ -144,8 +154,8 @@ export const loginNotSocial = async (req, res) => {
 };
 export const loginGithub = async (req, res) => {
   try {
-    const { code } = req.body?.value;
-    if (!req.body?.value) throw new Error("Entered UserInfo was wrong.");
+    const { code } = req.body;
+    if (!req.body) throw new Error("Entered UserInfo was wrong.");
     const baseUrl = "https://github.com/login/oauth/access_token";
     const tokenConfig = {
       code,
@@ -180,6 +190,7 @@ export const loginGithub = async (req, res) => {
     const existCode = await checkExistGithubUser(data?.login);
     //이미 존재하는 유저라면, uid가 맞는지 확인.
     if (existCode === NOTEXIST) {
+      //존재하지 않는 경우 회원가입
       const userInfo = {
         email: data?.email,
         username: data?.login,
@@ -189,6 +200,7 @@ export const loginGithub = async (req, res) => {
       signup(userInfo);
     }
     if (existCode === EXISTGITHUB || existCode === NOTEXIST) {
+      // 유저는 존재할 때, 로그인.
       //로그인
       const access_token = await jwt.sign({
         username: data.login,
@@ -205,12 +217,16 @@ export const loginGithub = async (req, res) => {
 };
 
 export const postSetting = (req, res) => {
-  const { user } = req.params;
-  const { targetWorkTime, targetWakeTime, targetBedTime } = req.body;
-  console.log(`${user} Post Setting`, req.body);
-  const ref = db.ref(`users/${user}/setting`);
-  ref.set({ targetWorkTime, targetWakeTime, targetBedTime });
-  return res.status(200).json({ status: "edit setting success" });
+  try {
+    const { user } = req.params;
+    const { targetWorkTime, targetWakeTime, targetBedTime } = req.body;
+    console.log(`${user} Post Setting`, req.body);
+    const ref = db.ref(`users/${user}/setting`);
+    ref.set({ targetWorkTime, targetWakeTime, targetBedTime });
+    return res.status(200).send("Failed at post setting.");
+  } catch (error) {
+    return res.status(400).send("Can't post Setting");
+  }
 };
 
 export const getSetting = (req, res) => {

@@ -21,37 +21,140 @@ export const authRouter = express.Router();
  *  @swagger
  *  paths:
  *   /auth/jwt/verify:
- *     post:
- *       summary: Verify JWT Token
- *       tags: [Auth]
- *       responses:
+ *     get:
+ *      parameters:
+ *        - in: header
+ *          name: x-access-token
+ *          schema:
+ *            type: string
+ *          required: true
+ *          description: x-access-token
+ *      summary: Verify Token.
+ *      tags: [Auth]
+ *      responses:
+ *         "400":
+ *            description: Missed Token.
+ *         "401":
+ *            description: Invaild Token.
  *         "200":
- *           description: Username & issued at.
- *           content:
- *             application/json:
+ *           description:  Verifie Tokend
  */
-authRouter.post("/jwt/verify", protectorMiddleWare, verifyToken);
+authRouter.get("/jwt/verify", protectorMiddleWare, verifyToken);
+// /**
+//  *  @swagger
+//  *  paths:
+//  *   /auth/test:
+//  *     get:
+//  *       summary: Verify JWT Token
+//  *       tags: [Auth]
+//  *       responses:
+//  *         "200":
+//  *           description: Username & issued at.
+//  *           content:
+//  *             application/json:
+//  */
+
 /**
  *  @swagger
  *  paths:
- *   /auth/test:
- *     get:
- *       summary: Verify JWT Token
- *       tags: [Auth]
- *       responses:
+ *   /auth/signup:
+ *     post:
+ *      parameters:
+ *        - in: header
+ *          name: x-access-token
+ *          schema:
+ *            type: string
+ *          description: x-access-token
+ *      summary: Signup not social
+ *      tags: [Auth]
+ *      requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/UserRequest'
+ *      responses:
+ *         "400":
+ *            description: User already logged in.
+ *         "401":
+ *            description: User has entered Info already exists.
  *         "200":
- *           description: Username & issued at.
- *           content:
- *             application/json:
+ *            description:  Complete create user.
  */
-authRouter.get("/test", (req, res) => res.send("TEST COMPLETE"));
 authRouter.post(
   "/signup",
   publicOnlyMiddleware,
   checkExistUser,
   signupNotSocial
 );
+/**
+ *  @swagger
+ *  paths:
+ *   /auth/login/notSocial:
+ *     post:
+ *      parameters:
+ *        - in: header
+ *          name: x-access-token
+ *          schema:
+ *            type: string
+ *          description: x-access-token
+ *      summary: Signup not social
+ *      tags: [Auth]
+ *      requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/UserInfo'
+ *      responses:
+ *         "400":
+ *            description: User already logged in.
+ *         "401":
+ *            description: Entered User's info was wrong.
+ *         "200":
+ *            description:  Complete login.
+ *         content:
+ *           application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/UserResponse'
+ */
 authRouter.post("/login/notSocial", publicOnlyMiddleware, loginNotSocial);
+/**
+ *  @swagger
+ *  paths:
+ *   /auth/login/github:
+ *     post:
+ *      parameters:
+ *        - in: header
+ *          name: x-access-token
+ *          schema:
+ *            type: string
+ *          description: x-access-token
+ *      summary: Signup not social
+ *      tags: [Auth]
+ *      requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *            schema:
+ *                type: object
+ *                required: true
+ *                properties:
+ *                  code:
+ *                    type: string
+ *                    description: Github Oauth Login Code.
+ *      responses:
+ *         "400":
+ *            description: User already logged in.
+ *         "401":
+ *            description: Entered User's info was wrong.
+ *         "200":
+ *            description:  Complete login.
+ *         content:
+ *           application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/UserResponse'
+ */
 authRouter.post("/login/github", publicOnlyMiddleware, loginGithub);
 
 /**
@@ -71,30 +174,20 @@ authRouter.post("/login/github", publicOnlyMiddleware, loginGithub);
  *          schema:
  *            type: string
  *          required: true
- *          description: User name
+ *          description: x-access-token
  *      summary: Post Work by User & Date
  *      requestBody:
  *         required: true
  *         content:
- *           application/x-www-form-urlencoded:
+ *           application/json:
  *            schema:
- *              type: object
- *              properties:
- *                name:          # <!--- form field name
- *                  type: string
- *                fav_number:    # <!--- form field name
- *                  type: integer
- *              required:
- *                - name
- *                - email
+ *                     $ref: '#/components/schemas/UserSetting'
  *      tags: [Auth]
  *      responses:
+ *         "400":
+ *            description: Failed at post setting.
  *         "200":
- *           description: Username & issued at.
- *           content:
- *             application/json:
- *           schema:
- *            type: string
+ *           description: Success at post setting
  *     get:
  *      parameters:
  *        - in: header
@@ -121,7 +214,7 @@ authRouter.post("/login/github", publicOnlyMiddleware, loginGithub);
  *            content:
  *              application/json:
  *                 schema:
- *                     $ref: '#/components/schemas/Work'
+ *                     $ref: '#/components/schemas/UserSetting'
  *
  */
 authRouter

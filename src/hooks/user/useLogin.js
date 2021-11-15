@@ -4,8 +4,7 @@ import { LocalStroage } from "../../tools/LocalStorage";
 import { getToday } from "../../tools/time";
 
 const verifyToken = async () => {
-  const { token } = LocalStroage.accessToken().get();
-  const response = await API.auth().verifyToken(token); //await API.post("/api/jwt/verify", { token });
+  const response = await API.auth().verifyToken(); //await API.post("/api/jwt/verify", { token });
   return response.data.decode;
 };
 

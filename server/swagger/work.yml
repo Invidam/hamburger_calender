@@ -11,7 +11,7 @@ components:
           description: 제품 이름
         main_image:
           type: string
-          description: 제품 메인 이미지
+          description: 제품 메인 이미지2
         discount:
           type: integer
           description: 할인 내역
