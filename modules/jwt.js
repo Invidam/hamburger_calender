@@ -20,7 +20,6 @@ const jwt = {
     let decode;
     try {
       const { secretKey, options } = key;
-      // console.log("TOKEN: ", token);
       decode = jsonwebtoken.verify(token, secretKey);
     } catch (error) {
       if (error.message === "jwt expired") {

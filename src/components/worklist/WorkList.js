@@ -83,7 +83,7 @@ export const WorkList = ({ user, date, targetSetting, workListHook }) => {
   return isLoading() ? (
     <LoadingElement text={"WorkList Loading. . ."} />
   ) : (
-    <div>
+    <div className="workList-content">
       <ol>
         {wakeTimeElement}
         {workListElement}

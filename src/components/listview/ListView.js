@@ -20,12 +20,10 @@ export const ListView = ({ user, date, setDate, listViewHook }) => {
   } = listViewHook;
   const listViewContent = listView
     ? listView.map((view, idx) => {
-        console.log("LV TEST", listView, view);
         const viewDate = getAddedDateStr(
           startDate,
           idx + Math.floor((ARRAY_LENGTH - DISPLAY_LENGTH) / 2)
         );
-        console.log("LIST VIEW VALUE: ", viewDate, getToday());
         return (
           <li
             className={`listView-element ${

@@ -4,7 +4,7 @@ export const putTodo = (req, res) => {
   const { isCheck, text, date, priority, id } = req.body;
   const todoItem = { isCheck, text, date, priority, id };
   if (!todoItem.isCheck) todoItem.isCheck = false;
-  console.log("PUT TODO: ", todoItem);
+  console.log(`[TODO] PUT TODO: `, todoItem);
   if (!db) return res.status(400).send("can't find database.");
   else {
     db.ref(`users/${user}/todoList/${id}`).set(todoItem);
@@ -19,6 +19,7 @@ export const editTodo = (req, res) => {
   if (!todoItem.isCheck) todoItem.isCheck = false;
   if (!db) return res.status(400).send("can't find database.");
   else {
+    console.log(`[TODO] SET TODO: `, todoItem);
     db.ref(`users/${user}/todoList/${id}`).set(todoItem);
     return res.status(200).send("edit todo success");
   }
@@ -32,6 +33,7 @@ export const deleteTodo = (req, res) => {
     const ref = db.ref(`users/${user}/todoList`);
     console.log("DELETE", user, id);
     ref.child(id).remove();
+    console.log(`[TODO] DELETE TODO: `, id);
     return res.status(200).send("delete todo success");
   }
 };
@@ -45,6 +47,7 @@ export const editTodoList = (req, res) => {
     });
   else {
     db.ref(`users/${user}/todoList`).set(value);
+    console.log(`[TODO] EDIT TODO LIST: `, value);
     return res.status(200).json({ status: "success" });
   }
 };
@@ -92,10 +95,11 @@ export const getTodoList = async (req, res) => {
     else return priorityCompare(cand1[1], cand2[1], directionFlag);
   };
   let idx = 0;
+  // {id: value} -(entry)->  [[id,value]]  -sort, reduce->  [value, ...] (idx에 따라).
   const ret = Object.entries(response)
     .sort((a, b) => sortCompare(a, b, sortType))
     .reduce((prev, [key, value]) => ({ ...prev, [idx++]: value }), {});
-  console.log("RET2: ", ret);
+  console.log(`[TODO] GET TODO LIST: `, ret);
   return res.json(ret);
 };
 

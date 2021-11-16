@@ -48,7 +48,6 @@ export const TodoExpired = ({ todoHook, id }) => {
     onDeleteTodo,
     ,
   ] = todoHook;
-  // setInterval(() => console.log("TEST"), 1000);
   const displayBtn = (
     <div className="todo__btn-box">
       <div className="todo__btn-content">

@@ -47,7 +47,7 @@ export const EmptyWork = ({ setWork }) => {
       </button>
     </Modal>
   );
-  console.log("[EMPTY]");
+  console.log("[EMPTY] WORK");
   return (
     <div>
       <li

@@ -34,6 +34,7 @@
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
 .page-input-box__btn {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,14 +42,32 @@
   color: var(--main-bg-color);
   font-size: 15px;
   margin-bottom: 20px;
-  height: 4vh;
+  height: 6vh;
   width: 100%;
-
-  border: 1px solid brown;
-  border-radius: 8px;
+  /* border: 2px solid brown; */
+  border: none;
+  border-radius: 12px;
 }
 .page-input-box__btn-github {
   background-color: var(--main-color);
+}
+.page-input-box__btn:hover {
+  transition: all 0.5s;
+  background-color: var(--main-sub-color__hover);
+}
+
+.page-input-box__btn:active {
+  transition: all 0.5s;
+  background-color: var(--main-sub-color__active);
+}
+.page-input-box__btn-github:hover {
+  transition: all 0.5s;
+  background-color: rgb(55, 6, 6);
+}
+
+.page-input-box__btn-github:active {
+  transition: all 0.5s;
+  background-color: rgb(0, 0, 0);
 }
 
 .page-input-box__btn-text {

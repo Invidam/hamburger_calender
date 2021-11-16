@@ -12,11 +12,9 @@ import { TodoExpired } from "./TodoExpired";
 // );
 export const Todo = ({ setTodo, _isEditMode, todoItem, id, idx }) => {
   const todoHook = useTodo(setTodo, todoItem, _isEditMode, idx);
-  // console.log("ID: ", id, "EDIT? ", todoHook.isEditMode, _isEditMode);
   const isEditMode = todoHook[0];
   const today = getToday();
   const isExpired = todoItem?.date < today;
-  console.log("TODO ITEM", id, todoItem, todoItem?.date < "2021-11-05");
   return (
     <li className="todo" key={"_" + todoItem?.id}>
       {isEditMode ? (

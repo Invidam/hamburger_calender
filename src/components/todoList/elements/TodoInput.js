@@ -90,7 +90,6 @@ export const TodoInput = ({ todoHook, id }) => {
       </div>
     </div>
   );
-  console.log("PRI: ", text);
   const inputElement = (
     <div className={`todo ${isSubmitMode ? "todo-add" : ""}`}>
       <input

@@ -78,7 +78,6 @@ export const Work = ({ workItem, setWork, targetTime, workTimeSum }) => {
     </div>
   );
   const diffTime = targetTime - workTimeSum;
-  console.log("[wt] ", targetTime, workTimeSum, diffTime);
   const diffElement = (
     <div className="tooltip-box__target">
       <span className="tooltip-box__key">Difference:</span>
@@ -106,7 +105,7 @@ export const Work = ({ workItem, setWork, targetTime, workTimeSum }) => {
   //     {workItem.workName} {workItem.workTime}h targetTime workTimeSum
   //   </span>
   // );
-  console.log("[WORK]");
+  console.log("[WORK]", workItem);
   return (
     <div>
       <li

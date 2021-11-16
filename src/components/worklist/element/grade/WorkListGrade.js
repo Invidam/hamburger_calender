@@ -23,20 +23,6 @@ export const WorkListGrade = ({ user, date }) => {
         )
       : 0;
   const gradeSum = getGradeSum();
-  // console.log("SUM : ", grade, gradeSum);
-  // const gradeElement = makeStar(getGradeSum()).map((elem, idx) => (
-  //   <div key={idx}> {elem}</div>
-  // ));
-  // Object.entries(gradeInfo).map(([key, value]) => {
-  //   return (
-  //     <tr>
-  //       <td>{strToFirstLEtterUpper(key)}</td>
-  //       {value.map((elem) => {
-  //         return <td> {elem}</td>;
-  //       })}
-  //     </tr>
-  //   );
-  // });
 
   const numToStr = (num, emptyStr) => (num === -1 ? emptyStr : num + "h");
   const getValue = (type, elem) => {
@@ -73,7 +59,7 @@ export const WorkListGrade = ({ user, date }) => {
             return (
               <tr key={key}>
                 <td>{strToFirstLEtterUpper(key)}</td>
-                {console.log(value)}
+
                 {value &&
                   Object.values(value).map((elem, idx) => {
                     return (

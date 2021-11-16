@@ -35,7 +35,6 @@ const sortDownElement = (
 const getIconArrByIdx = (idx) => {
   const indicateIdx = Math.floor(idx / SORT_TYPE_CNT);
   const type = idx % SORT_TYPES;
-  console.log("INDI: ", indicateIdx, "TYPEL ", type, idx);
   return new Array(SORT_TYPE_CNT)
     .fill()
     .map((elem, idx) =>

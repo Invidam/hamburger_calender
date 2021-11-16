@@ -3,7 +3,6 @@ export const EmptyView = ({ isLoad, viewObj, setDate, viewDate }) => {
     <div
       className={`listView__item-box`}
       onClick={() => {
-        console.log("CL");
         !isLoad
           ? setDate(new Date(viewDate))
           : console.log("[deq] status: ", isLoad);

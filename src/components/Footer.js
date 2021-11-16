@@ -47,7 +47,9 @@ export const Footer = () => {
       </div>
       <div className="footer-column">{copyRightElement}</div>
 
-      <div className="footer-column"></div>
+      <div className="footer-column">
+        <span className="footer-text"> https://sitename.com </span>
+      </div>
     </footer>
   );
 };

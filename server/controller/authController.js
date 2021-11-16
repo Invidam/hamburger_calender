@@ -30,14 +30,12 @@ const MY_TOKEN =
 export const verifyToken = async (req, res) => {
   let token = req.headers["x-access-token"];
   if (token === MASTER_TOKEN) token = MY_TOKEN;
-  console.log("head: ", req.headers["x-access-token"]);
   if (!token) return res.status(400).send(`Token missed`);
   const decode = await jwt.verify(token);
 
-  console.log("DEOCDE: ", decode);
   if (catchErrorToken(decode))
     return res.status(401).send(getErrorTokenText(decode));
-  console.log("DECODE: ", { decode });
+  console.log("[AUTH] Verify Token: ", { decode });
   return res.send({ decode });
 };
 
@@ -79,13 +77,6 @@ export const checkExistUser = async (req, res, next) => {
 
   const getExistCode = async ({ email, username }) => {
     const userList = await getUserList();
-    console.log(
-      "CHECK EXIST USER, ",
-      "EM",
-      userList.find((user) => user.email === email),
-      "NA",
-      userList.find((user) => user.username === username)
-    );
     return (
       EXISTEMAIL * !!userList.find((user) => user.email === email) +
       EXISTUSER * !!userList.find((user) => user.username === username)
@@ -115,18 +106,13 @@ export const signupNotSocial = async (req, res) => {
   const access_token = await jwt.sign({
     username,
   });
+  console.log("[AUTH], USER: ", username, "SIGNUP COMPLETE");
   return res.status(200).send("Sign up Complete");
 };
 
 export const loginNotSocial = async (req, res) => {
   try {
     const isCorrectUser = (enteredPassword, userInfo) => {
-      console.log(
-        "ENTER PW: ",
-        enteredPassword,
-        "INFO PW: ",
-        userInfo.password
-      );
       if (!userInfo) return false;
       return bcrypt.compareSync(enteredPassword, userInfo.password);
     };
@@ -144,7 +130,7 @@ export const loginNotSocial = async (req, res) => {
     const access_token = await jwt.sign({
       username: userInfo.username,
     });
-
+    console.log(`[AUTH] USER: ${userInfo.username} LOGGED IN`);
     return res.json({ access_token, username: userInfo.username });
   } catch (error) {
     console.log(error.name, "\n", error.message, "\n", error.stack);
@@ -205,6 +191,7 @@ export const loginGithub = async (req, res) => {
       const access_token = await jwt.sign({
         username: data.login,
       });
+      console.log(`[AUTH] USER: ${data.login} LOGGED IN.`);
       return res.json({ access_token, username: data.login });
     } else {
       //401 error
@@ -220,9 +207,11 @@ export const postSetting = (req, res) => {
   try {
     const { user } = req.params;
     const { targetWorkTime, targetWakeTime, targetBedTime } = req.body;
+    const targetTimeObj = { targetWorkTime, targetWakeTime, targetBedTime };
     console.log(`${user} Post Setting`, req.body);
     const ref = db.ref(`users/${user}/setting`);
-    ref.set({ targetWorkTime, targetWakeTime, targetBedTime });
+    ref.set(targetTimeObj);
+    console.log(`[AUTH] USER: ${user} POST SETTING : `, targetTimeObj);
     return res.status(200).send("Failed at post setting.");
   } catch (error) {
     return res.status(400).send("Can't post Setting");
@@ -236,7 +225,7 @@ export const getSetting = (req, res) => {
     "value",
     (settingObj) => {
       const setting = settingObj.val();
-      console.log("GET SETTING, ", user, setting);
+      console.log("[AUTH] USER: ", user, "GET SETTING, ", setting);
       if (!setting) return res.end();
       else return res.json(setting);
     },

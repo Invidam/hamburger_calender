@@ -140,7 +140,6 @@ export class API {
           return await customAxios.post(url, data);
         },
         delete: async (data) => {
-          console.log("IN API, WK, OBJL ", data);
           return await customAxios.delete(url, { data: { id: data.id } });
         },
       };
@@ -153,7 +152,6 @@ export class API {
       const url = `/api/${user}/listview`;
       const queryObj = { startDate, endDate };
       const queryString = qs.stringify(queryObj);
-      console.log("QS: ", queryObj, queryString);
       return {
         get: async () => {
           return await customAxios.get(url + `?${queryString}`);
@@ -179,7 +177,6 @@ export class API {
         get: async (sortTypeStr) => {
           const queryObj = sortTypeStr;
           const queryString = qs.stringify(queryObj);
-          console.log("QS: ", queryString);
           return await customAxios.get(url + `?${queryString}`);
         },
         edit: async (data) => {

@@ -12,7 +12,6 @@ const DAY = 0;
 const emptyTimeObj = { hour: null, minute: null };
 const makeWorkListSumObj = (workListObj) => {
   let workTimeSum = 0;
-  console.log("MAKE SUM, OBJ: ", workListObj?.workList);
   workListObj?.workList &&
     Object.values(workListObj?.workList).forEach((work) => {
       workTimeSum += work?.workTime;
@@ -25,7 +24,6 @@ const makeWorkListSumObj = (workListObj) => {
   return workListSumObj;
 };
 const makeGradePoint = (workListObj, settingObj) => {
-  console.log("LISTVIEW POINT: ", workListObj);
   const workListSumObj = makeWorkListSumObj(workListObj);
   const { grade } = makeGrade(workListSumObj, settingObj);
   let gradePointSum = 0;
@@ -63,7 +61,6 @@ const getListViewInOtherMonth = async (
 
           const gradePointSum = makeGradePoint(listView[idx], settingObj);
           listView[idx]["point"] = gradePointSum;
-          // console.log(`[${idx}]`, dividedEndMonth, key);
         }
     }
     // ,
@@ -153,7 +150,7 @@ export const getListView = async (req, res) => {
         endDate
       );
     }
-    console.log("LV: ", listView?.length, listView);
+    console.log("[ListView] Response: ", listView?.length, listView);
     return res.status(200).json(listView);
   } catch (error) {
     console.log("ERR: ", error);

@@ -6,9 +6,8 @@ import { NotLoggedInPage } from "../pages/NotLoggedInPage";
 export const CalendarTemplate = ({ user, updateDateHook }) => {
   const [date, onUpdateDate] = updateDateHook;
   const [mark, getUserInfo] = useDateInfo(user, date);
-  // console.log("DATE INFO: ", dateInfo);
   // const mark = dateInfo[0];
-  console.log("[Calendar]");
+  console.log("[Calendar] TEMPLATE");
   // return isDateInfoLoad ? (
   //   <article>
   //     {" "}
@@ -23,18 +22,9 @@ export const CalendarTemplate = ({ user, updateDateHook }) => {
       <Calendar
         className="caldendar"
         onChange={onUpdateDate}
-        // onChange={(value) => {
-        //   console.log("CHANGE EVENT", value);
-        //   onUpdateDate(value);
-        //   console.log("value:", value);
-        //   // onUpdateDate(value);
-        // }}
         value={new Date(date)}
         locale={"en"}
         calendarType={"US"}
-        // onClickDay={(date, event) => {
-        //   console.log("CLICK EVENT", date);
-        // }}
         onActiveStartDateChange={({ activeStartDate, value, view }) => {
           // setActiveDate(changeFormatYYYYMMDD(activeStartDate));
           getUserInfo(changeFormatYYYYMMDD(activeStartDate));

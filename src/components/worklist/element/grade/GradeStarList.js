@@ -50,7 +50,6 @@ export const makeStar = (gradeSum, isAlt = true, classType) =>
   });
 
 export const GradeStarList = ({ gradeSum }) => {
-  console.log("SYM : ", gradeSum);
   const starArr = makeStar(gradeSum, true, "work-icon");
   return (
     <ol className="workList-star__list">
