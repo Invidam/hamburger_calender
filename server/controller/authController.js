@@ -3,7 +3,9 @@ import randomToken from "rand-token";
 import bcrypt from "bcrypt";
 import jwt from "../../modules/jwt.js";
 import { db } from "../routes/firebase/config.js";
+import dotenv from "dotenv";
 
+dotenv.config();
 const SALTROUND = 5;
 const EXISTUSER = 1;
 const EXISTEMAIL = 2;
@@ -140,6 +142,7 @@ export const loginNotSocial = async (req, res) => {
 };
 export const loginGithub = async (req, res) => {
   try {
+    console.log("[AUTH] 도착: ");
     const { code } = req.body;
     if (!req.body) throw new Error("Entered UserInfo was wrong.");
     const baseUrl = "https://github.com/login/oauth/access_token";
@@ -153,14 +156,16 @@ export const loginGithub = async (req, res) => {
         accept: "application/json",
       },
     };
+    console.log("[AUTH] header: ", header, tokenConfig);
     const response = await axios.post(baseUrl, tokenConfig, header);
     const token = response?.data?.access_token;
-
+    console.log("[AUTH] TOKEN: ", token);
     const { data } = await axios.get("https://api.github.com/user", {
       headers: {
         Authorization: `token ${token}`,
       },
     });
+    console.log("[AUTH] data: ", data);
     //**** */
     const checkExistGithubUser = async (username) => {
       const userList = await getUserList();
@@ -174,6 +179,7 @@ export const loginGithub = async (req, res) => {
     };
 
     const existCode = await checkExistGithubUser(data?.login);
+    console.log("[AUTH] CODE: ", existCode);
     //이미 존재하는 유저라면, uid가 맞는지 확인.
     if (existCode === NOTEXIST) {
       //존재하지 않는 경우 회원가입
@@ -198,7 +204,7 @@ export const loginGithub = async (req, res) => {
       throw new Error(`User has entered info already exists.`);
     }
   } catch (error) {
-    console.log(error);
+    console.log("[AUTH]ERR: ", error);
     return res.status(401).send(error.message);
   }
 };
