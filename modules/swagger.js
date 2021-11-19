@@ -1,8 +1,6 @@
 // export const swaggerUi = require("swagger-ui-express");
 // const swaggereJsdoc = require("swagger-jsdoc");
-import swagerUi from "swagger-ui-express";
 import swaggereJsdoc from "swagger-jsdoc";
-export const swaggerUi = swagerUi;
 const options = {
   swaggerDefinition: {
     openapi: "3.0.0",

@@ -2,35 +2,36 @@
   "name": "hamburger_calender_server",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "14.17.3",
+    "npm": "6.14.13"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
-    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/user-event": "^12.8.3",
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "firebase": "^9.0.2",
-    "firebase-admin": "^9.11.1",
+    "firebase": "^9.5.0",
+    "firebase-admin": "^9.12.0",
     "http-proxy-middleware": "^2.0.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "qs": "^6.10.1",
     "rand-token": "^1.0.1",
-    "styled-components": "^5.3.1",
-    "validator": "^13.6.0",
+    "styled-components": "^5.3.3",
+    "validator": "^13.7.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "node index.js",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "npm start",
     "dev:client": "cd client && npm start",
@@ -50,7 +51,7 @@
   },
   "type": "module",
   "devDependencies": {
-    "swagger-jsdoc": "^6.1.0",
-    "swagger-ui-express": "^4.1.6"
+    "swagger-ui-express": "^4.1.6",
+    "swagger-jsdoc": "^6.1.0"
   }
 }
