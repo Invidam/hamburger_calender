@@ -23,8 +23,3 @@ const options = {
 };
 
 export const specs = swaggereJsdoc(options);
-
-// module.exports = {
-//   swaggerUi,
-//   specs,
-// };
