@@ -1,17 +1,20 @@
 import jsonwebtoken from "jsonwebtoken";
 import randomToken from "rand-token";
-import key from "../key/JWTKey.js";
 const TOKEN_EXPIRED = -3;
 const TOKEN_INVALID = -2;
-
+const jwtKeyOption = {
+  algorithm: "HS256", // 해싱 알고리즘
+  expiresIn: "30m", // 토큰 유효 기간
+  issuer: "issuer", // 발행자
+};
 const jwt = {
   sign: async ({ username }) => {
-    const { secretKey, options } = key;
+    const secretKey = process.env.JWT_KEY;
     const payload = {
       username,
     };
     const result = {
-      token: jsonwebtoken.sign(payload, secretKey, options),
+      token: jsonwebtoken.sign(payload, secretKey, jwtKeyOption),
       refreshToken: randomToken.uid(16),
     };
     return result;
@@ -19,7 +22,8 @@ const jwt = {
   verify: async (token) => {
     let decode;
     try {
-      const { secretKey, options } = key;
+      const secretKey = process.env.JWT_KEY;
+      console.log("[AUTH] sec key: ", secretKey);
       decode = jsonwebtoken.verify(token, secretKey);
     } catch (error) {
       if (error.message === "jwt expired") {

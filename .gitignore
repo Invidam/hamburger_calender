@@ -23,7 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # private
-/server/key
 .env
-server/.env
 .env.development

@@ -1,8 +1,5 @@
 import jwt from "./modules/jwt.js";
-import {
-  catchErrorToken,
-  getErrorTokenText,
-} from "./controller/authController.js";
+import { catchErrorToken } from "./controller/authController.js";
 
 export const publicOnlyMiddleware = (req, res, next) => {
   let token = req.headers["x-access-token"];

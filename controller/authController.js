@@ -3,9 +3,6 @@ import randomToken from "rand-token";
 import bcrypt from "bcrypt";
 import jwt from "../modules/jwt.js";
 import { db } from "../routes/firebase/config.js";
-import dotenv from "dotenv";
-
-dotenv.config();
 const SALTROUND = 5;
 const EXISTUSER = 1;
 const EXISTEMAIL = 2;
