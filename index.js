@@ -9,8 +9,8 @@ import { authRouter } from "./routes/authRouter.js";
 import { workListRouter } from "./routes/workListRouter.js";
 import { listViewRouter } from "./routes/listViewRouter.js";
 import { todoListRouter } from "./routes/todoListRouter.js";
-import swaggerUi from "swagger-ui-express";
-import { specs } from "./modules/swagger.js";
+// import swaggerUi from "swagger-ui-express";
+// import { specs } from "./modules/swagger.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -26,7 +26,7 @@ app.use(
   })
 );
 app.use(express.json());
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // app.use("/api", apiRouter);
 app.use("/api/:user/worklist/:date", workListRouter);
