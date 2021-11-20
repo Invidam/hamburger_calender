@@ -17,7 +17,7 @@ const options = {
       url: "http://localhost:3000",
     },
   ],
-  apis: ["./server/routes/*.js", "./server/swagger/*"],
+  apis: ["./routes/*.js", "./swagger/*"],
 };
 
 export const specs = swaggereJsdoc(options);
