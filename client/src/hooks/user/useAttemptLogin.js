@@ -3,7 +3,7 @@ import { useState } from "react";
 import isEmail from "validator/lib/isEmail";
 const baseUrl = "https://github.com/login/oauth/authorize";
 const authConfig = {
-  client_id: "44089da06c95a868c4cb",
+  client_id: process.env.GH_CLIENT_ID,
   allow_signup: false,
   scope: "read:user user:email",
 };
