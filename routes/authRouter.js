@@ -7,6 +7,7 @@ import {
   loginNotSocial,
   postSetting,
   signupNotSocial,
+  getGithubAuthUrl,
 } from "../controller/authController.js";
 import { protectorMiddleWare, publicOnlyMiddleware } from "../middlewares.js";
 /**
@@ -40,6 +41,35 @@ export const authRouter = express.Router();
  *           description:  Verifie Tokend
  */
 authRouter.get("/jwt/verify", protectorMiddleWare, verifyToken);
+
+/**
+ *  @swagger
+ *  paths:
+ *   /auth/github-auth-url:
+ *     get:
+ *      parameters:
+ *        - in: header
+ *          name: x-access-token
+ *          schema:
+ *            type: string
+ *          required: true
+ *          description: x-access-token
+ *      summary: Get Github Auth Url.
+ *      tags: [Auth]
+ *      responses:
+ *         "401":
+ *            description: Client id is empty.
+ *         "200":
+ *           description:  Get Github Auth Url.
+ *            schema:
+ *                type: object
+ *                required: true
+ *                properties:
+ *                  code:
+ *                    type: string
+ *                    description: Github Oauth Login Code.
+ */
+authRouter.get("/github-auth-url", protectorMiddleWare, getGithubAuthUrl);
 // /**
 //  *  @swagger
 //  *  paths:

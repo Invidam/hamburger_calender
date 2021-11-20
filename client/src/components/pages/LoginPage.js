@@ -2,6 +2,7 @@ import "../../css/pages/pages.css";
 import { useAttemptLogin } from "../../hooks/user/useAttemptLogin";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { LoadingElement } from "../Loading";
 
 const element = <FontAwesomeIcon icon={faGithub} />;
 
@@ -10,13 +11,21 @@ export const LoginPage = ({ customLoginHook, history, location }) => {
 
   const {
     email,
-    password,
     setEmail,
+    password,
     setPassword,
     handleSubmitNotSocial,
     authUrl,
+    isLoginPageLoading,
   } = useAttemptLogin(login, history);
-  return (
+  console.log(
+    "RES LOADL ",
+    isLoginPageLoading,
+    useAttemptLogin(login, history)
+  );
+  return isLoginPageLoading ? (
+    <LoadingElement text={"LoginPage Loading. . ."} />
+  ) : (
     <section className="page">
       <div className="page-input-box">
         <h1>Login Page</h1>
@@ -44,7 +53,7 @@ export const LoginPage = ({ customLoginHook, history, location }) => {
           className="page-input-box__btn page-input-box__btn-github"
           href={authUrl}
         >
-          {element}{" "}
+          {element}
           <span className="page-input-box__btn-text"> Github Login</span>
         </a>
       </div>

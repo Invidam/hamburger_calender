@@ -81,6 +81,9 @@ export class API {
         verifyToken: async () => {
           return await customAxios.get("/auth/jwt/verify");
         },
+        getGithubAuthUrl: async () => {
+          return await customAxios.get("/auth/github-auth-url");
+        },
       };
       // eslint-disable-next-line no-unreachable
     } catch (error) {

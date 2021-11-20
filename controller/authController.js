@@ -1,8 +1,10 @@
+import qs from "qs";
 import axios from "axios";
 import randomToken from "rand-token";
 import bcrypt from "bcrypt";
 import jwt from "../modules/jwt.js";
 import { db } from "../routes/firebase/config.js";
+import { authRouter } from "../routes/authRouter.js";
 const SALTROUND = 5;
 const EXISTUSER = 1;
 const EXISTEMAIL = 2;
@@ -38,6 +40,23 @@ export const verifyToken = async (req, res) => {
   return res.send({ decode });
 };
 
+export const getGithubAuthUrl = (req, res) => {
+  try {
+    const clientId = process.env.GH_CLIENT_ID;
+    const baseUrl = "https://github.com/login/oauth/authorize";
+    const authConfig = {
+      client_id: clientId,
+      allow_signup: false,
+      scope: "read:user user:email",
+    };
+    const authUrl = baseUrl + "?" + qs.stringify(authConfig);
+    if (!clientId) throw new Error("Client id is Empty");
+    console.log("[AUTH] GH CLIENT ID: ", process.env.GH_CLIENT_ID);
+    return res.status(200).json({ authUrl });
+  } catch (error) {
+    return res.status(401).send("Client id is Empty");
+  }
+};
 const getUserList = async () => {
   const userList = [];
   const ref = db.ref(`users`);
@@ -63,7 +82,6 @@ const signup = (userInfo) => {
   infoRef.set(userInfo);
   setDefaultSetting(username);
 };
-
 export const checkExistUser = async (req, res, next) => {
   const { email, username } = req.body;
   const getErrorText = (isExist) => {
