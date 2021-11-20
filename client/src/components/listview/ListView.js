@@ -29,7 +29,7 @@ export const ListView = ({ user, date, setDate, listViewHook }) => {
             className={`listView-element ${
               isListViewLoading ? "listView-loading" : ""
             }${
-              LocalStroage.date().get().clickedDate === viewDate
+              LocalStroage.date().get()?.clickedDate === viewDate
                 ? "listView-element__clickedDate "
                 : ""
             }${getToday() === viewDate ? "listView-element__today" : ""}`}
