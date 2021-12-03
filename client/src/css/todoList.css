@@ -62,6 +62,7 @@
 }
 .todo-add {
   /* border-bottom: 2px dotted rgba(226, 156, 63, 0.864); */
+  margin-bottom: 3em;
 }
 .todo__content {
   /* color: white; */
@@ -218,7 +219,7 @@
 .react-datepicker-wrapper {
   /* display: block; */
   width: 18%;
-  margin-right: 20px;
+  margin-right: 0.75em;
 }
 
 .react-datepicker__tab-loop {
@@ -235,7 +236,7 @@
 }
 .todo__btn-box {
   display: inline-block;
-  margin-left: 16px;
+  /* margin-left: 0.3em; */
   /* background-color: red;
   border: 1px solid green; */
 

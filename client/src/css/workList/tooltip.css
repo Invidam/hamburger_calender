@@ -101,6 +101,7 @@
 }
 .tooltip:hover .grade-tooltip-content {
   display: block;
+  width: inherit;
   position: absolute;
   background: #120611;
   border: 1px solid #3b444a;
