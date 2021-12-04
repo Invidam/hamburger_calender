@@ -8,7 +8,12 @@ export const EmptyView = ({ isLoad, viewObj, setDate, viewDate }) => {
           : console.log("[deq] status: ", isLoad);
       }}
     >
-      <span className="listView__item-text__box"> {viewDate.substr(5)}</span>
+      <div className="listView__item-text__box">
+        <span className="listView__item-text__column listView__item-text__column-date">
+          {" "}
+          {viewDate.substr(5)}
+        </span>
+      </div>
     </div>
   );
   return viewContent;

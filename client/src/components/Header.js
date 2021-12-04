@@ -47,9 +47,9 @@ export const Header = ({ updateDateHook, customLoginHook }) => {
             ></img>
           </Link>
         </div>
-        <div className="header__column header-title">
+        <div className="header__column">
           <Link className="" to="/">
-            <h1 className=""> Hamburger App</h1>
+            <h1 className="header-title"> Hamburger App</h1>
           </Link>
         </div>
         {!authenticated ? loginColumn : logoutColumn}

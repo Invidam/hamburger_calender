@@ -47,7 +47,7 @@
 .react-calendar__navigation button {
   min-width: 44px;
   background: none;
-  font-size: 1.25em;
+  font-size: 1em;
 }
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
@@ -161,7 +161,6 @@
 }
 
 .calendar-header {
-  width: 45vw;
   margin-left: 10px;
 }
 .react-calendar__month-view__days__day {

@@ -8,8 +8,8 @@ const CogElement = (
 );
 export const WorkListTemplate = ({ targetSetting, user, date }) => {
   return (
-    <div className="workList">
-      <header className="workList-header">
+    <div className="workList article-template">
+      <header className="workList-header article-header">
         <h1>Make Hamburger</h1>
 
         {CogElement}

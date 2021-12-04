@@ -27,11 +27,13 @@
 }
 
 .header-title {
+  font-size: 2em;
 }
 
 .header-link {
   display: flex;
   justify-content: flex-end;
+  align-items: flex-end;
 }
 .header-link__elem {
   font-size: 14px;
@@ -68,4 +70,26 @@
 
 .header__text {
   font-weight: bold;
+}
+
+@media (max-width: 560px) {
+  .header-title {
+    font-size: 1.275em;
+  }
+  .header-link__elem {
+    font-size: 65%;
+  }
+  .header__column:first-child {
+  }
+  .header-icon__icon img {
+  }
+  .header__column:last-child {
+  }
+  .header-link {
+    flex-direction: column;
+  }
+  .header-link__elem {
+    margin: 2px 8px 2px 0px;
+    width: 60%;
+  }
 }

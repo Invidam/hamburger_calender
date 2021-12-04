@@ -15,8 +15,8 @@ export const ListViewTemplate = ({ targetSetting, user, date, setDate }) => {
   return !user ? (
     <NotLoggedInPage elementName={"Week List"} />
   ) : (
-    <div className="listView">
-      <h1 className="listView-header">
+    <div className="listView article-template">
+      <h1 className="listView-header article-header">
         <span className="listView-header__row listView-header__title">
           Check your Week Calendar
           <button

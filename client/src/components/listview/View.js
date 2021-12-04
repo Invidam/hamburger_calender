@@ -56,10 +56,12 @@ export const View = ({ isLoad, viewObj, setDate, viewDate }) => {
       }
     >
       <div className="listView__item-text__box">
-        <span className="listView__item-text__column">
+        <span className="listView__item-text__column listView__item-text__column-date">
           {viewDate.substr(5)}
         </span>
-        <span className="listView__item-text__column">{starPointText}</span>
+        <span className="listView__item-text__column listView__item-text__column-star">
+          {starPointText}
+        </span>
       </div>
       <ol>
         {viewObj?.wakeTime ? wakeItem : emptyWakeItem} {workListItem}{" "}

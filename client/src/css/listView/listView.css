@@ -5,7 +5,6 @@
   align-items: center;
 }
 .listView-header {
-  width: 45vw;
   display: flex;
   justify-content: space-between;
 }
@@ -113,8 +112,6 @@
   flex-direction: column;
   align-items: center;
 }
-.listView__item-text__column {
-}
 
 .listView-loading {
   cursor: default;
@@ -184,4 +181,22 @@
   display: flex;
   /* background-color: red; */
   align-items: center;
+}
+.listView__item-text__column-date {
+  font-size: 1em;
+}
+.listView__item-text__column-star {
+  font-size: 1em;
+}
+@media (max-width: 1000px) {
+  .listView-header {
+    flex-direction: column;
+  }
+  .listView__item-text__column-date {
+    color: blueviolet;
+    font-size: 0.75em;
+  }
+  .listView__item-text__column-star {
+    font-size: 0.375em;
+  }
 }

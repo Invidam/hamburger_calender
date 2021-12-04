@@ -17,8 +17,8 @@ export const CalendarTemplate = ({ user, updateDateHook }) => {
   return !user ? (
     <NotLoggedInPage elementName={"Week Calendar"} />
   ) : (
-    <div className="calendar-template">
-      <h1 className="calendar-header">Check your calendar</h1>
+    <div className="calendar-template article-template">
+      <h1 className="calendar-header article-header">Check your calendar</h1>
       <Calendar
         className="caldendar"
         onChange={onUpdateDate}

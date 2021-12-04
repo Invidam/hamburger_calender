@@ -7,23 +7,26 @@
 }
 .todo-list__header {
   /* text-align: start; */
-  width: 45vw;
 }
 .todo-box {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 35vh;
+  height: 60%;
+  margin-top: 3.75%;
   border: 3px solid rgb(255, 131, 63);
   /* border-right: 11px solid green; */
   border-radius: 24px;
   padding: 1vw;
-  width: calc(43vw - 6px);
+  width: calc(90% - 6px);
   /* margin-left: 10px; */
   background-color: rgba(205, 97, 51, 1);
   /* width: 70%; */
   /* color: white; */
 }
+@media (max-width: 1000px) {
+}
+
 .todo-list {
   overflow-y: scroll;
   /* height: 20vh; */
