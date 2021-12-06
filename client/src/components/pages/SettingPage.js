@@ -15,10 +15,8 @@ export const SettingPage = ({ updateSettingHook }) => {
   return (
     <section className="page">
       <div className="page-input-box">
-        <div className="setting-box">
-          <div className="setting-column">
-            <h1>Setting Page</h1>{" "}
-          </div>
+        <h1 className="setting-title">Setting Page</h1>
+        <div className="page-input__form setting-box">
           <div className="setting-column">
             <span className="setting__text">TargetWorkTime: </span>
             <div className="setting__input-box">

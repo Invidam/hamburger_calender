@@ -1,15 +1,8 @@
-// import Loading from "react-loading";
-// import StarRatings from "react-star-ratings";
-// import { StarRatingInput, StarRating, css } from "react-star-rating-input";
-
-// import DatePicker from "react-datepicker";
 import { useTodoList } from "../../hooks/todolist/useTodoList";
 import { LoadingElement } from "../Loading";
-// import { InputTodo } from "./InputTodo";
 import { Todo } from "./elements/Todo";
 import "../../css/todoList.css";
 import { TodoExplain } from "./elements/TodoExplain";
-// import { Example } from "./dateTest";
 export const INIT_SORT_TYPE_IDX = 1,
   SORT_TYPES = 2,
   SORT_TYPE_CNT = 2;

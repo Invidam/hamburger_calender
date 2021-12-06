@@ -193,7 +193,6 @@
     flex-direction: column;
   }
   .listView__item-text__column-date {
-    color: blueviolet;
     font-size: 0.75em;
   }
   .listView__item-text__column-star {

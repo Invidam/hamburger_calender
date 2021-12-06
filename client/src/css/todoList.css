@@ -29,15 +29,19 @@
 
 .todo-list {
   overflow-y: scroll;
+  /* overflow-x: scroll; */
   /* height: 20vh; */
   margin: 0;
-  width: calc(43vw - 6px);
+  width: 100%;
+  /* width: calc(43vw - 6px); */
 }
 .todo-list__item {
   height: 20vh;
+  padding: none;
 }
 .todo-list__non-item {
-  width: calc(43vw - 14px);
+  width: calc(100% - 8px);
+
   display: block;
   /* border: 3px solid blue; */
   overflow-y: hidden;
@@ -62,6 +66,7 @@
 
 .todo {
   margin-bottom: 6px;
+  width: 100%;
 }
 .todo-add {
   /* border-bottom: 2px dotted rgba(226, 156, 63, 0.864); */
@@ -171,7 +176,7 @@
   background-color: inherit;
   cursor: default;
   border: none;
-  margin: 1px;
+  /* border: 1px solid blue; */
   /* display: inline-block;
   width: 10px;
   height: 10px;
@@ -192,6 +197,10 @@
   margin-left: 8px;
   width: 40%;
   padding-left: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+
+  text-overflow: clip;
 }
 .todo__text-checked {
   text-decoration: line-through;
@@ -287,6 +296,10 @@
 .todo__star-rating {
   width: 60px;
   display: inline;
+  margin-right: 1.5em;
+}
+.star-container {
+  /* width: 100%; */
 }
 .todo-expired {
   /* color: var(--main-color); */

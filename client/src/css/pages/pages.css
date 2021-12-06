@@ -3,25 +3,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
 }
 
 .page-input-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   background-color: rgb(255 159 92);
-  padding: 20px;
+  padding: 1% 7%;
   border-radius: 15px;
-  width: 40vw;
-  height: 50%;
+  width: 30vw;
+  height: 100%;
   /* width: 100%; */
   margin-bottom: 32px;
+}
+.page-input__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
 }
 .page-input-box__input {
   font-size: 16px;
   margin-bottom: 20px;
-  border-radius: 5px;
+  border-radius: 10px;
   border: 1px solid brown;
   height: 4vh;
   width: 100%;
@@ -42,13 +49,15 @@
   background-color: var(--main-sub-color);
   color: var(--main-bg-color);
   font-size: 15px;
-  margin-bottom: 20px;
-  height: 6vh;
+  /* margin-bottom: 10%; */
+  /* margin-top: 12%; */
+  margin: 2% 0px;
+  height: 4vh;
   width: 100%;
+  padding: 0;
   /* border: 2px solid brown; */
   border: none;
   border-radius: 12px;
-  margin-top: 12%;
 }
 .page-input-box__btn-github {
   background-color: var(--main-color);
@@ -78,6 +87,7 @@
 .setting-box {
   display: flex;
   flex-direction: column;
+  height: 70%;
 }
 .setting__text {
   font-size: 16px;
@@ -92,6 +102,11 @@
 .setting-column {
   display: flex;
   justify-content: space-around;
+  align-items: center;
+}
+.setting-title {
+  /* font-size: 100%; */
+  margin-bottom: 20%;
 }
 .setting__input {
   width: auto;
@@ -112,6 +127,13 @@
 .setting__input:hover {
   border: none;
   border-bottom: 2px solid rgba(100, 69, 19, 0.9);
+}
+.page__btn-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 @media (max-width: 1000px) {
   .page {

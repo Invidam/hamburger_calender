@@ -18,19 +18,23 @@ export const HomePage = ({ user, updateDateHook, targetSetting }) => {
 
   return (
     <div className="main-box">
-      <section>
-        <article>
-          <CalendarTemplate user={user} updateDateHook={updateDateHook} />
-        </article>
-        <article>
-          <ListViewTemplate
-            user={user}
-            date={date}
-            setDate={setDate}
-            targetSetting={targetSetting}
-          />
-        </article>
-      </section>
+      {user ? (
+        <section>
+          <article>
+            <CalendarTemplate user={user} updateDateHook={updateDateHook} />
+          </article>
+          <article>
+            <ListViewTemplate
+              user={user}
+              date={date}
+              setDate={setDate}
+              targetSetting={targetSetting}
+            />
+          </article>
+        </section>
+      ) : (
+        ""
+      )}
       <section>
         <article>
           <WorkListTemplate

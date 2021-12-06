@@ -21,12 +21,19 @@
 
 .footer-column {
   display: flex;
-  padding: 6px;
+  padding: 6px 0px;
   width: 100%;
   align-items: center;
   justify-content: center;
 }
 .footer-column__icon {
-  justify-content: flex-start;
-  margin-left: 48px;
+  justify-content: center;
+  /* margin-left: 48px; */
+}
+
+@media (max-width: 1000px) {
+  .footer {
+    padding: 0;
+    width: 100%;
+  }
 }

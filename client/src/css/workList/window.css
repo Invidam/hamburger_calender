@@ -1,10 +1,15 @@
+.ReactModal__Content {
+  /* z-index: 2; */
+}
 .modalWindow {
   color: var(--main-color);
+  /* font-size: 90%; */
+  /* width: 40vw; */
 }
 
 .modalWindow__input {
   display: inline;
-  font-size: 20px;
+  font-size: 90%;
   border: none;
   background: none;
   border-bottom: 2px solid rgba(243, 156, 18, 0.3);
@@ -13,7 +18,7 @@
 }
 
 .modalWindow__input::placeholder {
-  font-size: 16px;
+  /* font-size: 16px; */
   color: rgb(0, 0, 0, 0.3);
 }
 .modalWindow__input:hover {
@@ -70,8 +75,9 @@ select:focus {
 }
 .modalWindow__tab-content {
   height: 200px;
-  padding: 10px;
-  margin-bottom: 20px;
+  /* padding: 10px; */
+  /* margin-bottom: 20px; */
+  /* width: 3em; */
 }
 .modalWindow__btn {
   border: none;
