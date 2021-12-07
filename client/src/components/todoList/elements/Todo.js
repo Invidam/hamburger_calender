@@ -16,7 +16,7 @@ export const Todo = ({ setTodo, _isEditMode, todoItem, id, idx }) => {
   const today = getToday();
   const isExpired = todoItem?.date < today;
   return (
-    <li className="todo" key={"_" + todoItem?.id}>
+    <li className="todo-item" key={"_" + todoItem?.id}>
       {isEditMode ? (
         <TodoInput todoHook={todoHook} key={id} id={id} />
       ) : isExpired ? (

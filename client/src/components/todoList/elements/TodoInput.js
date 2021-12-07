@@ -9,6 +9,7 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { StarRating } from "./StarRating";
 const checkElement = (
   <FontAwesomeIcon
     className="todo-icon todo-icon__check"
@@ -91,7 +92,7 @@ export const TodoInput = ({ todoHook, id }) => {
     </div>
   );
   const inputElement = (
-    <div className={`todo ${isSubmitMode ? "todo-add" : ""}`}>
+    <div className={`${isSubmitMode ? "todo todo-add" : "todo"}`}>
       <input
         id={`todo__checkbox_${id}`}
         className={`todo__checkbox todo__checkbox todo__content ${
@@ -110,7 +111,6 @@ export const TodoInput = ({ todoHook, id }) => {
           {isSubmitMode ? "" : isCheck ? checkElement : ""}
         </span>
       </label>
-      {/* <input type="checkbox" name="TEST"></input> */}
       <input
         className={`todo__text todo-input__text todo__content ${
           isSubmitMode ? "todo-add__content" : "todo-input__content"
@@ -118,49 +118,16 @@ export const TodoInput = ({ todoHook, id }) => {
         type="text"
         autoComplete="off"
         name="todoText"
-        // defaultValue={text}
-        // value="TEST"
         value={text || ""}
         onChange={({ target: { value } }) => onChangeText(value)}
       ></input>
-      {/* <input
-        className={`todo-input__date ${isSubmitMode ? "todo-add__content" : "todo-input__content"}`}
-        type="date"
-        name="todoDate"
-        lang="en-us"
-        required
-        pattern="\d{4}-\d{2}-\d{2}"
-        defaultValue={isEditMode ? todoItem?.date : undefined}
-        min={getToday()}
-        onChange={({ target: { value } }) => onChangeDate(value)}
-      ></input> */}
       <DatePick
         isEditMode={isEditMode}
         isSubmitMode={isSubmitMode}
         date={date}
         onChangeDate={onChangeDate}
       />
-      {/* <input
-        className={`todo-input__priority ${isSubmitMode ? "todo-add__content" : "todo-input__content"}`}
-        type="text"
-        name="todoPriority"
-        defaultValue={todoItem?.priority}
-        onChange={({ target: { value } }) => onChangePriority(value)}
-      ></input> */}
-      <div className={`todo__star-rating todo-input__star`}>
-        <StarRatings
-          rating={priority}
-          starRatedColor="rgb(255, 223, 0)"
-          starHoverColor="rgb(255, 223, 0)"
-          starEmptyColor="rgba(162, 162, 162, 1)"
-          starSelectingHoverColor="red"
-          changeRating={onChangePriority}
-          numberOfStars={5}
-          name="rating"
-          starDimension="24px"
-          starSpacing="2px"
-        />{" "}
-      </div>
+      <StarRating priority={priority} onChangePriority={onChangePriority} />
       {inputBtn}
     </div>
   );

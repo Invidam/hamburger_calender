@@ -188,7 +188,7 @@
 .listView__item-text__column-star {
   font-size: 1em;
 }
-@media (max-width: 1000px) {
+@media (orientation: portrait) {
   .listView-header {
     flex-direction: column;
   }

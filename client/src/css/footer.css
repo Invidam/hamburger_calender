@@ -31,7 +31,7 @@
   /* margin-left: 48px; */
 }
 
-@media (max-width: 1000px) {
+@media (orientation: portrait) {
   .footer {
     padding: 0;
     width: 100%;

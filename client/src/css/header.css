@@ -72,7 +72,7 @@
   font-weight: bold;
 }
 
-@media (max-width: 560px) {
+@media (orientation: portrait) {
   .header-title {
     font-size: 1.275em;
   }

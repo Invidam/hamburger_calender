@@ -60,9 +60,13 @@ export const TodoExplain = ({ onClickByTabIdx, sortTypeIdx }) => {
       </button>
     );
   };
+  const inputBtn = (
+    <div className="todo__btn-box">
+      <div className="todo__btn-content">sdf</div>
+    </div>
+  );
   return (
     <div className="todo">
-      <div>{sortElement}</div>
       <input
         id={`todo__checkbox_ex`}
         className="todo__checkbox todo__checkbox todo__content todo-display__content"
@@ -83,7 +87,7 @@ export const TodoExplain = ({ onClickByTabIdx, sortTypeIdx }) => {
       <div className="todo__content todo-explain__priority todo-explain__content">
         <span className="todo-explain__text-box">Prioirty {iconBtn(1)}</span>
       </div>
-      {/* {displayBtn} */}
+      {inputBtn}
     </div>
   );
 };

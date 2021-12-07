@@ -5,6 +5,7 @@ import StarRatings from "react-star-ratings";
 import { DatePick } from "./DatePick";
 import { faCheck, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { StarRating } from "./StarRating";
 const checkElement = (
   <FontAwesomeIcon className="todo-icon__check" icon={faCheck} size="1x" />
 );
@@ -74,20 +75,8 @@ export const TodoDisplay = ({ todoHook, id }) => {
       >
         {text}
       </span>
-      <DatePick date={date} isEditMode={isEditMode} />
-      <div className={`todo__star-rating todo-display__star}`}>
-        <StarRatings
-          rating={priority}
-          starRatedColor="rgb(224, 200, 47)"
-          starHoverColor="rgb(224, 200, 47)"
-          starEmptyColor="rgba(133, 133, 133, 1)"
-          starSelectingHoverColor="red"
-          numberOfStars={5}
-          name="rating"
-          starDimension="24px"
-          starSpacing="2px"
-        />{" "}
-      </div>
+      <DatePick date={date} isEditMode={false} />
+      <StarRating priority={priority} />
       {displayBtn}
     </div>
   );

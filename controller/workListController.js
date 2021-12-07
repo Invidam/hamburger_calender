@@ -173,11 +173,12 @@ const getDateRange = (date) => {
   const getLastDay = (date) => {
     // const nextMonthDayList = [];
     const nextDateMonth = ((new Date(date).getMonth() + 1) % 12) + 1;
-    const nextDateYear = new Date(date).getMonth()
-      ? new Date(date).getFullYear()
-      : new Date(date).getFullYear() + 1;
+    const nextDateYear =
+      new Date(date).getMonth() !== 11
+        ? new Date(date).getFullYear()
+        : new Date(date).getFullYear() + 1;
     let firstDay = 1;
-    let nextDate = getDate(nextDateYear, nextDateMonth, firstDay);
+    let nextDate = getDate(nextDateYear, nextDateMonth - 1, firstDay);
     while (!isSaturday(nextDate)) {
       // nextMonthDayList.push(changeFormatYYYYMMDD(nextDate, false));
       firstDay++;
@@ -206,7 +207,7 @@ const getDateRange = (date) => {
 export const getDateInfo = async (req, res) => {
   const { user, date } = req.params;
   const [firstDay, lastDay] = getDateRange(date);
-  console.log("FIRST: ", firstDay, "LAST: ", lastDay);
+  console.log("[DATE INFO] FIRST: ", firstDay, "LAST: ", lastDay);
 
   const dividedFirstDay = divideDate(firstDay).dividedAddressYYYYMM;
   const dividedAddress = divideDate(date).dividedAddressYYYYMM;

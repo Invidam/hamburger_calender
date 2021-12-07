@@ -24,8 +24,6 @@
   /* width: 70%; */
   /* color: white; */
 }
-@media (max-width: 1000px) {
-}
 
 .todo-list {
   overflow-y: scroll;
@@ -36,7 +34,7 @@
   /* width: calc(43vw - 6px); */
 }
 .todo-list__item {
-  height: 20vh;
+  height: 50%;
   padding: none;
 }
 .todo-list__non-item {
@@ -65,6 +63,8 @@
 }
 
 .todo {
+  display: flex;
+  align-items: center;
   margin-bottom: 6px;
   width: 100%;
 }
@@ -83,7 +83,7 @@
 }
 .todo-input__content:not(.todo-input__checkbox) {
   border: none;
-  margin-right: 16px;
+  margin-right: 2%;
   transition: all 0.5s;
 
   border-bottom: 2px solid rgba(255, 215, 184, 0.898);
@@ -97,7 +97,7 @@
 }
 .todo-add__content:not(.todo-add__checkbox) {
   border: none;
-  margin-right: 16px;
+  margin-right: 2%;
 
   border-bottom: 2px solid rgba(255, 193, 146, 0.898);
 }
@@ -111,7 +111,7 @@
 .todo-display__content:not(.todo-display__checkbox) {
   border: none;
   cursor: default;
-  margin-right: 16px;
+  margin-right: 2%;
 
   border-bottom: 2px solid rgba(140, 86, 0, 0.611);
 }
@@ -249,6 +249,7 @@
 .todo__btn-box {
   display: inline-block;
   /* margin-left: 0.3em; */
+  /* margin-left: ; */
   /* background-color: red;
   border: 1px solid green; */
 
@@ -294,12 +295,15 @@
 }
 
 .todo__star-rating {
-  width: 60px;
-  display: inline;
-  margin-right: 1.5em;
+  /* width: 60px; */
+  /* display: inline; */
+  display: flex;
 }
 .star-container {
   /* width: 100%; */
+}
+.star-ratings {
+  /* padding: 20px; */
 }
 .todo-expired {
   /* color: var(--main-color); */
@@ -346,5 +350,51 @@
   }
   100% {
     color: var(--main-bg-color);
+  }
+}
+@media all and (orientation: portrait) {
+  /* //해당 비교에 따라 우선순위 별표의 위치조정을 실행한다. */
+  .todo__star-rating {
+    margin-left: calc(2.25vh / 2.75);
+  }
+  .todo__btn-box {
+    margin-left: calc(2.25vh / 1.25);
+  }
+  .todo__btn-box {
+    justify-content: flex-start;
+  }
+  .todo__explain-btn {
+    font-size: 6px;
+  }
+  .todo__content {
+    font-size: 10px;
+  }
+  .todo__text {
+    width: 30%;
+  }
+  .todo__btn {
+    /* padding: 4px; */
+    /* margin-left: 2%; */
+    height: 24px;
+    width: 27px;
+    font-weight: bold;
+    color: var(--main-bg-color);
+    background-color: var(--main-sub-color);
+  }
+  .todo__btn-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: black; */
+  }
+}
+@media all and (orientation: landscape) {
+  .todo__star-rating {
+    margin-left: calc(1.25vw / 2.75);
+  }
+  .todo__btn-box {
+    /* background-color: bl ue; */
+    margin-left: calc(1.25vw / 1.25);
   }
 }
