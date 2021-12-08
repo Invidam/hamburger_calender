@@ -60,7 +60,7 @@ authRouter.get("/jwt/verify", protectorMiddleWare, verifyToken);
  *         "401":
  *            description: Client id is empty.
  *         "200":
- *           description:  Get Github Auth Url.
+ *            description:  Get Github Auth Url.
  *            schema:
  *                type: object
  *                required: true
