@@ -9,7 +9,7 @@ import { authRouter } from "./routes/authRouter.js";
 import { workListRouter } from "./routes/workListRouter.js";
 import { listViewRouter } from "./routes/listViewRouter.js";
 import { todoListRouter } from "./routes/todoListRouter.js";
-// import swaggerUi from "swagger-ui-express";
+import swaggerUi from "swagger-ui-express";
 import { specs } from "./modules/swagger.js";
 // const swaggerUi = require("swagger-ui-express");
 import dotenv from "dotenv";
@@ -27,7 +27,7 @@ app.use(
   })
 );
 app.use(express.json());
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use("/api/:user/worklist/:date", workListRouter);
 app.use("/api/:user/todolist", todoListRouter);
