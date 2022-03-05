@@ -14,11 +14,15 @@ export const useWorkListGrade = (user, date) => {
   const updateInfo = async () => {
     try {
       setLoad(true);
-      const res = await API.workList(user, date).grade();
-      console.log(res.data);
-      if (!res?.data) throw new Error("[Error] WorkList Grade cannot load");
-      const resGradeInfo = res.data;
-      setGradeInfo(user ? resGradeInfo : baseSetting);
+      if (user) {
+        const res = await API.workList(user, date).grade();
+        console.log(res.data);
+        if (!res?.data) throw new Error("[Error] WorkList Grade cannot load");
+        const resGradeInfo = res.data;
+        setGradeInfo(resGradeInfo);
+      } else {
+        setGradeInfo(baseSetting);
+      }
       // setGrade(gradeInfo.grade);
       // setDifference(gradeInfo.difference);
       // setTarget(gradeInfo.target);
