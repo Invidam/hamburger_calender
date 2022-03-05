@@ -31,14 +31,16 @@
     "rand-token": "^1.0.1",
     "styled-components": "^5.3.3",
     "validator": "^13.7.0",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "swagger-ui-express": "^4.1.6",
+    "swagger-jsdoc": "^6.1.0"
   },
   "scripts": {
     "start": "node index.js",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
-    "dev:server": "npm start",
+    "dev:server": "nodemon index.js",
     "dev:client": "cd client && npm start",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "browserslist": {
     "production": [
