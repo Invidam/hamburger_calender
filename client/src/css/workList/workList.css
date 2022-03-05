@@ -137,12 +137,12 @@
 }
 .workList-grade__point {
   margin-left: 16px;
-  margin: 8px;
+  margin: 8px 3px;
   /* display: flex;
   flex-direction: column;
   align-items: center; */
   /* width: 73%; */
-  height: 20vh;
+  height: 13vh;
 }
 .workList-grade__btn:hover {
   transition: background-color 0.5s;
