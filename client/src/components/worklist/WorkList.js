@@ -90,7 +90,11 @@ export const WorkList = ({ user, date, targetSetting, workListHook }) => {
         {emptyWork}
         {bedTimeElemnt}
       </ol>
-      <WorkListGrade user={user} date={date} />
+      {user ? (
+        <WorkListGrade user={user} date={date} />
+      ) : (
+        "If you want to get grade, Please Log in. 😅"
+      )}
     </div>
   );
   // </div>

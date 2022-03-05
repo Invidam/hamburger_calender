@@ -92,14 +92,18 @@
 }
 .workList-star__item {
   font-size: 200%;
+  width: 36px;
+  height: 32px;
+  display: flex;
+  align-items: flex-start;
   color: var(--main-star-color);
 }
 .workList-grade__display {
   border-radius: 24px;
   background-color: rgba(0, 0, 0, 0.81);
   display: flex;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center;
+  justify-content: center; */
   width: 60%;
 }
 .work-icon__star-empty {
@@ -116,9 +120,9 @@
 }
 .work-icon__star-half__box {
   display: block;
-  height: 87px;
-  width: 72px;
-  position: relative;
+  /* height: 43px;
+  width: 36px;
+  position: relative; */
 }
 .workList-grade__btn {
   display: block;
