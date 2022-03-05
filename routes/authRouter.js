@@ -54,13 +54,13 @@ authRouter.get("/jwt/verify", protectorMiddleWare, verifyToken);
  *            type: string
  *          required: true
  *          description: x-access-token
- *      summary: Get Github Auth Url.
+ *      summary: Get Github Auth Url..
  *      tags: [Auth]
  *      responses:
  *         "401":
  *            description: Client id is empty.
  *         "200":
- *           description:  Get Github Auth Url.
+ *            description:  Get Github Auth Url.
  *            schema:
  *                type: object
  *                required: true

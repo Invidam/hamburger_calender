@@ -1,4 +1,4 @@
-// export const swaggerUi = require("swagger-ui-express");
+// import swaggerUi from "swagger-ui-express";
 // const swaggereJsdoc = require("swagger-jsdoc");
 import swaggereJsdoc from "swagger-jsdoc";
 const options = {
@@ -21,3 +21,5 @@ const options = {
 };
 
 export const specs = swaggereJsdoc(options);
+
+// export default { specs };
