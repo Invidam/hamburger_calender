@@ -212,7 +212,6 @@
   cursor: pointer;
   text-align: center;
   display: inline;
-  z-index: 9999;
   width: 100%;
 }
 .todo-explain__date {

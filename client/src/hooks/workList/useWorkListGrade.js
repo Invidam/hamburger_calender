@@ -34,5 +34,5 @@ export const useWorkListGrade = (user, date) => {
     }
   };
   return [gradeInfo, isGradeLoading, updateInfo];
-  //return [grade, difference, target, value, isGradeLoading, updateInfo];
+  //return [grade, difference, target, value, isGradeLoading, ufpdateInfo];
 };

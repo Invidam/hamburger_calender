@@ -120,6 +120,7 @@ export class API {
         },
         get: async () => {
           return await customAxios.get(url);
+          //팝업시 z-index 수정바람.
         },
         dataInfo: async () => {
           return await customAxios.get(url + "/date-info");

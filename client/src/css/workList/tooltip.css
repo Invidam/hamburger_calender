@@ -105,6 +105,7 @@
   position: absolute;
   background: #120611;
   border: 1px solid #3b444a;
+  z-index: 1;
 }
 .tooltip:hover .grade-tooltip-content:after,
 .tooltip:hover .grade-tooltip-content:before {
