@@ -62,7 +62,7 @@ export const TodoExplain = ({ onClickByTabIdx, sortTypeIdx }) => {
   };
   const inputBtn = (
     <div className="todo__btn-box">
-      <div className="todo__btn-content">sdf</div>
+      <div className="todo__btn-content"></div>
     </div>
   );
   return (
