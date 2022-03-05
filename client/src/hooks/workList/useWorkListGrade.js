@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { API } from "../../tools/API";
-
+const baseSetting = {
+  targetWorkTime: 6,
+  targetWakeTime: { hour: 8, minute: 0 },
+  targetBedTime: { hour: 0, minute: 0 },
+};
 export const useWorkListGrade = (user, date) => {
   const [gradeInfo, setGradeInfo] = useState();
   // const [difference, setDifference] = useState();
@@ -10,7 +14,7 @@ export const useWorkListGrade = (user, date) => {
   const updateInfo = async () => {
     try {
       setLoad(true);
-      const res = await API.workList(user, date).grade();
+      const res = user ? await API.workList(user, date).grade() : baseSetting;
       console.log(res.data);
       if (!res?.data) throw new Error("[Error] WorkList Grade cannot load");
       const resGradeInfo = res.data;
