@@ -6,13 +6,6 @@
 - 입력한 데이터들은 목표치와 비교하여 별점이 매겨진다.
 - 캘린더처럼 다른 날짜에 입력한 데이터도 쉽게 확인할 수 있다.
 
-## 사용 방법
-
-[Hamburger-Calendar](https://hamburger-calendar.herokuapp.com/)
-
-- 홈페이지 방문
-  - 대부분의 기능들은 로그인 필요 (깃헙 로그인 가능)
-
 ## 제작 의도
 
 - 시간 관리를 별점과 출석 체크를 통해 꾸준히 하게 위해 제작하였습니다.
@@ -22,12 +15,8 @@
 - Frontend: React.js
 - Backend: Node.js (express)
 - Databse: Firebase
-- Deploy: Heroku
-- Document: swagger, markdown
+- Document: markdown
 
-## API 문서
-
-[Swagger UI](https://hamburger-calendar.herokuapp.com/api-docs/)
 
 ## 기능 설명
 
